@@ -1,4 +1,4 @@
-package model;
+package edu.monash.madam.model;
 
 /**
  * Base class for markable objects in SIR.  Similar to the Mark base type in the MADAM

@@ -1,17 +1,18 @@
-package formatters;
+package edu.monash.madam.formatters;
 
 import java.util.List;
 import java.util.Stack;
 
-import model.Checkbox;
-import model.ComplexTask;
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.OutputMaker;
-import model.QTask;
-import model.Scale;
-import model.Task;
+import edu.monash.madam.model.Checkbox;
+import edu.monash.madam.model.ComplexTask;
+import edu.monash.madam.model.Criterion;
+import edu.monash.madam.model.Mark;
+import edu.monash.madam.model.MarkingScheme;
+import edu.monash.madam.model.OutputMaker;
+import edu.monash.madam.model.QTask;
+import edu.monash.madam.model.Scale;
+import edu.monash.madam.model.Task;
+
 
 public class ConsoleMaker implements OutputMaker {
 	private Stack<Integer> sectionNumber;

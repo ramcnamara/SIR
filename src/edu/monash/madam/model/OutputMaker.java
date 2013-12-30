@@ -1,4 +1,4 @@
-package model;
+package edu.monash.madam.model;
 
 
 /**

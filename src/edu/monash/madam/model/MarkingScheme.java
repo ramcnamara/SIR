@@ -1,8 +1,12 @@
-package model;
+package edu.monash.madam.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
+
+import edu.monash.madam.jaxb.XmlFileIO;
 
 /**
  * Marking scheme.  All marking schemes have precisely one instance of this class, which
@@ -90,56 +94,52 @@ public class MarkingScheme {
 	
 	
 	// test
-	public static void main(String[] args) {
-		MarkingScheme it = new MarkingScheme();
-		
-		it.setUnitCode("BSK2345 Intermediate Basket Weaving");
-		it.setTitle("Assignment 2: Applied basketry");
-		it.setPreamble("This is the preamble");
-		it.setSubtitle("This is the subtitle");
-		
-		Task s1 = new Task();
-		s1.setDescription("Appearance");
-		it.add(s1);
-		
-		String[] levels = {"poor", "good", "okay"};
-		Scale threeLevels = Scale.makeScheme(levels);
-		
-		String[] levels2 = {"N/A", "poor", "good", "okay"};
-		Scale fourLevels = Scale.makeScheme(levels2);
-		
-		Task n1 = new Task();
-		n1.setMaxMark(3);
-		n1.setName("Well-chosen colours");
-		QTask q1 = new QTask();
-		q1.setName("Colours not too bright");
-		q1.setScale(threeLevels);
-		try {
-			n1.addSubtask(q1);
-			QTask q2 = new QTask();
-			q2.setName("Pattern (if any) is clearly visible");
-			q2.setScale(fourLevels);
-			n1.addSubtask(q2);
-			s1.addSubtask(n1);
-			
-			Task n2 = new Task();
-			n2.setMaxMark(2);
-			n2.setName("Attractive materials");
-			s1.addSubtask(n2);
-		} catch (SubtaskTypeException e) {
-			e.printStackTrace();
-		}
-
-//		CalculatedMark s2 = new CalculatedMark();
-//		s2.setDescription("Functionality");
-//		it.add(s2);
+	public static void main(String[] args) throws JAXBException, SubtaskTypeException {
+//		MarkingScheme it = new MarkingScheme();
 //		
-//		CalculatedMark s3 = new CalculatedMark();
-//		s3.setDescription("Report");
-//		it.add(s3);
+//		it.setUnitCode("BSK2345 Intermediate Basket Weaving");
+//		it.setTitle("Assignment 2: Applied basketry");
+//		it.setPreamble("This is the preamble");
+//		it.setSubtitle("This is the subtitle");
+//		
+//		Task s1 = new Task();
+//		s1.setDescription("Appearance");
+//		it.add(s1);
+//		
+//		String[] levels = {"poor", "good", "okay"};
+//		Scale threeLevels = Scale.makeScheme(levels);
+//		
+//		String[] levels2 = {"N/A", "poor", "good", "okay"};
+//		Scale fourLevels = Scale.makeScheme(levels2);
+//		
+//		Task n1 = new Task();
+//		n1.setMaxMark(3);
+//		n1.setName("Well-chosen colours");
+//		QTask q1 = new QTask();
+//		q1.setName("Colours not too bright");
+//		q1.setScale(threeLevels);
+//		try {
+//			n1.addSubtask(q1);
+//			QTask q2 = new QTask();
+//			q2.setName("Pattern (if any) is clearly visible");
+//			q2.setScale(fourLevels);
+//			n1.addSubtask(q2);
+//			s1.addSubtask(n1);
+//			
+//			Task n2 = new Task();
+//			n2.setMaxMark(2);
+//			n2.setName("Attractive materials");
+//			s1.addSubtask(n2);
+//		} catch (SubtaskTypeException e) {
+//			e.printStackTrace();
+//		}
+		
+		// New test: how well does our XML marshaller/unmarshaller do?
+		XmlFileIO infile = new XmlFileIO("C:\\Users\\Robyn\\Desktop\\test.xml");
+		MarkingScheme it = infile.getMarkingScheme();
 
 		
-		formatters.ConsoleMaker cm = new formatters.ConsoleMaker(it);
+		edu.monash.madam.formatters.ConsoleMaker cm = new edu.monash.madam.formatters.ConsoleMaker(it);
 		cm.doScheme(it);
 	}
 
@@ -153,6 +153,11 @@ public class MarkingScheme {
 
 	public List<Mark> getSubtasks() {
 		return Collections.unmodifiableList(tasks);
+	}
+
+	public void setActivityName(String name) {
+		this.activityName = name;
+		
 	}
 }
 

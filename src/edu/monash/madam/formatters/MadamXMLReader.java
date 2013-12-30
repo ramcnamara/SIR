@@ -1,4 +1,4 @@
-package formatters;
+package edu.monash.madam.formatters;
 
 /**
  * Given a file containing a valid MADAM marking scheme, 

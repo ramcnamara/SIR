@@ -1,4 +1,4 @@
-package gui;
+package edu.monash.madam.gui;
 
 import java.awt.EventQueue;
 

@@ -1,4 +1,4 @@
-package model;
+package edu.monash.madam.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +30,8 @@ public abstract class ComplexTask extends Mark {
 	}
 	
 	public void addCriterion(Criterion c) {
+		if (criteria == null)
+			criteria = new ArrayList<Criterion>();
 		criteria.add(c);
 	}
 	

@@ -1,12 +1,11 @@
-package model;
+package edu.monash.madam.model;
 
 /**
  * A Criterion captures a single qualitative judgement.  It has a description and a rating scale.
  * @author Robyn
  *
  */
-public class Criterion {
-	private String description;
+public class Criterion extends Mark {
 	private Scale scale;
 	
 	public Criterion(String description, Scale scale) {
@@ -29,5 +28,17 @@ public class Criterion {
 	public void makeOutput(OutputMaker om) {
 		om.doCriterion(this);
 		om.endCriterion(this);
+	}
+	public void setMarkerInstruction(String markerInstruction) {
+		this.markerInstruction = markerInstruction;
+		
+	}
+	
+	public String getMarkerInstruction() {
+		return markerInstruction;
+	}
+	@Override
+	public float getMark() {
+		return 0;
 	}
 }

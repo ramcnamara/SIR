@@ -1,4 +1,4 @@
-package model;
+package edu.monash.madam.model;
 
 /**
  * A Checkbox is a kind of task with no granularity, i.e. the marks are either awarded or not awarded.  No
@@ -10,6 +10,7 @@ package model;
 public class Checkbox extends Mark {
 	
 	private float maxMark;
+	private boolean bonus;
 
 	@Override
 	public void makeOutput(OutputMaker om) {
@@ -28,6 +29,14 @@ public class Checkbox extends Mark {
 	@Override
 	public float getMark() {
 		return maxMark;
+	}
+
+	public void setBonus(boolean bonus) {
+		this.bonus = bonus;
+	}
+	
+	public boolean getBonus() {
+		return bonus;
 	}
 
 }
