@@ -33,6 +33,7 @@ public class Task extends ComplexTask {
 	
 	@Override
 	public List<Mark> getSubtasks() {
+		if (subtasks == null) return null;
 		return Collections.unmodifiableList(subtasks);
 	}
 	

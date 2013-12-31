@@ -3,6 +3,7 @@ package edu.monash.madam.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,7 +25,7 @@ import edu.monash.madam.jaxb.XmlFileIO;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Scheme")
-public class MarkingScheme {
+public class MarkingScheme extends Observable {
 	
 	@XmlElement(name="UnitCode", required=true)
 	private String unitCode;
@@ -58,6 +59,7 @@ public class MarkingScheme {
 	 */
 	public void setUnitCode(String unitCode) {
 		this.unitCode = unitCode;
+		setChanged();
 	}
 
 
@@ -73,6 +75,7 @@ public class MarkingScheme {
 	 */
 	public void setTitle(String name) {
 		this.activityName = name;
+		setChanged();
 	}
 
 	/**
@@ -91,15 +94,18 @@ public class MarkingScheme {
 	 */
 	public void setPreamble(String preamble) {
 		this.preamble = preamble;
+		setChanged();
 	}
 
 	
 	public MarkingScheme() {
 		tasks = new ArrayList<Mark>();
+		setChanged();
 	}
 	
 	public void add(Mark newSection) {
 		tasks.add(newSection);
+		setChanged();
 	}
 	
 	public Mark delete(int n) {
@@ -173,6 +179,7 @@ public class MarkingScheme {
 
 	public void setSubtitle(String subtitle) {
 		this.subtitle = subtitle;
+		setChanged();
 	}
 
 	public List<Mark> getSubtasks() {
@@ -181,6 +188,7 @@ public class MarkingScheme {
 
 	public void setActivityName(String name) {
 		this.activityName = name;
+		setChanged();
 		
 	}
 }
