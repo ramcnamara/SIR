@@ -34,6 +34,8 @@ public class QTask extends ComplexTask {
 
 	@Override
 	public void addSubtask(Mark task) throws SubtaskTypeException {
+		if (subtasks == null)
+			subtasks = new ArrayList<QTask>();
 		// Check that prospective subtask is qualitative
 		if (task instanceof QTask)
 			subtasks.add((QTask)task);
@@ -56,7 +58,7 @@ public class QTask extends ComplexTask {
 	
 	public QTask() {
 		this.scale = null;
-		this.subtasks = new ArrayList<QTask>();
+		this.subtasks = null;
 	}
 
 	public Scale getScale() {
