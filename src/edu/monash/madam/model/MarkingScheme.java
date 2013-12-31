@@ -158,11 +158,13 @@ public class MarkingScheme {
 		
 		// New test: how well does our XML marshaller/unmarshaller do?
 		XmlFileIO infile = new XmlFileIO("C:\\Users\\Robyn\\Desktop\\test.xml");
-		MarkingScheme it = infile.getMarkingScheme();
+		//MarkingScheme it = infile.getMarkingScheme();
 
+		String s = infile.getXML();
+		System.out.println(s);
 		
-		edu.monash.madam.formatters.ConsoleMaker cm = new edu.monash.madam.formatters.ConsoleMaker(it);
-		cm.doScheme(it);
+//		edu.monash.madam.formatters.ConsoleMaker cm = new edu.monash.madam.formatters.ConsoleMaker(it);
+//		cm.doScheme(it);
 	}
 
 	public String getSubtitle() {

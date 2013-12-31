@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NumericType")
 public class Task extends ComplexTask {
-	@XmlElementWrapper(name="Subtasks")
+	@XmlElementWrapper(name="Subtasks", required=false, nillable=false)
 	@XmlElements({ @XmlElement(name="Task", type=Task.class),
 		@XmlElement(name="QTask", type=QTask.class),
 		@XmlElement(name="Checkbox", type=Checkbox.class)
@@ -37,11 +37,12 @@ public class Task extends ComplexTask {
 	}
 	
 	public Task() {
-		subtasks = new ArrayList<Mark>();
 	}
 
 	@Override
 	public void addSubtask(Mark task) throws SubtaskTypeException {
+		if (subtasks == null)
+			subtasks = new ArrayList<Mark>();
 		subtasks.add(task);
 		
 	}

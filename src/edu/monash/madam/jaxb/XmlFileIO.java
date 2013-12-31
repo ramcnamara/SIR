@@ -16,7 +16,7 @@ public class XmlFileIO {
 	private MarkingScheme jaxbscheme;
 	
 	public XmlFileIO(String filename) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(MarkingScheme.class);
+		context = JAXBContext.newInstance(MarkingScheme.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		File infile = new File(filename);
 		jaxbscheme = (MarkingScheme) unmarshaller.unmarshal(infile);
@@ -26,9 +26,11 @@ public class XmlFileIO {
 	public String getXML() throws JAXBException {
 		
 	    java.io.StringWriter sw = new StringWriter();
+	    
 
 	    Marshaller marshaller = context.createMarshaller();
 	    marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+	    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	    marshaller.marshal(jaxbscheme, sw);
 
 	    return sw.toString();		

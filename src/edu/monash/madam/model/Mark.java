@@ -24,13 +24,13 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 })
 public abstract class Mark {
 
-	@XmlElement(name="Name")
+	@XmlElement(name="Name", required=true, nillable=false)
 	protected String name;
 	
-	@XmlElement(name="Description")
+	@XmlElement(name="Description", required=false, nillable=false)
 	protected String description;
 	
-	@XmlElement(name="MarkerInstruction")
+	@XmlElement(name="MarkerInstruction", required=false, nillable=false)
 	protected String markerInstruction;
 	
 	@XmlAttribute

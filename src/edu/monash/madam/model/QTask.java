@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QualitativeType")
 public class QTask extends ComplexTask {
-	@XmlElementWrapper(name="Subtasks")
+	@XmlElementWrapper(name="Subtasks", required=false)
 	@XmlElement(name="QTask", type=QTask.class)
 	private ArrayList<QTask> subtasks;
 	
