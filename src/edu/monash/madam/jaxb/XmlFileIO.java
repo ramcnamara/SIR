@@ -13,13 +13,13 @@ import edu.monash.madam.model.SubtaskTypeException;
 
 public class XmlFileIO {
 	private JAXBContext context;
-	private Scheme jaxbscheme;
+	private MarkingScheme jaxbscheme;
 	
 	public XmlFileIO(String filename) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(Scheme.class);
+		JAXBContext context = JAXBContext.newInstance(MarkingScheme.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		File infile = new File(filename);
-		jaxbscheme = (Scheme) unmarshaller.unmarshal(infile);
+		jaxbscheme = (MarkingScheme) unmarshaller.unmarshal(infile);
 	}
 
 
@@ -39,17 +39,17 @@ public class XmlFileIO {
 		if (jaxbscheme == null)
 			return null;
 		
-		MarkingScheme scheme = new MarkingScheme();
-		scheme.setPreamble(jaxbscheme.getPreamble());
-		scheme.setActivityName(jaxbscheme.getActivityName());
-		scheme.setSubtitle(jaxbscheme.getSubtitle());
-		scheme.setUnitCode(jaxbscheme.getUnitCode());
-		
-		for (Mark m: jaxbscheme.getTasks().getTaskOrQTaskOrCheckbox()) {
-			scheme.add(m.toMark());
-		}
-		
-		
-		return scheme;
+//		MarkingScheme scheme = new MarkingScheme();
+//		scheme.setPreamble(jaxbscheme.getPreamble());
+//		scheme.setActivityName(jaxbscheme.getActivityName());
+//		scheme.setSubtitle(jaxbscheme.getSubtitle());
+//		scheme.setUnitCode(jaxbscheme.getUnitCode());
+//		
+//		for (Mark m: jaxbscheme.getTasks().getTaskOrQTaskOrCheckbox()) {
+//			scheme.add(m.toMark());
+//		}
+//		
+//		
+		return jaxbscheme;
 	}
 }

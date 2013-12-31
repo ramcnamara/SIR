@@ -1,5 +1,8 @@
 package edu.monash.madam.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * A Checkbox is a kind of task with no granularity, i.e. the marks are either awarded or not awarded.  No
  * partial marks, subcriteria, or comments are allowed.  It is intended for applications such as late penalties.
@@ -7,9 +10,13 @@ package edu.monash.madam.model;
  * @author Robyn
  *
  */
+@XmlType(name="Checkbox")
 public class Checkbox extends Mark {
 	
+	@XmlAttribute
 	private float maxMark;
+	
+	@XmlAttribute
 	private boolean bonus;
 
 	@Override

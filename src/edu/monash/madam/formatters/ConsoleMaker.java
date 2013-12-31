@@ -100,7 +100,9 @@ public class ConsoleMaker implements OutputMaker {
 
 	@Override
 	public void doCriterion(Criterion criterion) {
-		System.out.println(criterion.getDescription());
+		System.out.println(criterion.getName());
+		
+		if (criterion.getScale() == null) return;
 		String[] levels = criterion.getScale().asArray();
 		for (String level: levels)
 			System.out.println("\t[ ] " + level);
@@ -133,7 +135,7 @@ public class ConsoleMaker implements OutputMaker {
 	public void doTask(Task task) {
 		doComplexTask(task);
 		System.out.println("\nMark: ___/" + task.getMaxMark());
-		if (task.isBonus())
+		if (task.getBonus())
 			System.out.println("[Bonus allowed] ");
 	}
 
@@ -156,8 +158,7 @@ public class ConsoleMaker implements OutputMaker {
 
 	@Override
 	public void endScheme(MarkingScheme markingScheme) {
-		// TODO Auto-generated method stub
-
+		sectionNumber.clear();
 	}
 	
 	private String sectString() {

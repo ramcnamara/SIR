@@ -4,9 +4,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "NumericType")
 public class Task extends ComplexTask {
+	@XmlElementWrapper(name="Subtasks")
+	@XmlElements({ @XmlElement(name="Task", type=Task.class),
+		@XmlElement(name="QTask", type=QTask.class),
+		@XmlElement(name="Checkbox", type=Checkbox.class)
+	})
 	private ArrayList<Mark> subtasks;
+	
+	@XmlAttribute
 	private float maxMark;
+	
+	@XmlAttribute
+	private float minMark;
+	
+	@XmlAttribute
 	private boolean bonus;
 	
 	@Override
@@ -45,7 +67,7 @@ public class Task extends ComplexTask {
 		this.maxMark = maxMark;
 	}
 
-	public boolean isBonus() {
+	public boolean getBonus() {
 		return bonus;
 	}
 

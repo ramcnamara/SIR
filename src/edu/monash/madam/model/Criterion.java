@@ -1,20 +1,36 @@
 package edu.monash.madam.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 /**
  * A Criterion captures a single qualitative judgement.  It has a description and a rating scale.
  * @author Robyn
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name="Criterion")
 public class Criterion extends Mark {
+	
+	@XmlElement(name="Scale")
+	@XmlJavaTypeAdapter(ScaleAdapter.class)
 	private Scale scale;
 	
 	public Criterion(String description, Scale scale) {
 		this.description = description;
 		this.scale = scale;
 	}
+	public Criterion() {
+	}
+
+
 	public Scale getScale() {
 		return scale;
 	}
+
 	public void setScale(Scale scale) {
 		this.scale = scale;
 	}

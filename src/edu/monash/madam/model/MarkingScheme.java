@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import edu.monash.madam.jaxb.XmlFileIO;
 
@@ -16,13 +22,29 @@ import edu.monash.madam.jaxb.XmlFileIO;
  * @author ram
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Scheme")
 public class MarkingScheme {
 	
+	@XmlElement(name="UnitCode", required=true)
 	private String unitCode;
+	
+	@XmlElement(name="ActivityName", required=true)
 	private String activityName;
+	
+	@XmlElement(name="Subtitle", required=false)
 	private String subtitle;
+	
+	@XmlElement(name="Preamble", required=false)
 	private String preamble;
 	
+	
+	@XmlElementWrapper(name="Tasks")
+	@XmlElements({@XmlElement(name = "Task", type=Task.class),
+		@XmlElement(name="QTask", type=QTask.class),
+		@XmlElement(name="Checkbox", type=Checkbox.class)
+	})
+
 	private ArrayList<Mark> tasks;
 	/**
 	 * @return the unit code

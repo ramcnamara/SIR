@@ -1,5 +1,12 @@
 package edu.monash.madam.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 /**
  * Base class for markable objects in SIR.  Similar to the Mark base type in the MADAM
  * XML schema.
@@ -7,12 +14,29 @@ package edu.monash.madam.model;
  * @author Robyn
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name="Mark")
+@XmlSeeAlso({Task.class,
+		QTask.class,
+		Checkbox.class,
+		ComplexTask.class,
+		Criterion.class
+})
 public abstract class Mark {
 
+	@XmlElement(name="Name")
 	protected String name;
+	
+	@XmlElement(name="Description")
 	protected String description;
+	
+	@XmlElement(name="MarkerInstruction")
 	protected String markerInstruction;
+	
+	@XmlAttribute
 	protected String label;
+	
+	@XmlAttribute
 	protected boolean group;
 
 	public abstract void makeOutput(OutputMaker om);
