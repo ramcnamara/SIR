@@ -18,12 +18,7 @@ import edu.monash.madam.model.MarkingScheme;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import java.awt.FlowLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
 
 public class SIRMainFrame extends JFrame {
 
