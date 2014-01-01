@@ -13,7 +13,8 @@ public class SIRControlPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public SIRControlPanel() {
-
 	}
+	
+	
 
 }

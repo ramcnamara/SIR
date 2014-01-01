@@ -31,6 +31,7 @@ public class SIRMainFrame extends JFrame {
 	private SIRXmlPanel xmlPanel;
 	private SIRTreePanel treePanel;
 	private SIRControlPanel controlPanel;
+	private SIRSchemePanel schemePanel;
 
 
 	/**
@@ -72,7 +73,12 @@ public class SIRMainFrame extends JFrame {
 					theScheme.addObserver(treePanel);
 					xmlPanel.update(theScheme, null);
 					treePanel.update(theScheme, null);
-
+					
+					// Instantiate scheme editor panel
+					schemePanel = new SIRSchemePanel(theScheme);
+					controlPanel.removeAll();
+					controlPanel.add(schemePanel);
+					repaint();
 				}
 			}
 		});
