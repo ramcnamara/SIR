@@ -11,6 +11,7 @@ import javax.xml.bind.Marshaller;
 
 import edu.monash.madam.model.MarkingScheme;
 import java.awt.BorderLayout;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
@@ -21,6 +22,7 @@ public class SIRXmlPanel extends JPanel implements Observer {
 	 */
 	private static final long serialVersionUID = -3215744673653118442L;
 	private XmlTextPane xmlDisplay;
+	private JScrollPane scrollPanel;
 
 
 	/**
@@ -34,7 +36,8 @@ public class SIRXmlPanel extends JPanel implements Observer {
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		xmlDisplay = new XmlTextPane();
-		JScrollPane scrollPanel = new JScrollPane(xmlDisplay);
+		xmlDisplay.setEditable(false);
+		scrollPanel = new JScrollPane(xmlDisplay);
 		panel.add(scrollPanel);
 	}
 
@@ -51,11 +54,14 @@ public class SIRXmlPanel extends JPanel implements Observer {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			marshaller.marshal(scheme, sw);
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		xmlDisplay.setText(sw.toString());
-		xmlDisplay.repaint();
+		
+		// set display position to top of XML
+		xmlDisplay.setSelectionStart(0);
+		xmlDisplay.setSelectionEnd(0);
+		scrollPanel.repaint();
 	}
-
 }
