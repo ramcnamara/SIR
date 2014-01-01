@@ -10,7 +10,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import edu.monash.madam.model.MarkingScheme;
-import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
@@ -21,7 +20,7 @@ public class SIRXmlPanel extends JPanel implements Observer {
 	 * 
 	 */
 	private static final long serialVersionUID = -3215744673653118442L;
-	private JTextPane xmlDisplay;
+	private XmlTextPane xmlDisplay;
 
 
 	/**
@@ -34,7 +33,7 @@ public class SIRXmlPanel extends JPanel implements Observer {
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "XML View", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
-		xmlDisplay = new JTextPane();
+		xmlDisplay = new XmlTextPane();
 		JScrollPane scrollPanel = new JScrollPane(xmlDisplay);
 		panel.add(scrollPanel);
 	}
