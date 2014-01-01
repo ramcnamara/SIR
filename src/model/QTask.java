@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 /**
  * A QTask is a qualitative Task.  It can have qualitatively-marked subtasks but not 
  * numerically-marked subtasks.  It may have a Scale for qualitative marking, but this is
@@ -13,14 +20,22 @@ import java.util.List;
  * @author Robyn
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "QualitativeType")
 public class QTask extends ComplexTask {
-	
+	@XmlElementWrapper(name="Subtasks", required=false)
+	@XmlElement(name="QTask", type=QTask.class)
 	private ArrayList<QTask> subtasks;
+	
+	@XmlElement(name="Scale")
+	@XmlJavaTypeAdapter(ScaleAdapter.class)
 	private Scale scale;
 
 
 	@Override
 	public void addSubtask(Mark task) throws SubtaskTypeException {
+		if (subtasks == null)
+			subtasks = new ArrayList<QTask>();
 		// Check that prospective subtask is qualitative
 		if (task instanceof QTask)
 			subtasks.add((QTask)task);
@@ -43,7 +58,7 @@ public class QTask extends ComplexTask {
 	
 	public QTask() {
 		this.scale = null;
-		this.subtasks = new ArrayList<QTask>();
+		this.subtasks = null;
 	}
 
 	public Scale getScale() {

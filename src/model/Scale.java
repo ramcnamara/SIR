@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 /**
  * A set of levels for marking criterion-referenced assessment.  Each qualitatively-marked
  * item is associated with a Scale that determines which levels are available to the

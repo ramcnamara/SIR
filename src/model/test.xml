@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<Scheme
+	xmlns="http://www.monash.edu/MADAM">
+	<UnitCode>FIT3077 -- Software Engineering: Architecture and Design</UnitCode>
+	<ActivityName>Assignment 2 Stage 1</ActivityName>
+	<Tasks>
+		<Task>
+			<Name>UML Design Documents</Name>
+<Preamble> </Preamble>
+				<Subtasks>
+					<Task maxMark="2" hasComment="false">
+							<Name>Appropriate diagrams (class diagram is the minimum required)</Name>
+					</Task>
+					<Task maxMark="3" hasComment="false">
+							<Name>Appropriate use of notation (associations, inheritance, etc.)</Name>
+					</Task>
+					<Task maxMark="2" hasComment="false">
+							<Name>Captures important concepts and relationships in class model</Name>
+					</Task>
+					<Task maxMark="2" hasComment="false">
+							<Name>Appropriate use of design patterns and principles (e.g. use of Observer pattern, avoidance of cyclic dependencies, etc.)</Name>
+					</Task>
+					<Task maxMark="1" hasComment="false">
+							<Name>Attention paid to extensibility (e.g. will be easy to add a new type of monitor or service</Name>
+					</Task>
+			</Subtasks>
+	</Task>
+	<Task>
+			<Name>Source Code</Name>
+			<Subtasks>
+					<Task maxMark="3" hasComment="false">
+							<Name>Design in code matches design in documents</Name>
+							<Criteria>
+									<Criterion>
+											<Name>Classes and class names</Name>
+											<Scale>
+													<Level>Poor</Level>
+													<Level>Okay</Level>
+													<Level>Excellent</Level>
+											</Scale>
+									</Criterion>
+									<Criterion>
+											<Name>Attribute and method names</Name>
+											<Scale>
+													<Level>Poor</Level>
+													<Level>Okay</Level>
+													<Level>Excellent</Level>
+													<Level>N/A</Level>
+											</Scale>
+									</Criterion>
+									<Criterion>
+											<Name>Inheritance, realization, and specialization</Name>
+											<Scale>
+													<Level>Poor</Level>
+													<Level>Okay</Level>
+													<Level>Excellent</Level>
+													<Level>N/A</Level>
+											</Scale>
+									</Criterion>
+									<Criterion>
+											<Name>Packaging and organization</Name>
+											<Scale>
+													<Level>Poor</Level>
+													<Level>Okay</Level>
+													<Level>Excellent</Level>
+													<Level>N/A</Level>
+											</Scale>
+									</Criterion>
+									<Criterion>
+											<Name>Associations and dependencies</Name>
+											<Scale>
+													<Level>Poor</Level>
+													<Level>Okay</Level>
+													<Level>Excellent</Level>
+											</Scale>
+									</Criterion>
+							</Criteria>
+					</Task>
+					<Task maxMark="3" hasComment="false">
+							<Name>Completeness with respect for requirements (can choose a match to monitor, displays ball information as text, can monitor more than one match simultaneously, can choose to stop monitoring a match, etc.)</Name>
+					</Task>
+					<Task maxMark="1" hasComment="false">
+							<Name>Does not generate unnecessary network traffic (i.e. only polls the web service once every 30 seconds per match, only queries for matches with monitors, etc.)</Name>
+					</Task>
+					<Task maxMark="1" hasComment="false">
+							<Name>Coding standards for any code that has been touched by human hands (e.g. meaningful variable and method names, commenting, layout) -- note that this applies to both human-written code and machine-generated code that has been hand-edited</Name>
+					</Task>
+			</Subtasks>
+</Task>
+			<Task>
+					<Name>Subversion log</Name>
+					<Subtasks>
+							<Task maxMark="1" hasComment="false">
+									<Name>Both team members have contributed significantly to the project</Name>
+							</Task>
+							<Task maxMark="1" hasComment="false">
+									<Name>Check-ins have meaningful and accurate messages</Name>
+							</Task>
+					</Subtasks>
+			</Task>
+	</Tasks>
+</Scheme>

@@ -4,15 +4,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 /**
  * A ComplexTask may have criteria and subtasks.
  * 
  * @author Robyn
  *
  */
+@XmlType(name="ComplexTask")
+@XmlSeeAlso({
+	Task.class,
+	QTask.class})
+
 public abstract class ComplexTask extends Mark {
 	
+	@XmlElementWrapper(name="Criteria")
+	@XmlElement(name="Criterion")
 	protected ArrayList<Criterion> criteria;
+	
+	@XmlAttribute
 	protected boolean hasComment;
 	
 	public abstract List<Mark> getSubtasks(); 
@@ -30,6 +45,8 @@ public abstract class ComplexTask extends Mark {
 	}
 	
 	public void addCriterion(Criterion c) {
+		if (criteria == null)
+			criteria = new ArrayList<Criterion>();
 		criteria.add(c);
 	}
 	
