@@ -31,7 +31,7 @@ public class SIRMainFrame extends JFrame {
 	private MarkingScheme theScheme;
 	private SIRXmlPanel xmlPanel;
 	private SIRTreePanel treePanel;
-	private SIRControlPanel controlPanel;
+	private JPanel controlPanel;
 	private SIRSchemePanel schemePanel;
 
 
@@ -108,7 +108,7 @@ public class SIRMainFrame extends JFrame {
 		splitPane.setRightComponent(xmlPanel);
 		treePanel = new SIRTreePanel();
 		splitPane_1.setLeftComponent(treePanel);
-		controlPanel = new SIRControlPanel();
+		controlPanel = new JPanel();
 		splitPane_1.setRightComponent(controlPanel);
 		contentPane.repaint();
 	}
