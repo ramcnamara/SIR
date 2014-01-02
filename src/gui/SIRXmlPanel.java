@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
@@ -36,8 +37,10 @@ public class SIRXmlPanel extends JPanel implements Observer {
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "XML View", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
+		panel.setPreferredSize(new Dimension(0, 0));
 		xmlDisplay = new XmlTextPane();
 		xmlDisplay.setEditable(false);
+		xmlDisplay.setPreferredSize(new Dimension(900, 100));
 		scrollPanel = new JScrollPane(xmlDisplay);
 		panel.add(scrollPanel);
 	}

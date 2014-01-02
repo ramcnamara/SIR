@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +21,8 @@ import java.io.File;
 import javax.swing.JSplitPane;
 
 import model.MarkingScheme;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class SIRMainFrame extends JFrame {
 
@@ -40,7 +43,7 @@ public class SIRMainFrame extends JFrame {
 	 */
 	public SIRMainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 812, 596);
+		setBounds(100, 100, 900, 602);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -91,26 +94,34 @@ public class SIRMainFrame extends JFrame {
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mnFile.add(mntmExit);
 		
-		
+		// TODO: factor this out so that it can also be used for File -> New.
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JSplitPane splitPane = new JSplitPane();
-		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		contentPane.add(splitPane);
-		
-		JSplitPane splitPane_1 = new JSplitPane();
-		splitPane.setLeftComponent(splitPane_1);
+		JSplitPane xmlSplitPane = new JSplitPane();
+		xmlSplitPane.setOneTouchExpandable(true);
+		xmlSplitPane.setContinuousLayout(true);
+		xmlSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		contentPane.add(xmlSplitPane, BorderLayout.CENTER);
 		
 		xmlPanel = new SIRXmlPanel();
-		splitPane.setRightComponent(xmlPanel);
+		xmlSplitPane.setRightComponent(xmlPanel);
+		
+		JSplitPane treeSplitPane = new JSplitPane();
+		xmlSplitPane.setLeftComponent(treeSplitPane);
+		
 		treePanel = new SIRTreePanel();
-		splitPane_1.setLeftComponent(treePanel);
+		treeSplitPane.setLeftComponent(treePanel);
 		controlPanel = new JPanel();
-		splitPane_1.setRightComponent(controlPanel);
-		contentPane.repaint();
+		treeSplitPane.setRightComponent(controlPanel);
+		
+		// If we don't put any content into the treePanel on creation it'll end up one line high,
+		// so add a VerticalStrut.  Note that this controlPanel will be replaced on load anyway.
+		Component verticalStrut = Box.createVerticalStrut(300);
+		controlPanel.add(verticalStrut);
+		repaint();
 	}
 
 }

@@ -25,7 +25,7 @@ public class SIRTreePanel extends JScrollPane implements Observer {
 
 		setLayout(new ScrollPaneLayout());
 		add(new JLabel("No scheme loaded"));
-		setPreferredSize(new Dimension(300, 500));
+		setPreferredSize(new Dimension(200, 800));
 	}
 	@Override
 	public void update(Observable o, Object arg) {
