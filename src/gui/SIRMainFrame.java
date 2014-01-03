@@ -81,6 +81,7 @@ public class SIRMainFrame extends JFrame {
 					schemePanel = new SIRSchemePanel(theScheme);
 					controlPanel.removeAll();
 					controlPanel.add(schemePanel);
+					pack();
 					repaint();
 				}
 			}
