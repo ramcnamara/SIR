@@ -153,26 +153,27 @@ public class SIRSchemePanel extends JPanel implements ActionListener {
 		String action = e.getActionCommand();
 		String currentValue = "";
 		
-		if (e.equals("Activity name"))
+		if (action.equals("Activity name"))
 			currentValue = lblActivityName.getText();
-		else if (e.equals("Unit code"))
+		else if (action.equals("Unit code"))
 			currentValue = lblUnitCode.getText();
-		else if (e.equals("Subtitle"))
+		else if (action.equals("Subtitle"))
 			currentValue = lblSubtitle.getText();
-		else if (e.equals("Preamble"))
+		else if (action.equals("Preamble"))
 			currentValue = preambleTextPane.getText();
 		else return;
 		
 		SIREditDialog dlg = new SIREditDialog(action, currentValue);
-		String newValue = dlg.showDialog();
+		dlg.setVisible(true);
+		String newValue = dlg.getValue();
 		
-		if (e.equals("Activity name"))
+		if (action.equals("Activity name"))
 			lblActivityName.setText(newValue);
-		else if (e.equals("Unit code"))
+		else if (action.equals("Unit code"))
 			lblUnitCode.setText(newValue);
-		else if (e.equals("Subtitle"))
+		else if (action.equals("Subtitle"))
 			lblSubtitle.setText(newValue);
-		else if (e.equals("Preamble"))
+		else if (action.equals("Preamble"))
 			preambleTextPane.setText(newValue);	
 	}
 }
