@@ -122,6 +122,11 @@ public class JTreeMaker implements OutputMaker {
 		public String getUuid() {
 			return uuid;
 		}
+
+		public String getName() {
+			// TODO Auto-generated method stub
+			return userObject.toString();
+		}
 		
 	}
 	private Node root = null;
@@ -164,7 +169,8 @@ public class JTreeMaker implements OutputMaker {
 		path.push(parent);
 		path.push(child);
 		JPanel card = new QTaskPanel(qtask);
-		panel.add(card, uuid);
+//		panel.add(card, uuid);
+		panel.add(card, qtask.getName());
 		lastcard = card;
 		
 		if (qtask.getCriteria() == null) return;
@@ -195,8 +201,8 @@ public class JTreeMaker implements OutputMaker {
 		
 		JPanel card = new TaskPanel(task);
 		lastcard = card;
-		panel.add(card, uuid);
-		System.out.println("Adding task with ID "+ uuid);
+//		panel.add(card, uuid);
+		panel.add(card, task.getName());
 		
 		if (task.getCriteria() == null) return;
 		for (Mark m: task.getCriteria()) {
