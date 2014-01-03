@@ -1,4 +1,4 @@
-package gui;
+package gui.xml;
 
 import javax.swing.JTextPane;
 

@@ -1,5 +1,7 @@
 package gui;
 
+import gui.xml.XmlTextPane;
+
 import java.io.StringWriter;
 import java.util.Observable;
 import java.util.Observer;
