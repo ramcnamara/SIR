@@ -36,12 +36,8 @@ public class SIRMarkListPanel extends JPanel implements Observer, TreeSelectionL
 
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
-//		CardLayout layout = (CardLayout)panel.getLayout();
 		JTreeMaker.Node node = (Node) e.getNewLeadSelectionPath().getLastPathComponent();
-//		layout.show(panel, node.getUuid());
-//		this.repaint();
-		System.out.println("Looking for task with ID " + node.getName());
-		((CardLayout) panel.getLayout()).show(panel, node.getName());
+		((CardLayout) panel.getLayout()).show(panel, node.getId());
 	}
 
 }

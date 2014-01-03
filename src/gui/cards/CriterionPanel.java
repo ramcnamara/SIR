@@ -6,20 +6,18 @@ import javax.swing.JPanel;
 import model.Criterion;
 
 public class CriterionPanel extends JPanel {
-	private Criterion target;
 
 	/**
 	 * Create the panel.
 	 */
 	public CriterionPanel(Criterion criterion) {
-		target = criterion;
 		
 		String levels = "";
 		for (String level:criterion.getScale().asArray()) {
-			levels += " ";
+			levels += level + " ";
 		}
 		
-		add(new JLabel(criterion.getDescription()));
+		add(new JLabel(criterion.getName()));
 		add(new JLabel(levels));
 
 	}
