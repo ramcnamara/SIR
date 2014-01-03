@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
  * @author Robyn
  *
  */
-public class SIRSchemePanel extends JPanel implements ActionListener {
+public class SIRMetadataPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	MarkingScheme theScheme;
@@ -35,7 +35,7 @@ public class SIRSchemePanel extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
-	public SIRSchemePanel(MarkingScheme scheme) {
+	public SIRMetadataPanel(MarkingScheme scheme) {
 		
 		// Displays for marking scheme metadata.  These are all editable.
 		JLabel lblUCtext = new JLabel("Unit code");

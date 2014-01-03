@@ -5,22 +5,29 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 
+
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.JSplitPane;
 
 import model.MarkingScheme;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 
 public class SIRMainFrame extends JFrame {
@@ -34,7 +41,8 @@ public class SIRMainFrame extends JFrame {
 	private SIRXmlPanel xmlPanel;
 	private SIRTreePanel treePanel;
 	private JPanel controlPanel;
-	private SIRSchemePanel schemePanel;
+	private SIRMetadataPanel schemePanel;
+	private SIRMarkListPanel cardPanel;
 
 
 	/**
@@ -52,6 +60,7 @@ public class SIRMainFrame extends JFrame {
 		
 		JMenuItem mntmLoad = new JMenuItem("Load");
 		mntmLoad.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				
 				// display "file open" dialog
@@ -74,13 +83,17 @@ public class SIRMainFrame extends JFrame {
 					// Get things displaying on the XML Pane and Tree
 					theScheme.addObserver(xmlPanel);
 					theScheme.addObserver(treePanel);
+					theScheme.addObserver(cardPanel);
 					xmlPanel.update(theScheme, null);
-					treePanel.update(theScheme, null);
+					treePanel.update(theScheme, cardPanel);
+					cardPanel.update(theScheme, null);
 					
 					// Instantiate scheme editor panel
-					schemePanel = new SIRSchemePanel(theScheme);
+					schemePanel = new SIRMetadataPanel(theScheme);
 					controlPanel.removeAll();
 					controlPanel.add(schemePanel);
+					controlPanel.add(new JSeparator());
+					controlPanel.add(cardPanel);
 					pack();
 					repaint();
 				}
@@ -115,7 +128,9 @@ public class SIRMainFrame extends JFrame {
 		treePanel = new SIRTreePanel();
 		treeSplitPane.setLeftComponent(treePanel);
 		controlPanel = new JPanel();
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		treeSplitPane.setRightComponent(controlPanel);
+		cardPanel = new SIRMarkListPanel();
 		
 		// If we don't put any content into the treePanel on creation it'll end up one line high,
 		// so add a VerticalStrut.  Note that this controlPanel will be replaced on load anyway.
