@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -36,9 +38,18 @@ public class Scale {
 	 */
 	public static Scale makeScheme(String[] aScheme) {
 		
+		// Iterate through all the currently-known schemes.
+		search:
 		for (Scale t: schemes) {
-			if (t.asArray().equals(aScheme))
-				return t;
+			String[] tarray = t.asArray();
+			
+
+			if (tarray.length != aScheme.length)
+					continue;
+			for (int i = 0; i < aScheme.length; i++)
+				if (!tarray[i].equals(aScheme[i]))
+					continue search;
+			return t;
 		}
 		Scale newScheme = new Scale(aScheme);
 		schemes.add(newScheme);
@@ -83,6 +94,10 @@ public class Scale {
 			out += s + "\t";
 		}
 		return out;
+	}
+
+	public static List<Scale> getScales() {
+		return Collections.unmodifiableList(schemes);
 	}
 }
 	

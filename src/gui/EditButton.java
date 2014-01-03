@@ -7,7 +7,7 @@ public class EditButton extends JButton {
 
 	private static final long serialVersionUID = 8521367046169718607L;
 
-	EditButton() {
+	public EditButton() {
 		super(new ImageIcon(SIRMetadataPanel.class.getResource("/resources/editIcon.png")));
 		setOpaque(false);
 		setBorderPainted(false);
