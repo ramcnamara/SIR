@@ -4,8 +4,6 @@ import java.awt.Font;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -43,19 +41,17 @@ public class SIRSchemePanel extends JPanel implements ActionListener {
 		JLabel lblUCtext = new JLabel("Unit code");
 		lblUnitCode = new JLabel(scheme.getUnitCode());
 		lblUnitCode.setFont(new Font("Tahoma", Font.BOLD, 14));
-		JButton btnEditUnitCode = new JButton("");
+		EditButton btnEditUnitCode = new EditButton();
 		btnEditUnitCode.setActionCommand("Unit code");
 		btnEditUnitCode.addActionListener(this);
-		btnEditUnitCode.setIcon(new ImageIcon(SIRSchemePanel.class.getResource("/resources/editIcon.png")));
 		
 		
 		JLabel lblANtext = new JLabel("Activity name");
 		lblActivityName = new JLabel(scheme.getActivityName());
 		lblActivityName.setFont(new Font("Tahoma", Font.BOLD, 14));
-		JButton btnEditActivityName = new JButton("");
+		EditButton btnEditActivityName = new EditButton();
 		btnEditActivityName.setActionCommand("Activity name");
 		btnEditActivityName.addActionListener(this);
-		btnEditActivityName.setIcon(new ImageIcon(SIRSchemePanel.class.getResource("/resources/editIcon.png")));
 		
 		// Subtitle and Preamble are optional.
 		String st = scheme.getSubtitle();
@@ -63,22 +59,21 @@ public class SIRSchemePanel extends JPanel implements ActionListener {
 		JLabel lblST = new JLabel("Subtitle");
 		lblSubtitle = new JLabel(st);
 		lblSubtitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-		JButton btnEditSubtitle = new JButton("");
+		EditButton btnEditSubtitle = new EditButton();
 
 		btnEditSubtitle.setActionCommand("Subtitle");
 		btnEditSubtitle.addActionListener(this);
-		btnEditSubtitle.setIcon(new ImageIcon(SIRSchemePanel.class.getResource("/resources/editIcon.png")));
 		
 		String pr = scheme.getPreamble();
 		if (pr == null) pr = "";
 		JLabel lblPreamble = new JLabel("Preamble");
 		preambleTextPane = new JTextPane();
+		preambleTextPane.setEditable(false);
 		preambleTextPane.setText(pr);
-		JButton btnEditPreamble = new JButton("");
+		EditButton btnEditPreamble = new EditButton();
 
 		btnEditPreamble.setActionCommand("Preamble");
 		btnEditPreamble.addActionListener(this);
-		btnEditPreamble.setIcon(new ImageIcon(SIRSchemePanel.class.getResource("/resources/editIcon.png")));
 		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
