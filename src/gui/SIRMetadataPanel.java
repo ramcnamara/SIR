@@ -159,13 +159,21 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 		dlg.setVisible(true);
 		String newValue = dlg.getValue();
 		
-		if (action.equals("Activity name"))
+		if (action.equals("Activity name")) {
 			lblActivityName.setText(newValue);
-		else if (action.equals("Unit code"))
+			theScheme.setActivityName(newValue);
+		}
+		else if (action.equals("Unit code")) {
 			lblUnitCode.setText(newValue);
-		else if (action.equals("Subtitle"))
+			theScheme.setUnitCode(newValue);
+		}
+		else if (action.equals("Subtitle")) {
 			lblSubtitle.setText(newValue);
-		else if (action.equals("Preamble"))
-			preambleTextPane.setText(newValue);	
+			theScheme.setSubtitle(newValue);
+		}
+		else if (action.equals("Preamble")) {
+			preambleTextPane.setText(newValue);
+			theScheme.setSubtitle(newValue);
+		}
 	}
 }
