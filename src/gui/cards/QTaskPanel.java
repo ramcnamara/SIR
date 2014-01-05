@@ -18,7 +18,6 @@ public class QTaskPanel extends JPanel implements CriterionContainer {
 	 * Create the panel.
 	 */
 	public QTaskPanel(QTask task) {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(new JLabel(task.getName()));
 		add(new JLabel(task.getDescription()));
 		cp = new CriterionPanel();
