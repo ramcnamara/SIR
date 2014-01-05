@@ -7,6 +7,7 @@ import javax.swing.JSeparator;
 import model.Criterion;
 import model.Task;
 import javax.swing.BoxLayout;
+import javax.swing.border.TitledBorder;
 
 public class TaskPanel extends JPanel implements CriterionContainer {
 
@@ -22,8 +23,8 @@ public class TaskPanel extends JPanel implements CriterionContainer {
 		add(new JLabel(task.getName()));
 		add(new JLabel("Max mark: " + task.getMaxMark()));
 		add(new JLabel(task.getDescription()));
-		add(new JSeparator());
 		cp = new CriterionPanel();
+		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(cp);
 	}
 	

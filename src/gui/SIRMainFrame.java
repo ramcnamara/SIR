@@ -95,8 +95,7 @@ public class SIRMainFrame extends JFrame {
 					controlPanel.add(schemePanel);
 					controlPanel.add(new JSeparator());
 					controlPanel.add(cardPanel);
-					pack();
-					repaint();
+					validate();
 				}
 			}
 		});
@@ -117,6 +116,7 @@ public class SIRMainFrame extends JFrame {
 		JSplitPane xmlSplitPane = new JSplitPane();
 		xmlSplitPane.setOneTouchExpandable(true);
 		xmlSplitPane.setContinuousLayout(true);
+		xmlSplitPane.setDividerLocation(0.75);
 		xmlSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		contentPane.add(xmlSplitPane, BorderLayout.CENTER);
 		
@@ -138,7 +138,6 @@ public class SIRMainFrame extends JFrame {
 		// so add a VerticalStrut.  Note that this controlPanel will be replaced on load anyway.
 		Component verticalStrut = Box.createVerticalStrut(300);
 		controlPanel.add(verticalStrut);
-		repaint();
 	}
 
 }

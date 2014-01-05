@@ -90,7 +90,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 								.addComponent(lblUCtext, Alignment.TRAILING))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblSubtitle, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+								.addComponent(lblSubtitle, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblActivityName, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
 								.addComponent(lblUnitCode, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -101,8 +101,8 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 								.addComponent(btnEditPreamble, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(33)
-							.addComponent(preambleTextPane, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
-							.addGap(23)))
+							.addComponent(preambleTextPane, GroupLayout.PREFERRED_SIZE, 386, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -121,9 +121,11 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 						.addComponent(btnEditActivityName, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblST)
-							.addComponent(lblSubtitle))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(5)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblST)
+								.addComponent(lblSubtitle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 						.addComponent(btnEditSubtitle, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -131,8 +133,8 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblPreamble)
 							.addGap(10)
-							.addComponent(preambleTextPane, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(116, Short.MAX_VALUE))
+							.addComponent(preambleTextPane, GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)))
+					.addGap(11))
 		);
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);

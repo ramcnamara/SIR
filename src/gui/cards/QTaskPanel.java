@@ -21,8 +21,8 @@ public class QTaskPanel extends JPanel implements CriterionContainer {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(new JLabel(task.getName()));
 		add(new JLabel(task.getDescription()));
-		add(new JSeparator());
 		cp = new CriterionPanel();
+		add(cp);
 	}
 	
 	public void addCriterion(Criterion c) {
