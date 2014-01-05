@@ -1,6 +1,6 @@
 package formatters;
 
-import gui.cards.CriterionPanel;
+import gui.cards.CriterionContainer;
 import gui.cards.QTaskPanel;
 import gui.cards.TaskPanel;
 
@@ -125,7 +125,7 @@ public class JTreeMaker implements OutputMaker {
 
 	private Node root = null;
 	private JPanel panel = new JPanel(new CardLayout());
-	private JPanel lastcard = new JPanel();
+	private CriterionContainer lastcard;
 	private Stack<Node> path = new Stack<Node>();
 	private Integer tasknum = 0;
 
@@ -148,7 +148,7 @@ public class JTreeMaker implements OutputMaker {
 		String uuid = parent.getId();
 		parent.add(new Node(uuid, parent, criterion.getName()));
 		path.push(parent);
-		lastcard.add(new CriterionPanel(criterion));
+		lastcard.addCriterion(criterion);
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class JTreeMaker implements OutputMaker {
 		parent.add(child);
 		path.push(parent);
 		path.push(child);
-		JPanel card = new QTaskPanel(qtask);
+		QTaskPanel card = new QTaskPanel(qtask);
 		panel.add(card, idstr);
 		lastcard = card;
 	}
@@ -182,7 +182,7 @@ public class JTreeMaker implements OutputMaker {
 		path.push(parent);
 		path.push(child);
 
-		JPanel card = new TaskPanel(task);
+		TaskPanel card = new TaskPanel(task);
 		lastcard = card;
 		panel.add(card, idstr);
 	}

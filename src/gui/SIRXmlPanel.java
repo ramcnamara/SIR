@@ -44,33 +44,33 @@ public class SIRXmlPanel extends JPanel implements Observer {
 		
 		// scrolling is broken in XmlTextPane
 		// xmlDisplay = new XmlTextPane();
-		xmlDisplay = new JTextPane();
-		xmlDisplay.setEditable(false);
-		scrollPanel = new JScrollPane(xmlDisplay);
-		panel.add(scrollPanel);
+//		xmlDisplay = new JTextPane();
+//		xmlDisplay.setEditable(false);
+//		scrollPanel = new JScrollPane(xmlDisplay);
+//		panel.add(scrollPanel);
 	}
 	
 	@Override
 	public void update(Observable scheme, Object arg1) {
-		java.io.StringWriter sw = new StringWriter();
-
-		JAXBContext context;
-		try {
-			context = JAXBContext.newInstance(MarkingScheme.class);
-
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			marshaller.marshal(scheme, sw);
-		} catch (JAXBException e) {
-			e.printStackTrace();
+//		java.io.StringWriter sw = new StringWriter();
+//
+//		JAXBContext context;
+//		try {
+//			context = JAXBContext.newInstance(MarkingScheme.class);
+//
+//			Marshaller marshaller = context.createMarshaller();
+//			marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+//			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//			marshaller.marshal(scheme, sw);
+//		} catch (JAXBException e) {
+//			e.printStackTrace();
 		}
 		
-		xmlDisplay.setText(sw.toString());
-		
-		// set display position to top of XML
-		xmlDisplay.setSelectionStart(0);
-		xmlDisplay.setSelectionEnd(0);
-		scrollPanel.repaint();
-	}
+//		xmlDisplay.setText(sw.toString());
+//		
+//		// set display position to top of XML
+//		xmlDisplay.setSelectionStart(0);
+//		xmlDisplay.setSelectionEnd(0);
+//		scrollPanel.repaint();
+//	}
 }

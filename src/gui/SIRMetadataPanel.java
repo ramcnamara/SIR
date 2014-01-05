@@ -91,8 +91,8 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblSubtitle, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-								.addComponent(lblActivityName, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
-								.addComponent(lblUnitCode, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
+								.addComponent(lblActivityName, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+								.addComponent(lblUnitCode, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnEditUnitCode, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
@@ -100,8 +100,9 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 								.addComponent(btnEditSubtitle, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnEditPreamble, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(23)
-							.addComponent(preambleTextPane, GroupLayout.PREFERRED_SIZE, 396, GroupLayout.PREFERRED_SIZE)))
+							.addGap(33)
+							.addComponent(preambleTextPane, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+							.addGap(23)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -130,8 +131,8 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblPreamble)
 							.addGap(10)
-							.addComponent(preambleTextPane, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(preambleTextPane, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(116, Short.MAX_VALUE))
 		);
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);

@@ -2,6 +2,7 @@ package gui.cards;
 
 import javax.swing.JComboBox;
 
+import model.Criterion;
 import model.Scale;
 
 public class ScaleBox extends JComboBox {
@@ -34,11 +35,12 @@ public class ScaleBox extends JComboBox {
 	
 	
 	// Populate ScaleBox with all the Scales in the current model.
-	ScaleBox() {
+	ScaleBox(Criterion criterion) {
 		for (Scale s: Scale.getScales()) {
 			ScaleItem item = new ScaleItem(s);
 			addItem(item);
 		}
 		addItem("New scale...");
+		setSelectedItem(new ScaleItem(criterion.getScale()));
 	}
 }
