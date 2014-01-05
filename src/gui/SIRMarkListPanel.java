@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -31,6 +32,7 @@ public class SIRMarkListPanel extends JPanel implements Observer, TreeSelectionL
 		panel = treemaker.getCardStack();
 		this.removeAll();
 		this.add(panel);
+		panel.setAlignmentY(Component.LEFT_ALIGNMENT);
 		this.repaint();
 	}
 
@@ -39,5 +41,4 @@ public class SIRMarkListPanel extends JPanel implements Observer, TreeSelectionL
 		JTreeMaker.Node node = (Node) e.getNewLeadSelectionPath().getLastPathComponent();
 		((CardLayout) panel.getLayout()).show(panel, node.getId());
 	}
-
 }

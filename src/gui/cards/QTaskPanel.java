@@ -1,8 +1,9 @@
 package gui.cards;
 
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 
 import model.Criterion;
 import model.QTask;
@@ -26,6 +27,10 @@ public class QTaskPanel extends JPanel implements CriterionContainer {
 	
 	public void addCriterion(Criterion c) {
 		cp.addCriterion(c);
+	}
+	
+	public Dimension getPreferredSize() {
+		return new Dimension(400, 200);
 	}
 	
 

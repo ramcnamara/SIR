@@ -22,10 +22,8 @@ public class SIRTreePanel extends JScrollPane implements Observer {
 	JTree tree;
 	
 	SIRTreePanel() {
-
 		setLayout(new ScrollPaneLayout());
-		add(new JLabel("No scheme loaded"));
-		setPreferredSize(new Dimension(200, 800));
+		setPreferredSize(new Dimension(300, 1000));
 	}
 	@Override
 	public void update(Observable o, Object listener) {
@@ -40,6 +38,16 @@ public class SIRTreePanel extends JScrollPane implements Observer {
 		tree.addTreeSelectionListener((TreeSelectionListener)listener);
 		this.getViewport().removeAll();
 		this.getViewport().add(tree);
+		
+		// expand the tree
+		int j=tree.getRowCount();
+		int i=0;
+		while( i < j) {
+			tree.expandRow(i);
+			i++;
+			j = tree.getRowCount();
+		}
+		
 		tree.repaint();
 		repaint();
 	}
