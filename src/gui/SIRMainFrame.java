@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -127,6 +128,7 @@ public class SIRMainFrame extends JFrame {
 		
 		treePanel = new SIRTreePanel();
 		treeSplitPane.setLeftComponent(treePanel);
+		treePanel.setMinimumSize(new Dimension(100, 100));
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		treeSplitPane.setRightComponent(controlPanel);

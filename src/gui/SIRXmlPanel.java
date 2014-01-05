@@ -1,7 +1,4 @@
 package gui;
-
-import gui.xml.XmlTextPane;
-
 import java.io.StringWriter;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 
@@ -25,7 +23,10 @@ public class SIRXmlPanel extends JPanel implements Observer {
 	 * 
 	 */
 	private static final long serialVersionUID = -3215744673653118442L;
-	private XmlTextPane xmlDisplay;
+	
+	// TODO: fix problem with scrolling and sizing in XmlTextPane
+	//private XmlTextPane xmlDisplay;
+	private JTextPane xmlDisplay;
 	private JScrollPane scrollPanel;
 
 
@@ -40,13 +41,15 @@ public class SIRXmlPanel extends JPanel implements Observer {
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		panel.setPreferredSize(new Dimension(0, 0));
-		xmlDisplay = new XmlTextPane();
+		
+		// scrolling is broken in XmlTextPane
+		// xmlDisplay = new XmlTextPane();
+		xmlDisplay = new JTextPane();
 		xmlDisplay.setEditable(false);
-		xmlDisplay.setPreferredSize(new Dimension(900, 100));
 		scrollPanel = new JScrollPane(xmlDisplay);
 		panel.add(scrollPanel);
 	}
-
+	
 	@Override
 	public void update(Observable scheme, Object arg1) {
 		java.io.StringWriter sw = new StringWriter();
