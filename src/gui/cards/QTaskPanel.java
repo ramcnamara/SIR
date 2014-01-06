@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import model.Criterion;
 import model.QTask;
@@ -23,7 +24,8 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
-	private JTextField tfDescription;
+	private JTextArea taDescription;
+	private JTextArea taMarkerInstructions;
 
 	/**
 	 * Create the panel.
@@ -32,42 +34,48 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][357.00px,grow][172.00px]", "[14px][14px][14px][][][55.00px,grow,top]"));
+contents.setLayout(new MigLayout("", "[][grow,fill][]", "[14px][][pref!,grow,top][][14px][][55.00px,fill]"));
 		
 		JLabel lblName = new JLabel("Task name");
-		contents.add(lblName, "cell 0 0,alignx trailing");
+		contents.add(lblName, "cell 0 0,alignx right");
 		
-		tfTaskName = new JTextField();
+		tfTaskName = new JTextField(qtask.getName());
 		contents.add(tfTaskName, "cell 1 0,growx");
 		tfTaskName.setColumns(10);
+
 		
-		JLabel lblMaxMark = new JLabel("Scale");
-		contents.add(lblMaxMark, "flowx,cell 2 0");
-		
+		JLabel lblComputed = new JLabel("(from subtasks)");
+		contents.add(lblComputed, "cell 1 1,alignx left,aligny baseline, growx");
 		JLabel lblDescription = new JLabel("Description");
-		contents.add(lblDescription, "cell 0 1,alignx trailing");
+		contents.add(lblDescription, "cell 0 2,alignx right");
 		
-		tfDescription = new JTextField();
-		contents.add(tfDescription, "cell 1 1 2 1,growx");
-		tfDescription.setColumns(10);
+		taDescription = new JTextArea(qtask.getDescription());
+		taDescription.setLineWrap(true);
+		contents.add(taDescription, "cell 1 2,wmin 10,grow");
+		taDescription.setColumns(10);
 		
-		JCheckBox chckbxAllowMarkerComment = new JCheckBox("Allow marker comment");
-		contents.add(chckbxAllowMarkerComment, "cell 1 4");
+		JLabel lblInstructionsToMarkers = new JLabel("Instructions to markers");
+		contents.add(lblInstructionsToMarkers, "cell 0 3,alignx trailing");
+		
+		taMarkerInstructions = new JTextArea(qtask.getMarkerInstruction());
+		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
+		taMarkerInstructions.setColumns(10);
+		
+		JCheckBox chckbxAllowMarkerComment = new JCheckBox("Allow marker comment", qtask.hasComment());
+		contents.add(chckbxAllowMarkerComment, "cell 1 5");
 		cp = new CriterionPanel();
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 5 3 1,aligny top,grow");
+		contents.add(cp, "cell 0 6 2 1,aligny top,grow");
 		setViewportView(contents);
 		
+		JCheckBox chckbxGroupTask = new JCheckBox("Group task", qtask.isGroup());
+		contents.add(chckbxGroupTask, "flowx,cell 1 4");
+		
+
 		ScaleBox scalebox = new ScaleBox(qtask);
 		scalebox.addItem("None");
 		contents.add(scalebox, "cell 2 0");
-		
-		JCheckBox chckbxGroupTask = new JCheckBox("Group task");
-		contents.add(chckbxGroupTask, "flowx,cell 1 2");
-		
-		JCheckBox chckbxBonusTask = new JCheckBox("Bonus task");
-		contents.add(chckbxBonusTask, "cell 1 3");
 	}
 	
 	public void addCriterion(Criterion c) {
