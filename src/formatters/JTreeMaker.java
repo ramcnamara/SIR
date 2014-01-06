@@ -1,5 +1,6 @@
 package formatters;
 
+import gui.cards.CheckboxPanel;
 import gui.cards.CriterionContainer;
 import gui.cards.QTaskPanel;
 import gui.cards.TaskPanel;
@@ -135,7 +136,7 @@ public class JTreeMaker implements OutputMaker {
 		String idstr = (++tasknum).toString();
 		parent.add(new Node(idstr, parent, checkbox.getName()));
 		path.push(parent);
-		// panel.add(new CheckboxPanel(checkbox, idstr));
+		panel.add(new CheckboxPanel(checkbox), idstr);
 	}
 
 	@Override
