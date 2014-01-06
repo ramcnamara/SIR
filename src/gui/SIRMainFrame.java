@@ -66,6 +66,7 @@ public class SIRMainFrame extends JFrame {
 				
 				// display "file open" dialog
 				JFileChooser fc = new JFileChooser();
+				fc.addChoosableFileFilter(new XmlFileFilter());
 				int fcval = fc.showOpenDialog(contentPane);
 				
 				// file chosen?
