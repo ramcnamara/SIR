@@ -125,7 +125,6 @@ public class SIRMainFrame extends JFrame {
 		
 		JSplitPane treeSplitPane = new JSplitPane();
 		xmlSplitPane.setLeftComponent(treeSplitPane);
-		xmlSplitPane.setDividerLocation(0.85);
 		
 		treePanel = new SIRTreePanel();
 		treeSplitPane.setLeftComponent(treePanel);

@@ -34,7 +34,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-contents.setLayout(new MigLayout("", "[][grow,fill][]", "[14px][][pref!,grow,top][][14px][][55.00px,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill][]", "[14px][][pref!,grow,top][][14px][][55.00px,fill]"));
 		
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx right");
@@ -84,6 +84,15 @@ contents.setLayout(new MigLayout("", "[][grow,fill][]", "[14px][][pref!,grow,top
 	
 	public Dimension getPreferredSize() {
 		return new Dimension(400, 200);
+	}
+	
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+
+		if (visible) {
+			getVerticalScrollBar().setValue(0);
+			repaint();
+		}
 	}
 
 }
