@@ -2,9 +2,15 @@ package gui.cards;
 
 import javax.swing.JComboBox;
 
-import model.Criterion;
+import model.CriterionReferenced;
 import model.Scale;
 
+/** 
+ * A ComboBox that is populated with all Scales used in the current marking scheme.
+ * Also allows user-defined Scales.
+ * @author ram
+ *
+ */
 public class ScaleBox extends JComboBox {
 	/**
 	 * 
@@ -35,7 +41,7 @@ public class ScaleBox extends JComboBox {
 	
 	
 	// Populate ScaleBox with all the Scales in the current model.
-	ScaleBox(Criterion criterion) {
+	ScaleBox(CriterionReferenced criterion) {
 		for (Scale s: Scale.getScales()) {
 			ScaleItem item = new ScaleItem(s);
 			addItem(item);

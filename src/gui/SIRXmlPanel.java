@@ -14,7 +14,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.border.TitledBorder;
-import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 

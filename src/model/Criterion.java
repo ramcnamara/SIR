@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="Criterion")
-public class Criterion extends Mark {
+public class Criterion extends Mark implements CriterionReferenced {
 	
 	@XmlElement(name="Scale")
 	@XmlJavaTypeAdapter(ScaleAdapter.class)

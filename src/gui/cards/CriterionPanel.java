@@ -8,7 +8,6 @@ import model.Criterion;
 
 import javax.swing.JTextArea;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
 
 public class CriterionPanel extends JPanel {
 

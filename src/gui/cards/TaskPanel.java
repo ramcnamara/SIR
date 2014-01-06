@@ -12,13 +12,11 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
 
 public class TaskPanel extends JScrollPane implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
-	private Task target;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
@@ -32,7 +30,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][357.00px,grow][172.00px]", "[14px][14px][14px][][][55.00px,grow,top]"));
+		contents.setLayout(new MigLayout("", "[][357.00px,grow][172.00px]", "[14px][14px][14px][][]"));
 		
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx trailing");
@@ -52,11 +50,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		tfDescription.setColumns(10);
 		
 		JCheckBox chckbxAllowMarkerComment = new JCheckBox("Allow marker comment");
-		contents.add(chckbxAllowMarkerComment, "cell 1 4");
-		cp = new CriterionPanel();
-		cp.setAlignmentY(LEFT_ALIGNMENT);
-		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 5 3 1,aligny top,grow");
+		contents.add(chckbxAllowMarkerComment, "cell 1 3");
 		setViewportView(contents);
 		
 		tfMaxMark = new JTextField();
@@ -69,9 +63,10 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		
 		JCheckBox chckbxGroupTask = new JCheckBox("Group task");
 		contents.add(chckbxGroupTask, "flowx,cell 1 2");
-		
-		JCheckBox chckbxBonusTask = new JCheckBox("Bonus task");
-		contents.add(chckbxBonusTask, "cell 1 3");
+		cp = new CriterionPanel();
+		cp.setAlignmentY(LEFT_ALIGNMENT);
+		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		contents.add(cp, "cell 0 4 3 1,aligny top,grow");
 	}
 	
 	public void addCriterion(Criterion c) {
