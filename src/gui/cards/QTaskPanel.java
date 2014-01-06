@@ -24,7 +24,6 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
 	private JTextField tfDescription;
-	private JTextField tfMaxMark;
 
 	/**
 	 * Create the panel.
@@ -62,12 +61,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		
 		ScaleBox scalebox = new ScaleBox(qtask);
 		scalebox.addItem("None");
-		contents.add(tfMaxMark, "cell 2 0");
-		tfMaxMark.setColumns(10);
-		
-		JLabel lblComputed = new JLabel("(computed from subtasks)");
-		lblComputed.setVisible(false);
-		contents.add(lblComputed, "cell 2 0,alignx left");
+		contents.add(scalebox, "cell 2 0");
 		
 		JCheckBox chckbxGroupTask = new JCheckBox("Group task");
 		contents.add(chckbxGroupTask, "flowx,cell 1 2");
