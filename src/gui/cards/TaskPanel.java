@@ -10,6 +10,10 @@ import model.Criterion;
 import model.Task;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JSeparator;
+import javax.swing.JCheckBox;
 
 public class TaskPanel extends JScrollPane implements CriterionContainer {
 
@@ -17,21 +21,57 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 	private Task target;
 	private JPanel contents;
 	private CriterionPanel cp;
+	private JTextField tfTaskName;
+	private JTextField tfDescription;
+	private JTextField tfMaxMark;
 
 	/**
 	 * Create the panel.
 	 */
 	public TaskPanel(Task task) {
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[450px]", "[14px][14px][14px][258px]"));
-		contents.add(new JLabel(task.getName()), "cell 0 0,alignx left,aligny center");
-		contents.add(new JLabel("Max mark: " + task.getMaxMark()), "cell 0 1,alignx left,aligny center");
-		contents.add(new JLabel(task.getDescription()), "cell 0 2,alignx left,aligny center");
+		contents.setLayout(new MigLayout("", "[][357.00px,grow][172.00px]", "[14px][14px][14px][][][55.00px,grow,top]"));
+		
+		JLabel lblName = new JLabel("Task name");
+		contents.add(lblName, "cell 0 0,alignx trailing");
+		
+		tfTaskName = new JTextField();
+		contents.add(tfTaskName, "cell 1 0,growx");
+		tfTaskName.setColumns(10);
+		
+		JLabel lblMaxMark = new JLabel("Max. mark");
+		contents.add(lblMaxMark, "flowx,cell 2 0");
+		
+		JLabel lblDescription = new JLabel("Description");
+		contents.add(lblDescription, "cell 0 1,alignx trailing");
+		
+		tfDescription = new JTextField();
+		contents.add(tfDescription, "cell 1 1 2 1,growx");
+		tfDescription.setColumns(10);
+		
+		JCheckBox chckbxAllowMarkerComment = new JCheckBox("Allow marker comment");
+		contents.add(chckbxAllowMarkerComment, "cell 1 4");
 		cp = new CriterionPanel();
+		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 3,growx,aligny top");
+		contents.add(cp, "cell 0 5 3 1,aligny top,grow");
 		setViewportView(contents);
+		
+		tfMaxMark = new JTextField();
+		contents.add(tfMaxMark, "cell 2 0");
+		tfMaxMark.setColumns(10);
+		
+		JLabel lblComputed = new JLabel("(computed from subtasks)");
+		lblComputed.setVisible(false);
+		contents.add(lblComputed, "cell 2 0,alignx left");
+		
+		JCheckBox chckbxGroupTask = new JCheckBox("Group task");
+		contents.add(chckbxGroupTask, "flowx,cell 1 2");
+		
+		JCheckBox chckbxBonusTask = new JCheckBox("Bonus task");
+		contents.add(chckbxBonusTask, "cell 1 3");
 	}
 	
 	public void addCriterion(Criterion c) {

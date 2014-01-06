@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.Observable;
@@ -15,6 +16,9 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
 public class SIRMarkListPanel extends JPanel implements Observer, TreeSelectionListener {
+	public SIRMarkListPanel() {
+		setLayout(new BorderLayout());
+	}
 
 	private JPanel panel;
 

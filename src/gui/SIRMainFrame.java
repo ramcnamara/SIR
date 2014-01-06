@@ -51,7 +51,7 @@ public class SIRMainFrame extends JFrame {
 	 */
 	public SIRMainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 602);
+		setBounds(100, 100, 1152, 820);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -117,7 +117,6 @@ public class SIRMainFrame extends JFrame {
 		JSplitPane xmlSplitPane = new JSplitPane();
 		xmlSplitPane.setOneTouchExpandable(true);
 		xmlSplitPane.setContinuousLayout(true);
-		xmlSplitPane.setDividerLocation(0.75);
 		xmlSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		contentPane.add(xmlSplitPane, BorderLayout.CENTER);
 		
@@ -126,6 +125,7 @@ public class SIRMainFrame extends JFrame {
 		
 		JSplitPane treeSplitPane = new JSplitPane();
 		xmlSplitPane.setLeftComponent(treeSplitPane);
+		xmlSplitPane.setDividerLocation(0.85);
 		
 		treePanel = new SIRTreePanel();
 		treeSplitPane.setLeftComponent(treePanel);
