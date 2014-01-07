@@ -25,17 +25,15 @@ public class ScaleBox extends JComboBox {
 			this.scale = s;
 		}
 		
+		public Scale getScale() {
+			return scale;
+		}
+		
 		public String toString() {
 			if (scale == null || scale.asArray().length == 0)
 				return "";
-			
-			String rep = "";
-			for (String s: scale.asArray()) {
-				if (rep.length() > 0)
-					rep +=" / ";
-				rep += s;
-			}
-			return rep;
+
+			return scale.toString();
 		}
 	}
 	
@@ -47,6 +45,17 @@ public class ScaleBox extends JComboBox {
 			addItem(item);
 		}
 		addItem("New scale...");
-		setSelectedItem(new ScaleItem(criterion.getScale()));
+		
+		// Set selected item to whatever the criterion is currently using
+		String s = criterion.getScale().toString();
+		setSelectedItem(null);
+		for (int i = 0; i < getItemCount(); i++) {
+			if (getItemAt(i).toString().equals(s))
+				setSelectedIndex(i);
+		}
+	}
+	
+	public Scale getSelectedScale() {
+		return ((ScaleItem) getSelectedItem()).getScale();
 	}
 }

@@ -90,8 +90,10 @@ public class Scale {
 	@Override
 	public String toString() {
 		String out = "";
+		String sep = "";
 		for (String s: levels) {
-			out += s + "\t";
+			out += sep + s;
+			sep = " / ";
 		}
 		return out;
 	}
