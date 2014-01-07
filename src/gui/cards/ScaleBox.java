@@ -1,5 +1,7 @@
 package gui.cards;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JComboBox;
 
 import model.CriterionReferenced;
@@ -11,7 +13,7 @@ import model.Scale;
  * @author ram
  *
  */
-public class ScaleBox extends JComboBox {
+public class ScaleBox extends JComboBox implements ActionListener {
 	/**
 	 * 
 	 */
@@ -57,5 +59,12 @@ public class ScaleBox extends JComboBox {
 	
 	public Scale getSelectedScale() {
 		return ((ScaleItem) getSelectedItem()).getScale();
+	}
+	
+	public Scale newScale() {
+		Scale s = null;
+		
+		// Display dialog
+		return s;
 	}
 }
