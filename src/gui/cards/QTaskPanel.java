@@ -1,6 +1,5 @@
 package gui.cards;
 
-import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -81,10 +80,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 	public void addCriterion(Criterion c) {
 		cp.addCriterion(c);
 	}
-	
-	public Dimension getPreferredSize() {
-		return new Dimension(1000, 1000);
-	}
+
 	
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
