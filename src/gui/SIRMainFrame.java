@@ -1,20 +1,17 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
 
 
 
@@ -26,10 +23,8 @@ import java.io.File;
 import javax.swing.JSplitPane;
 
 import model.MarkingScheme;
+import net.miginfocom.swing.MigLayout;
 
-import java.awt.Component;
-
-import javax.swing.Box;
 
 public class SIRMainFrame extends JFrame {
 
@@ -93,9 +88,8 @@ public class SIRMainFrame extends JFrame {
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
 					controlPanel.removeAll();
-					controlPanel.add(schemePanel);
-					controlPanel.add(new JSeparator());
-					controlPanel.add(cardPanel);
+					controlPanel.add(schemePanel, "dock north, growy");
+					controlPanel.add(cardPanel, "dock south, growy");
 					validate();
 				}
 			}
@@ -110,7 +104,6 @@ public class SIRMainFrame extends JFrame {
 		
 		// TODO: factor this out so that it can also be used for File -> New.
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
@@ -121,23 +114,22 @@ public class SIRMainFrame extends JFrame {
 		contentPane.add(xmlSplitPane, BorderLayout.CENTER);
 		
 		xmlPanel = new SIRXmlPanel();
+		xmlPanel.setBorder(null);
 		xmlSplitPane.setRightComponent(xmlPanel);
 		
 		JSplitPane treeSplitPane = new JSplitPane();
 		xmlSplitPane.setLeftComponent(treeSplitPane);
+		xmlSplitPane.setResizeWeight(0.8);
 		
 		treePanel = new SIRTreePanel();
 		treeSplitPane.setLeftComponent(treePanel);
-		treePanel.setMinimumSize(new Dimension(100, 100));
 		controlPanel = new JPanel();
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-		treeSplitPane.setRightComponent(controlPanel);
+		controlPanel.setLayout(new MigLayout("fill", "", ""));
+		controlPanel.add(new SIRMetadataPanel(null), "dock north, growy");
 		cardPanel = new SIRMarkListPanel();
-		
-		// If we don't put any content into the treePanel on creation it'll end up one line high,
-		// so add a VerticalStrut.  Note that this controlPanel will be replaced on load anyway.
-		Component verticalStrut = Box.createVerticalStrut(300);
-		controlPanel.add(verticalStrut);
+		controlPanel.add(cardPanel, "dock center, growy");
+		treeSplitPane.setRightComponent(controlPanel);
+		treeSplitPane.setResizeWeight(0.2);
 	}
 
 }

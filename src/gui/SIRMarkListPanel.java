@@ -35,7 +35,7 @@ public class SIRMarkListPanel extends JPanel implements Observer, TreeSelectionL
 		treemaker.doScheme((MarkingScheme)scheme);
 		panel = treemaker.getCardStack();
 		this.removeAll();
-		this.add(panel);
+		this.add(panel, BorderLayout.CENTER);
 		panel.setAlignmentY(Component.LEFT_ALIGNMENT);
 		this.repaint();
 	}

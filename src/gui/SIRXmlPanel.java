@@ -27,7 +27,6 @@ public class SIRXmlPanel extends JPanel implements Observer {
 	
 	// TODO: fix problem with scrolling and sizing in XmlTextPane
 	private XmlTextPane xmlDisplay;
-	//private JTextPane xmlDisplay;
 	private JScrollPane scrollPanel;
 
 
@@ -41,11 +40,10 @@ public class SIRXmlPanel extends JPanel implements Observer {
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "XML View", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
-		panel.setPreferredSize(new Dimension(0, 0));
 		
 		// scrolling is broken in XmlTextPane
 		xmlDisplay = new XmlTextPane();
-		//xmlDisplay = new JTextPane();
+		xmlDisplay.setEnabled(false);
 		xmlDisplay.setEditable(false);
 		scrollPanel = new JScrollPane(xmlDisplay);
 		panel.add(scrollPanel);
@@ -67,11 +65,13 @@ public class SIRXmlPanel extends JPanel implements Observer {
 			e.printStackTrace();
 		}
 		
+		Dimension size = xmlDisplay.getSize();
 		xmlDisplay.setText(sw.toString());
 		
 		// set display position to top of XML
 		xmlDisplay.setSelectionStart(0);
 		xmlDisplay.setSelectionEnd(0);
+		xmlDisplay.setPreferredSize(size);
 		scrollPanel.repaint();
 	}
 }

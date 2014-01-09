@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,7 +21,6 @@ public class SIRTreePanel extends JScrollPane implements Observer {
 	
 	SIRTreePanel() {
 		setLayout(new ScrollPaneLayout());
-		setPreferredSize(new Dimension(300, 1000));
 	}
 	@Override
 	public void update(Observable o, Object listener) {

@@ -34,7 +34,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill][]", "[14px][][pref!,grow,top][][14px][][55.00px,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill][]", "[][][pref!,grow,top][][][][pref!,fill]"));
 		
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx right");
@@ -66,7 +66,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		cp = new CriterionPanel();
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 6 2 1,aligny top,grow");
+		contents.add(cp, "cell 0 6 2 2,aligny top,grow");
 		setViewportView(contents);
 		
 		JCheckBox chckbxGroupTask = new JCheckBox("Group task", qtask.isGroup());
@@ -83,7 +83,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 	}
 	
 	public Dimension getPreferredSize() {
-		return new Dimension(400, 200);
+		return new Dimension(1000, 1000);
 	}
 	
 	public void setVisible(boolean visible) {

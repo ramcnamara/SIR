@@ -15,7 +15,6 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
 
 public class TaskPanel extends JScrollPane implements CriterionContainer {
@@ -32,11 +31,9 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 	 * Create the panel.
 	 */
 	public TaskPanel(Task task) {
-		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]",
-				"[14px][][pref!,grow,top][][14px][][][55.00px,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[14px][][pref!,grow,top][][14px][][][fill]"));
 
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx right");
@@ -96,9 +93,6 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		cp.addCriterion(c);
 	}
 
-	public Dimension getPreferredSize() {
-		return new Dimension(400, 200);
-	}
 
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
