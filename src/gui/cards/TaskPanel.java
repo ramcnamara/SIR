@@ -1,7 +1,5 @@
 package gui.cards;
 
-import java.awt.Dimension;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
