@@ -1,15 +1,15 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.Font;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
+import net.miginfocom.swing.MigLayout;
 import model.MarkingScheme;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -37,109 +37,79 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 	 */
 	public SIRMetadataPanel(MarkingScheme scheme) {
 		
+		String notLoadedString = new String("<no marking scheme loaded>");
+		String unitCode = notLoadedString;
+		String activityName = notLoadedString;
+		String subtitle = notLoadedString;
+		String preamble = notLoadedString;
+		
+
+		
+		if (scheme != null) {
+			unitCode = scheme.getUnitCode();
+			activityName = scheme.getActivityName();
+			subtitle = (scheme.getSubtitle() == null? "":scheme.getSubtitle());
+			preamble = (scheme.getPreamble() == null? "":scheme.getPreamble());
+		}
+		
 		// Displays for marking scheme metadata.  These are all editable.
 		JLabel lblUCtext = new JLabel("Unit code");
-		lblUnitCode = new JLabel(scheme.getUnitCode());
+		lblUnitCode = new JLabel(unitCode);
 		lblUnitCode.setFont(new Font("Tahoma", Font.BOLD, 14));
 		EditButton btnEditUnitCode = new EditButton();
 		btnEditUnitCode.setActionCommand("Unit code");
-		btnEditUnitCode.addActionListener(this);
 		
 		
 		JLabel lblANtext = new JLabel("Activity name");
-		lblActivityName = new JLabel(scheme.getActivityName());
+		lblActivityName = new JLabel(activityName);
 		lblActivityName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		EditButton btnEditActivityName = new EditButton();
 		btnEditActivityName.setActionCommand("Activity name");
-		btnEditActivityName.addActionListener(this);
-		
-		// Subtitle and Preamble are optional.
-		String st = scheme.getSubtitle();
-		if (st == null) st = "";
+
+
 		JLabel lblST = new JLabel("Subtitle");
-		lblSubtitle = new JLabel(st);
+		lblSubtitle = new JLabel(subtitle);
 		lblSubtitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 		EditButton btnEditSubtitle = new EditButton();
-
 		btnEditSubtitle.setActionCommand("Subtitle");
-		btnEditSubtitle.addActionListener(this);
 		
-		String pr = scheme.getPreamble();
-		if (pr == null) pr = "";
 		JLabel lblPreamble = new JLabel("Preamble");
 		preambleTextPane = new JTextPane();
 		preambleTextPane.setEditable(false);
-		preambleTextPane.setText(pr);
+		preambleTextPane.setText(preamble);
 		EditButton btnEditPreamble = new EditButton();
 
 		btnEditPreamble.setActionCommand("Preamble");
-		btnEditPreamble.addActionListener(this);
 		
+		if (scheme != null) {
+			btnEditUnitCode.addActionListener(this);
+			btnEditActivityName.addActionListener(this);
+			btnEditSubtitle.addActionListener(this);
+			btnEditPreamble.addActionListener(this);
+		}
 		
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblPreamble, Alignment.TRAILING)
-								.addComponent(lblST, Alignment.TRAILING)
-								.addComponent(lblANtext, Alignment.TRAILING)
-								.addComponent(lblUCtext, Alignment.TRAILING))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblSubtitle, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblActivityName, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-								.addComponent(lblUnitCode, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnEditUnitCode, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnEditActivityName, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnEditSubtitle, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnEditPreamble, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(33)
-							.addComponent(preambleTextPane, GroupLayout.PREFERRED_SIZE, 386, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnEditUnitCode, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblUCtext)
-							.addComponent(lblUnitCode)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblANtext)
-						.addComponent(lblActivityName)
-						.addComponent(btnEditActivityName, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(5)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblST)
-								.addComponent(lblSubtitle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addComponent(btnEditSubtitle, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnEditPreamble, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblPreamble)
-							.addGap(10)
-							.addComponent(preambleTextPane, GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)))
-					.addGap(11))
-		);
-		groupLayout.setAutoCreateGaps(true);
-		groupLayout.setAutoCreateContainerGaps(true);
-		setLayout(groupLayout);
-		this.repaint();
+		else
+			for (Component c:this.getComponents()) {
+				c.setEnabled(false);
+			}
+		
+		setLayout(new MigLayout("", "[align right][fill][pref!]", "[][][][fill]"));
+		add(lblUCtext, "cell 0 0");
+		add(lblANtext, "cell 0 1");
+		add(lblST, "cell 0 2");
+		add(lblPreamble, "cell 0 3");
+		
+		add(lblUnitCode, "cell 1 0");
+		add(lblActivityName, "cell 1 1");
+		add(lblSubtitle, "cell 1 2");
+		add(preambleTextPane, "cell 1 3");
+		
+		add(btnEditUnitCode, "cell 2 0");
+		add(btnEditActivityName, "cell 2 1");
+		add(btnEditSubtitle, "cell 2 2");
+		add(btnEditPreamble, "cell 2 3");
+		
+		repaint();
 	}
 
 	@Override
