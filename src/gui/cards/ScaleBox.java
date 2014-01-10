@@ -42,21 +42,26 @@ public class ScaleBox extends JComboBox implements ActionListener {
 	
 	// Populate ScaleBox with all the Scales in the current model.
 	ScaleBox(CriterionReferenced criterion) {
+		this(criterion.getScale());
+	}
+	
+	public ScaleBox(Scale scale) {
+		this();
+		
+		for (int i=0; i<getItemCount(); i++) {
+			if (scale.toString().equals(getItemAt(i)))
+				setSelectedIndex(i);
+		}
+	}
+
+	public ScaleBox() {
 		for (Scale s: Scale.getScales()) {
 			ScaleItem item = new ScaleItem(s);
 			addItem(item);
 		}
 		addItem("New scale...");
-		
-		// Set selected item to whatever the criterion is currently using
-		String s = criterion.getScale().toString();
-		setSelectedItem(null);
-		for (int i = 0; i < getItemCount(); i++) {
-			if (getItemAt(i).toString().equals(s))
-				setSelectedIndex(i);
-		}
 	}
-	
+
 	public Scale getSelectedScale() {
 		return ((ScaleItem) getSelectedItem()).getScale();
 	}

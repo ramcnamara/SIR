@@ -7,18 +7,24 @@ import model.Criterion;
 import javax.swing.table.AbstractTableModel;
 
 public class CriterionTableModel extends AbstractTableModel {
+
+
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Criterion> data = new ArrayList<Criterion>();
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return data.size();
+	}
+	
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		return true;
 	}
 
 	@Override
