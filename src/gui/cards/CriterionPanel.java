@@ -1,10 +1,8 @@
 package gui.cards;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
+import javax.swing.JTable;
 
 import net.miginfocom.swing.MigLayout;
 import model.Criterion;
@@ -13,14 +11,13 @@ public class CriterionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane contents;
-	private JList criteria;
+	private JTable criteria;
 	
 	public CriterionPanel() {
 		setLayout(new MigLayout("fill", "[fill]", "[pref!]"));
 		// set up list and its containers
-		ListModel m = new DefaultListModel();
-		criteria = new JList(m);
-		criteria.setCellRenderer(new CriterionCellRenderer());
+		CriterionTableModel m = new CriterionTableModel();
+		criteria = new JTable(m);
 		contents = new JScrollPane(criteria);
 		
 		// get everything to display
@@ -28,7 +25,7 @@ public class CriterionPanel extends JPanel {
 	}
 	
 	public void addCriterion(Criterion criterion) {
-		((DefaultListModel) criteria.getModel()).addElement(criterion);
+		((CriterionTableModel) criteria.getModel()).addCriterion(criterion);
 	}
 }
 	
