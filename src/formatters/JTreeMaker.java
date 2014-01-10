@@ -18,6 +18,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import model.Checkbox;
+import model.ComplexTask;
 import model.Criterion;
 import model.Mark;
 import model.MarkingScheme;
@@ -39,6 +40,14 @@ public class JTreeMaker implements OutputMaker {
 			this.userObject = userObject;
 			children = new ArrayList<MutableTreeNode>();
 		}
+		
+		public ComplexTask getParentTask() {
+			if (this.parent != null && ((Node)this.parent).userObject instanceof ComplexTask)
+				return (ComplexTask)((Node)this.parent).userObject;
+			
+			return null;
+		}
+		
 
 		public String toString() {
 			return userObject.toString();
@@ -122,6 +131,12 @@ public class JTreeMaker implements OutputMaker {
 		public String getId() {
 			return id;
 		}
+
+		public ComplexTask getMark() {
+			if (userObject != null && userObject instanceof ComplexTask)
+				return (ComplexTask)userObject;
+			return null;
+		}
 	}
 
 	private Node root = null;
@@ -136,7 +151,7 @@ public class JTreeMaker implements OutputMaker {
 		String idstr = (++tasknum).toString();
 		parent.add(new Node(idstr, parent, checkbox));
 		path.push(parent);
-		panel.add(new CheckboxPanel(checkbox), idstr);
+		panel.add(new CheckboxPanel(checkbox, parent.getMark()), idstr);
 	}
 
 	@Override
@@ -164,7 +179,7 @@ public class JTreeMaker implements OutputMaker {
 		parent.add(child);
 		path.push(parent);
 		path.push(child);
-		QTaskPanel card = new QTaskPanel(qtask);
+		QTaskPanel card = new QTaskPanel(qtask, parent.getMark());
 		panel.add(card, idstr);
 		lastcard = card;
 	}
@@ -183,7 +198,7 @@ public class JTreeMaker implements OutputMaker {
 		path.push(parent);
 		path.push(child);
 
-		TaskPanel card = new TaskPanel(task);
+		TaskPanel card = new TaskPanel(task, parent.getMark());
 		lastcard = card;
 		panel.add(card, idstr);
 	}
@@ -220,5 +235,4 @@ public class JTreeMaker implements OutputMaker {
 	public JPanel getCardStack() {
 		return panel;
 	}
-
 }

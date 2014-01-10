@@ -11,25 +11,29 @@ import javax.swing.ScrollPaneConstants;
 
 import net.miginfocom.swing.MigLayout;
 import model.Checkbox;
+import model.ComplexTask;
+import model.Mark;
 
 public class CheckboxPanel extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 	private Checkbox target;
+	private ComplexTask parent;
 	private JPanel contents;
 	private JTextArea tfTaskName;
 	private JTextArea taDescription;
 	private JTextField tfMark;
 	private JTextArea taMarkerInstructions;
-	private JCheckBox chckbxAllowMarkerComment;
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxBonusTask;
 
 	/**
 	 * Create the panel.
+	 * @param mark 
 	 */
-	public CheckboxPanel(Checkbox checkbox) {
+	public CheckboxPanel(Checkbox checkbox, ComplexTask mark) {
 		target = checkbox;
+		parent = mark;
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
@@ -106,5 +110,9 @@ public class CheckboxPanel extends JScrollPane {
 		
 		target.setGroup(chckbxGroupTask.isSelected());
 		target.setBonus(chckbxBonusTask.isSelected());
+	}
+	
+	public ComplexTask getParentTask() {
+		return parent;
 	}
 }
