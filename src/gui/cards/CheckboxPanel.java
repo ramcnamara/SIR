@@ -31,31 +31,43 @@ public class CheckboxPanel extends JScrollPane {
 		contents = new JPanel();
 		contents.setLayout(new MigLayout("", "[][grow]", "[][][][][][][]"));
 
+		String taskName = "";
+		Float maxMark = 0.0f;
+		String description = "";
+		String markerInst = "";
+		
+		if (checkbox != null) {
+			taskName = taskName + checkbox.getName();
+			maxMark += checkbox.getMaxMark();
+			description = description + checkbox.getDescription();
+			markerInst = markerInst + checkbox.getMarkerInstruction();
+		}
+		
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx trailing");
 
-		tfTaskName = new JTextArea();
+		tfTaskName = new JTextArea(taskName);
 		contents.add(tfTaskName, "cell 1 0,growx");
 		tfTaskName.setColumns(10);
 
 		JLabel lblMaxMark = new JLabel("Mark");
 		contents.add(lblMaxMark, "cell 0 1,alignx trailing");
 
-		tfMark = new JTextField();
+		tfMark = new JTextField(maxMark.toString());
 		contents.add(tfMark, "cell 1 1");
 		tfMark.setColumns(5);
 		
 		JLabel lblDescription = new JLabel("Description");
 		contents.add(lblDescription, "cell 0 2,alignx trailing");
 
-		taDescription = new JTextArea();
+		taDescription = new JTextArea(description);
 		contents.add(taDescription, "cell 1 2,growx");
 		taDescription.setColumns(10);
 		
 		JLabel lblInstructionsToMarkers = new JLabel("Instructions to markers");
 		contents.add(lblInstructionsToMarkers, "cell 0 3,alignx trailing");
 
-		taMarkerInstructions = new JTextArea(checkbox.getMarkerInstruction());
+		taMarkerInstructions = new JTextArea(markerInst);
 		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 
@@ -70,9 +82,4 @@ public class CheckboxPanel extends JScrollPane {
 		JCheckBox chkbxBonusTask = new JCheckBox("Bonus task");
 		contents.add(chkbxBonusTask, "flowx, cell 1 6");
 	}
-
-	public Dimension getPreferredSize() {
-		return new Dimension(400, 200);
-	}
-
 }
