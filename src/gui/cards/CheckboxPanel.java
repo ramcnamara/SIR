@@ -1,6 +1,5 @@
 package gui.cards;
 
-import java.awt.Dimension;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
