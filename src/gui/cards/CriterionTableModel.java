@@ -47,5 +47,12 @@ public class CriterionTableModel extends AbstractTableModel {
 		data.add(criterion);
 		fireTableRowsInserted(row, row);
 	}
+	
+	public void removeRow(int row) {
+		if (row >= 0 && row < data.size()) {
+			data.remove(row);
+			fireTableRowsDeleted(row, row);
+		}
+	}
 
 }

@@ -1,8 +1,12 @@
 package gui.cards;
 
+import java.awt.Container;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
 import model.CriterionReferenced;
 import model.Scale;
@@ -40,7 +44,6 @@ public class ScaleBox extends JComboBox implements ActionListener {
 	}
 	
 	
-	// Populate ScaleBox with all the Scales in the current model.
 	ScaleBox(CriterionReferenced criterion) {
 		this(criterion.getScale());
 	}
@@ -54,16 +57,23 @@ public class ScaleBox extends JComboBox implements ActionListener {
 		}
 	}
 
+	// Populate ScaleBox with all the Scales in the current model.
 	public ScaleBox() {
 		for (Scale s: Scale.getScales()) {
 			ScaleItem item = new ScaleItem(s);
 			addItem(item);
 		}
 		addItem("New scale...");
+		
+		setActionCommand("scalebox");
+		addActionListener(this);
 	}
 
 	public Scale getSelectedScale() {
-		return ((ScaleItem) getSelectedItem()).getScale();
+		Object item = getSelectedItem();
+		if (item != null && item instanceof ScaleItem)
+			return ((ScaleItem) getSelectedItem()).getScale();
+		return null;
 	}
 	
 	public Scale newScale() {
@@ -71,5 +81,35 @@ public class ScaleBox extends JComboBox implements ActionListener {
 		
 		// Display dialog
 		return s;
+	}
+	
+	private Window findRoot() {
+		Container c = getParent();
+		while (c.getParent() != null)
+			c = c.getParent();
+		
+		if (c instanceof Window)
+			return (Window) c;
+		return null;
+		
+	}
+	
+	public void actionPerformed(ActionEvent ev) {
+		if (ev.getActionCommand().equals("scalebox")) {
+			// Adding a scale?
+			Object selectedItem = getSelectedItem();
+			if (selectedItem instanceof String && selectedItem.equals("New scale...")) {
+				NewScaleDialog dlg = new NewScaleDialog(findRoot());
+				dlg.setVisible(true);
+				Scale newScale = dlg.getScale();
+				if (newScale != null) {
+					ScaleItem item = new ScaleItem(newScale);
+					removeItemAt(getItemCount() - 1);
+					addItem(item);
+					addItem("New scale...");
+					setSelectedItem(item);
+				}
+			}
+		}
 	}
 }

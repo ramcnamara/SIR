@@ -61,7 +61,7 @@ public class Scale {
 	 */
 	private ArrayList<String> levels;
 	
-	protected Scale(String[] scheme) {
+	private Scale(String[] scheme) {
 		this.levels = new ArrayList<String>();
 		for (String s: scheme) {
 			this.levels.add(s);

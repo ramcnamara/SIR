@@ -41,6 +41,8 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		CriterionTableModel m = new CriterionTableModel();
 		criteria = new JTable(m);
 		criteria.setPreferredScrollableViewportSize(new Dimension(450, 40));
+		criteria.setRowSelectionAllowed(true);
+		criteria.setColumnSelectionAllowed(false);
 		TableColumn scales = criteria.getColumnModel().getColumn(1);
 		scales.setCellEditor(new ScaleboxCellEditor());
 		contents = new JScrollPane(criteria);
@@ -62,6 +64,11 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		if (cmd.equals("Add criterion")) {
 			Criterion c = new Criterion();
 			((CriterionTableModel) criteria.getModel()).addCriterion(c);
+		}
+		else if (cmd.equals("Delete criterion")) {
+			int row = criteria.getSelectedRow();
+			if (row != -1)
+			((CriterionTableModel) criteria.getModel()).removeRow(row);
 		}
 		
 	}

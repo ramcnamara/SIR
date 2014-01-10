@@ -1,64 +1,105 @@
 package gui.cards;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
+import model.Scale;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JTextField;
 
-public class NewScaleDialog extends JDialog {
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+public class NewScaleDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTable levelTable;
+	private Scale theScale;
 
 	/**
 	 * Create the dialog.
 	 */
-	public NewScaleDialog() {
+	
+	public NewScaleDialog(Window parent) {
+		super(parent, "Add scale", JDialog.ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new MigLayout("", "[grow]", "[][][][]"));
+		contentPanel.setLayout(new MigLayout("", "[grow]", "[][grow][][]"));
 		JLabel lblPrompt = new JLabel("Enter new scale:");
 		contentPanel.add(lblPrompt, "cell 0 0,alignx left,aligny top");
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			textField = new JTextField();
-			contentPanel.add(textField, "cell 0 1,growx");
-			textField.setColumns(10);
+		
+		Object[][] emptyStrings = new Object[][]{{""},{""}};
+		String[] columnheader = {"Level"};
+		DefaultTableModel m = new DefaultTableModel(emptyStrings, columnheader);
+		levelTable = new JTable(m);
+		levelTable.setShowGrid(true);
+		levelTable.setGridColor(Color.BLUE);
+		contentPanel.add(levelTable, "cell 0 1,grow");
+
+		JButton btnNewButton = new JButton("Add level");
+		btnNewButton.setActionCommand("Add level");
+		btnNewButton.addActionListener(this);
+		contentPanel.add(btnNewButton, "cell 0 3,alignx right");
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+
+		JButton okButton = new JButton("OK");
+		okButton.setActionCommand("OK");
+		okButton.addActionListener(this);
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.setActionCommand("Cancel");
+		cancelButton.addActionListener(this);
+		buttonPane.add(cancelButton);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ev) {
+		String cmd = ev.getActionCommand();
+		if (cmd.equals("Add level")) {
+			((DefaultTableModel) levelTable.getModel()).addRow(new Object[]{""});
 		}
-		{
-			textField_1 = new JTextField();
-			contentPanel.add(textField_1, "cell 0 2,growx");
-			textField_1.setColumns(10);
+		if (cmd.equals("OK")) {
+			ArrayList<String> levels = new ArrayList<String>();
+			DefaultTableModel m = (DefaultTableModel) levelTable.getModel();
+			for (int i = 0; i < m.getRowCount(); i++) {
+				Object val = m.getValueAt(i, 0);
+				if (val != null) {
+					levels.add(val.toString());
+				}
+			}
+			
+			theScale = Scale.makeScheme(levels.toArray(new String[levels.size()]));
+			setVisible(false);
+			dispose();
 		}
-		{
-			JButton btnNewButton = new JButton("Add level");
-			contentPanel.add(btnNewButton, "cell 0 3,alignx right");
+		
+		if (cmd.equals("Cancel")) {
+			setVisible(false);
+			dispose();
 		}
 
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+	}
+	
+	public Scale getScale() {
+		return theScale;
 	}
 
 }
