@@ -38,7 +38,7 @@ public class SIRMainFrame extends JFrame {
 	private SIRTreePanel treePanel;
 	private JPanel controlPanel;
 	private SIRMetadataPanel schemePanel;
-	private SIRMarkListPanel cardPanel;
+	private SIRCardPanel cardPanel;
 
 
 	/**
@@ -126,7 +126,7 @@ public class SIRMainFrame extends JFrame {
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new MigLayout("fill", "", ""));
 		controlPanel.add(new SIRMetadataPanel(null), "dock north, growy");
-		cardPanel = new SIRMarkListPanel();
+		cardPanel = new SIRCardPanel();
 		controlPanel.add(cardPanel, "dock center, growy");
 		treeSplitPane.setRightComponent(controlPanel);
 		treeSplitPane.setResizeWeight(0.2);
