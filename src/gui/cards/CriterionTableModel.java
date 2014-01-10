@@ -43,7 +43,9 @@ public class CriterionTableModel extends AbstractTableModel {
 	}
 	
 	public void addCriterion(Criterion criterion) {
+		int row = data.size();
 		data.add(criterion);
+		fireTableRowsInserted(row, row);
 	}
 
 }
