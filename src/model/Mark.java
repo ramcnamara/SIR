@@ -82,4 +82,6 @@ public abstract class Mark {
 	public void setGroup(boolean group) {
 		this.group = group;
 	}
+	
+	public abstract String toString();
 }

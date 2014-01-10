@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -96,6 +95,7 @@ public class MarkingScheme extends Observable {
 		setChanged();
 	}
 
+
 	
 	public MarkingScheme() {
 		tasks = new ArrayList<Mark>();
@@ -104,6 +104,10 @@ public class MarkingScheme extends Observable {
 	
 	public void add(Mark newSection) {
 		tasks.add(newSection);
+		setChanged();
+	}
+	
+	public void refresh() {
 		setChanged();
 	}
 	
@@ -119,52 +123,6 @@ public class MarkingScheme extends Observable {
 		om.endScheme(this);
 	}
 	
-	
-	// test
-	public static void main(String[] args) throws JAXBException, SubtaskTypeException {
-//		MarkingScheme it = new MarkingScheme();
-//		
-//		it.setUnitCode("BSK2345 Intermediate Basket Weaving");
-//		it.setTitle("Assignment 2: Applied basketry");
-//		it.setPreamble("This is the preamble");
-//		it.setSubtitle("This is the subtitle");
-//		
-//		Task s1 = new Task();
-//		s1.setDescription("Appearance");
-//		it.add(s1);
-//		
-//		String[] levels = {"poor", "good", "okay"};
-//		Scale threeLevels = Scale.makeScheme(levels);
-//		
-//		String[] levels2 = {"N/A", "poor", "good", "okay"};
-//		Scale fourLevels = Scale.makeScheme(levels2);
-//		
-//		Task n1 = new Task();
-//		n1.setMaxMark(3);
-//		n1.setName("Well-chosen colours");
-//		QTask q1 = new QTask();
-//		q1.setName("Colours not too bright");
-//		q1.setScale(threeLevels);
-//		try {
-//			n1.addSubtask(q1);
-//			QTask q2 = new QTask();
-//			q2.setName("Pattern (if any) is clearly visible");
-//			q2.setScale(fourLevels);
-//			n1.addSubtask(q2);
-//			s1.addSubtask(n1);
-//			
-//			Task n2 = new Task();
-//			n2.setMaxMark(2);
-//			n2.setName("Attractive materials");
-//			s1.addSubtask(n2);
-//		} catch (SubtaskTypeException e) {
-//			e.printStackTrace();
-//		}
-		
-		
-//		formatters.ConsoleMaker cm = new formatters.ConsoleMaker(it);
-//		cm.doScheme(it);
-	}
 
 	public String getSubtitle() {
 		return subtitle;

@@ -81,5 +81,10 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 			newList.add(qt);
 		return Collections.unmodifiableList(newList);
 	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 
 }

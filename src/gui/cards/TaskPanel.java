@@ -18,17 +18,22 @@ import javax.swing.JCheckBox;
 public class TaskPanel extends JScrollPane implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
+	private Task target;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
 	private JTextArea taDescription;
 	private JTextField tfMaxMark;
 	private JTextArea taMarkerInstructions;
+	private JCheckBox chckbxGroupTask;
+	private JCheckBox chckbxAllowMarkerComment;
+	private JCheckBox chckbxBonusTask;
 
 	/**
 	 * Create the panel.
 	 */
 	public TaskPanel(Task task) {
+		target = task;
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
 		contents.setLayout(new MigLayout("", "[][grow,fill]", "[14px][][pref!,grow,top][][14px][][][fill]"));
@@ -64,7 +69,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 
-		JCheckBox chckbxAllowMarkerComment = new JCheckBox(
+		chckbxAllowMarkerComment = new JCheckBox(
 				"Allow marker comment", task.hasComment());
 		contents.add(chckbxAllowMarkerComment, "cell 1 6");
 		cp = new CriterionPanel();
@@ -74,10 +79,10 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		contents.add(cp, "cell 0 7 2 1,aligny top,grow");
 		setViewportView(contents);
 
-		JCheckBox chckbxGroupTask = new JCheckBox("Group task", task.isGroup());
+		chckbxGroupTask = new JCheckBox("Group task", task.isGroup());
 		contents.add(chckbxGroupTask, "flowx,cell 1 4");
 
-		JCheckBox chckbxBonusTask = new JCheckBox("Bonus task", task.getBonus());
+		chckbxBonusTask = new JCheckBox("Bonus task", task.getBonus());
 		contents.add(chckbxBonusTask, "cell 1 5");
 		if (task.getSubtasks() == null || task.getSubtasks().size() == 0)
 			lblComputed.setVisible(false);
@@ -89,6 +94,32 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 
 	public void addCriterion(Criterion c) {
 		cp.addCriterion(c);
+	}
+	
+	public void reset() {
+		tfTaskName.setText(target.getName());
+		tfMaxMark.setText("" + target.getMaxMark());
+		taDescription.setText(target.getDescription());
+		taMarkerInstructions.setText(target.getMarkerInstruction());
+		
+		chckbxAllowMarkerComment.setSelected(target.hasComment());
+		chckbxGroupTask.setSelected(target.isGroup());
+		chckbxBonusTask.setSelected(target.getBonus());
+	}
+	
+	public void save() {
+		target.setName(tfTaskName.getText());
+		try {
+			target.setMaxMark(Float.parseFloat(tfMaxMark.getText()));
+		} catch (NumberFormatException e) {
+			target.setMaxMark(0);
+		}
+		target.setDescription(taDescription.getText());
+		target.setMarkerInstruction(taMarkerInstructions.getText());
+		
+		target.setHasComment(chckbxAllowMarkerComment.isSelected());
+		target.setGroup(chckbxGroupTask.isSelected());
+		target.setBonus(chckbxBonusTask.isSelected());
 	}
 
 

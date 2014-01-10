@@ -57,4 +57,8 @@ public class Criterion extends Mark implements CriterionReferenced {
 	public float getMark() {
 		return 0;
 	}
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

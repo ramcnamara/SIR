@@ -46,4 +46,9 @@ public class Checkbox extends Mark {
 		return bonus;
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }

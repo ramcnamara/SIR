@@ -86,4 +86,8 @@ public class Task extends ComplexTask {
 		return myMark;
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

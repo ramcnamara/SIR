@@ -15,16 +15,21 @@ import model.Checkbox;
 public class CheckboxPanel extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
+	private Checkbox target;
 	private JPanel contents;
 	private JTextArea tfTaskName;
 	private JTextArea taDescription;
 	private JTextField tfMark;
 	private JTextArea taMarkerInstructions;
+	private JCheckBox chckbxAllowMarkerComment;
+	private JCheckBox chckbxGroupTask;
+	private JCheckBox chckbxBonusTask;
 
 	/**
 	 * Create the panel.
 	 */
 	public CheckboxPanel(Checkbox checkbox) {
+		target = checkbox;
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
@@ -70,15 +75,36 @@ public class CheckboxPanel extends JScrollPane {
 		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 
-		JCheckBox chckbxAllowMarkerComment = new JCheckBox("Allow marker comment");
-		contents.add(chckbxAllowMarkerComment, "cell 1 4");
 		setViewportView(contents);
 
-
-		JCheckBox chckbxGroupTask = new JCheckBox("Group task");
+		chckbxGroupTask = new JCheckBox("Group task");
 		contents.add(chckbxGroupTask, "flowx,cell 1 5");
 		
-		JCheckBox chkbxBonusTask = new JCheckBox("Bonus task");
-		contents.add(chkbxBonusTask, "flowx, cell 1 6");
+		chckbxBonusTask = new JCheckBox("Bonus task");
+		contents.add(chckbxBonusTask, "flowx, cell 1 6");
+	}
+	
+	public void reset() {
+		tfTaskName.setText(target.getName());
+		tfMark.setText("" + target.getMaxMark());
+		taDescription.setText(target.getDescription());
+		taMarkerInstructions.setText(target.getMarkerInstruction());
+		
+		chckbxGroupTask.setSelected(target.isGroup());
+		chckbxBonusTask.setSelected(target.getBonus());
+	}
+	
+	public void save() {
+		target.setName(tfTaskName.getText());
+		try {
+			target.setMaxMark(Float.parseFloat(tfMark.getText()));
+		} catch (NumberFormatException e) {
+			target.setMaxMark(0);
+		}
+		target.setDescription(taDescription.getText());
+		target.setMarkerInstruction(taMarkerInstructions.getText());
+		
+		target.setGroup(chckbxGroupTask.isSelected());
+		target.setBonus(chckbxBonusTask.isSelected());
 	}
 }

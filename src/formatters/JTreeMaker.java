@@ -134,7 +134,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doCheckbox(Checkbox checkbox) {
 		Node parent = path.pop();
 		String idstr = (++tasknum).toString();
-		parent.add(new Node(idstr, parent, checkbox.getName()));
+		parent.add(new Node(idstr, parent, checkbox));
 		path.push(parent);
 		panel.add(new CheckboxPanel(checkbox), idstr);
 	}
@@ -147,7 +147,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doCriterion(Criterion criterion) {
 		Node parent = path.pop();
 		String uuid = parent.getId();
-		parent.add(new Node(uuid, parent, criterion.getName()));
+		parent.add(new Node(uuid, parent, criterion));
 		path.push(parent);
 		lastcard.addCriterion(criterion);
 	}
@@ -160,7 +160,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doQTask(QTask qtask) {
 		Node parent = path.pop();
 		String idstr = (++tasknum).toString();
-		Node child = new Node(idstr, parent, qtask.getName());
+		Node child = new Node(idstr, parent, qtask);
 		parent.add(child);
 		path.push(parent);
 		path.push(child);
@@ -178,7 +178,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doTask(Task task) {
 		Node parent = path.pop();
 		String idstr = (++tasknum).toString();
-		Node child = new Node(idstr, parent, task.getName());
+		Node child = new Node(idstr, parent, task);
 		parent.add(child);
 		path.push(parent);
 		path.push(child);

@@ -20,16 +20,20 @@ import javax.swing.JCheckBox;
 public class QTaskPanel extends JScrollPane implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
+	private QTask target;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
 	private JTextArea taDescription;
 	private JTextArea taMarkerInstructions;
+	private JCheckBox chckbxGroupTask;
+	private JCheckBox chckbxAllowMarkerComment;
 
 	/**
 	 * Create the panel.
 	 */
 	public QTaskPanel(QTask qtask) {
+		target=qtask;
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
@@ -60,7 +64,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 		
-		JCheckBox chckbxAllowMarkerComment = new JCheckBox("Allow marker comment", qtask.hasComment());
+		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment", qtask.hasComment());
 		contents.add(chckbxAllowMarkerComment, "cell 1 5");
 		cp = new CriterionPanel();
 		cp.setAlignmentY(LEFT_ALIGNMENT);
@@ -68,7 +72,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		contents.add(cp, "cell 0 6 2 2,aligny top,grow");
 		setViewportView(contents);
 		
-		JCheckBox chckbxGroupTask = new JCheckBox("Group task", qtask.isGroup());
+		chckbxGroupTask = new JCheckBox("Group task", qtask.isGroup());
 		contents.add(chckbxGroupTask, "flowx,cell 1 4");
 		
 
@@ -89,6 +93,24 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 			getVerticalScrollBar().setValue(0);
 			repaint();
 		}
+	}
+	
+	public void reset() {
+		tfTaskName.setText(target.getName());
+		taDescription.setText(target.getDescription());
+		taMarkerInstructions.setText(target.getMarkerInstruction());
+		
+		chckbxAllowMarkerComment.setSelected(target.hasComment());
+		chckbxGroupTask.setSelected(target.isGroup());
+	}
+	
+	public void save() {
+		target.setName(tfTaskName.getText());
+		target.setDescription(taDescription.getText());
+		target.setMarkerInstruction(taMarkerInstructions.getText());
+		
+		target.setHasComment(chckbxAllowMarkerComment.isSelected());
+		target.setGroup(chckbxGroupTask.isSelected());
 	}
 
 }
