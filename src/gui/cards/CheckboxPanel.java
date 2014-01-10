@@ -12,7 +12,6 @@ import javax.swing.ScrollPaneConstants;
 import net.miginfocom.swing.MigLayout;
 import model.Checkbox;
 import model.ComplexTask;
-import model.Mark;
 
 public class CheckboxPanel extends JScrollPane {
 
