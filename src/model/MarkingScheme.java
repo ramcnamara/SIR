@@ -57,7 +57,7 @@ public class MarkingScheme extends Observable {
 	 */
 	public void setUnitCode(String unitCode) {
 		this.unitCode = unitCode;
-		setChanged();
+		change();
 	}
 
 
@@ -73,7 +73,7 @@ public class MarkingScheme extends Observable {
 	 */
 	public void setTitle(String name) {
 		this.activityName = name;
-		setChanged();
+		change();
 	}
 
 	/**
@@ -92,23 +92,24 @@ public class MarkingScheme extends Observable {
 	 */
 	public void setPreamble(String preamble) {
 		this.preamble = preamble;
-		setChanged();
+		change();
 	}
 
 
 	
 	public MarkingScheme() {
 		tasks = new ArrayList<Mark>();
-		setChanged();
+		change();
 	}
 	
 	public void add(Mark newSection) {
 		tasks.add(newSection);
-		setChanged();
+		change();
 	}
 	
 	public void refresh() {
 		setChanged();
+		notifyObservers();
 	}
 	
 	public Mark delete(int n) {
@@ -130,7 +131,7 @@ public class MarkingScheme extends Observable {
 
 	public void setSubtitle(String subtitle) {
 		this.subtitle = subtitle;
-		setChanged();
+		change();
 	}
 
 	public List<Mark> getSubtasks() {
@@ -139,8 +140,13 @@ public class MarkingScheme extends Observable {
 
 	public void setActivityName(String name) {
 		this.activityName = name;
-		setChanged();
+		change();
 		
+	}
+
+	private void change() {
+		setChanged();
+		notifyObservers();
 	}
 }
 
