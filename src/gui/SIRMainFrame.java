@@ -82,8 +82,9 @@ public class SIRMainFrame extends JFrame {
 					theScheme.addObserver(treePanel);
 					theScheme.addObserver(cardPanel);
 					xmlPanel.update(theScheme, null);
-					treePanel.update(theScheme, cardPanel);
+					treePanel.update(theScheme, null);
 					cardPanel.update(theScheme, null);
+					treePanel.addTreeSelectionListener(cardPanel);
 					
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
@@ -127,9 +128,9 @@ public class SIRMainFrame extends JFrame {
 		controlPanel.setLayout(new MigLayout("fill", "", ""));
 		controlPanel.add(new SIRMetadataPanel(null), "dock north, growy");
 		cardPanel = new SIRCardPanel();
+		treePanel.addTreeSelectionListener(cardPanel);
 		controlPanel.add(cardPanel, "dock center, growy");
 		treeSplitPane.setRightComponent(controlPanel);
 		treeSplitPane.setResizeWeight(0.2);
 	}
-
 }
