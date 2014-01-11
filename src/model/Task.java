@@ -90,4 +90,17 @@ public class Task extends ComplexTask {
 	public String toString() {
 		return getName();
 	}
+
+	@Override
+	public Mark removeSubtask(Mark task) {
+		int idx = subtasks.indexOf(task);
+		if (idx == -1)
+			return null;
+		return removeSubtask(idx);
+	}
+
+	@Override
+	public Mark removeSubtask(int idx) {
+		return subtasks.remove(idx);
+	}
 }

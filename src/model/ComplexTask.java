@@ -32,6 +32,8 @@ public abstract class ComplexTask extends Mark {
 	
 	public abstract List<Mark> getSubtasks(); 
 	public abstract void addSubtask(Mark task) throws SubtaskTypeException;
+	public abstract Mark removeSubtask(Mark task);
+	public abstract Mark removeSubtask(int idx);
 	
 	// Criterion handling
 	/**

@@ -116,6 +116,16 @@ public class MarkingScheme extends Observable {
 		return tasks.remove(n);
 	}
 	
+	public Mark delete(Mark m) {
+		int idx = tasks.indexOf(m);
+		if (idx == -1)
+			return null;
+		
+		return delete(tasks.indexOf(m));
+	}
+	
+
+	
 	public void makeOutput(OutputMaker om) {
 		om.doScheme(this);
 		for (Mark m: tasks) {
