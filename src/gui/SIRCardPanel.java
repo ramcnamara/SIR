@@ -7,11 +7,12 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BoxLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import model.ComplexTask;
+import model.Mark;
 import model.MarkingScheme;
 import model.Task;
 import net.miginfocom.swing.MigLayout;
@@ -23,6 +24,8 @@ import javax.swing.event.TreeSelectionListener;
 
 public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListener, ActionListener {
 	private MarkingScheme scheme;
+	private ComplexTask parent = null;
+	private Mark task = null;
 	
 	public SIRCardPanel() {
 		setLayout(new MigLayout());
@@ -48,6 +51,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		if (!(scheme instanceof MarkingScheme))
 			return;
 		this.scheme = (MarkingScheme)scheme;
+		parent = null;
 		JTreeMaker treemaker = new JTreeMaker();
 		treemaker.doScheme(this.scheme);
 		cardArea = treemaker.getCardStack();
@@ -61,6 +65,8 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		JTreeMaker.Node node = (Node) e.getNewLeadSelectionPath().getLastPathComponent();
+		parent = node.getParentTask();
+		task = node.getMark();
 		((CardLayout) cardArea.getLayout()).show(cardArea, node.getId());
 		
 	}
@@ -73,6 +79,16 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			newTask.setName("New task");
 			scheme.add(newTask);
 			((CardLayout)cardArea.getLayout()).last(cardArea);
+			validate();
+		}
+		
+		else if (cmd.equals("Remove task")) {
+			if (parent == null) {
+				scheme.delete(task);
+			}
+			else
+				parent.removeSubtask(task);
+			scheme.refresh();
 			validate();
 		}
 		

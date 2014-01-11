@@ -132,9 +132,9 @@ public class JTreeMaker implements OutputMaker {
 			return id;
 		}
 
-		public ComplexTask getMark() {
-			if (userObject != null && userObject instanceof ComplexTask)
-				return (ComplexTask)userObject;
+		public Mark getMark() {
+			if (userObject != null && userObject instanceof Mark)
+				return (Mark)userObject;
 			return null;
 		}
 	}

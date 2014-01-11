@@ -4,8 +4,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.ComplexTask;
+
 import model.Criterion;
+import model.Mark;
 import model.Task;
 
 import javax.swing.border.TitledBorder;
@@ -20,7 +21,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
 	private Task target;
-	private ComplexTask parent;
+	private Mark parent;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
@@ -35,7 +36,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 	 * Create the panel.
 	 * @param mark 
 	 */
-	public TaskPanel(Task task, ComplexTask mark) {
+	public TaskPanel(Task task, Mark mark) {
 		target = task;
 		parent = mark;
 		setAlignmentY(LEFT_ALIGNMENT);
@@ -136,7 +137,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		}
 	}
 	
-	public ComplexTask getParentTask() {
+	public Mark getParentTask() {
 		return parent;
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Observer;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeSelectionListener;
 
 import model.MarkingScheme;

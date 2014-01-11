@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import model.Criterion;
-import model.ComplexTask;
+import model.Mark;
 import model.QTask;
 
 import javax.swing.border.TitledBorder;
@@ -22,7 +22,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
 	private QTask target;
-	private ComplexTask parent;
+	private Mark parent;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
@@ -35,7 +35,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 	 * Create the panel.
 	 * @param mark 
 	 */
-	public QTaskPanel(QTask qtask, ComplexTask mark) {
+	public QTaskPanel(QTask qtask, Mark mark) {
 		target=qtask;
 		parent = mark;
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -117,7 +117,7 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		target.setGroup(chckbxGroupTask.isSelected());
 	}
 	
-	public ComplexTask getParentTask() {
+	public Mark getParentTask() {
 		return parent;
 	}
 
