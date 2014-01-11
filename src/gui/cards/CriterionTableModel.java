@@ -10,11 +10,16 @@ public class CriterionTableModel extends AbstractTableModel {
 
 
 	private static final long serialVersionUID = 1L;
+	private String[] tableHeaders = {"Name", "Scale"};
 	private ArrayList<Criterion> data = new ArrayList<Criterion>();
 
 	@Override
 	public int getColumnCount() {
 		return 2;
+	}
+	
+	public String getColumnName(int idx) {
+		return tableHeaders[idx];
 	}
 
 	@Override

@@ -8,19 +8,33 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 import model.Criterion;
 import java.awt.Dimension;
 import java.awt.Component;
 
+/**
+ * A JPanel that displays assessment criteria for a particular Task or QTask, and
+ * allows these to be edited.
+ * 
+ * @author Robyn
+ *
+ */
 public class CriterionPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane contents;
 	private JTable criteria;
 	
+	
+	/**
+	 * Creates the panel, including a JTable containing the data and
+	 * a panel of buttons for insertion and deletion.
+	 */
 	public CriterionPanel() {
 		setLayout(new MigLayout("fill", "[fill]", "[pref!,grow][]"));
 		// create button panel
@@ -37,14 +51,15 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		buttonPanel.add(addButton);
 		buttonPanel.add(deleteButton);
 		
-		// set up list and its containers
+		// set up table and its containers
 		CriterionTableModel m = new CriterionTableModel();
+
 		criteria = new JTable(m);
 		criteria.setPreferredScrollableViewportSize(new Dimension(450, 40));
 		criteria.setRowSelectionAllowed(true);
 		criteria.setColumnSelectionAllowed(false);
 		TableColumn scales = criteria.getColumnModel().getColumn(1);
-		scales.setCellEditor(new ScaleboxCellEditor());
+		scales.setCellEditor(new ScaleBoxCellEditor());
 		contents = new JScrollPane(criteria);
 		
 		// get everything to display

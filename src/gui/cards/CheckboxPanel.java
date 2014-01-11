@@ -13,6 +13,12 @@ import net.miginfocom.swing.MigLayout;
 import model.Checkbox;
 import model.Mark;
 
+/**
+ * Display for Checkbox type tasks.
+ * 
+ * @author Robyn
+ *
+ */
 public class CheckboxPanel extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
@@ -87,6 +93,10 @@ public class CheckboxPanel extends JScrollPane {
 		contents.add(chckbxBonusTask, "flowx, cell 1 6");
 	}
 	
+	/**
+	 * Re-reads the displayed data from the model, which has the
+	 * effect of cancelling any changes that were to have been made.
+	 */
 	public void reset() {
 		tfTaskName.setText(target.getName());
 		tfMark.setText("" + target.getMaxMark());
@@ -97,6 +107,10 @@ public class CheckboxPanel extends JScrollPane {
 		chckbxBonusTask.setSelected(target.getBonus());
 	}
 	
+	
+	/**
+	 * Stores displayed values back into the model.
+	 */
 	public void save() {
 		target.setName(tfTaskName.getText());
 		try {
@@ -111,6 +125,11 @@ public class CheckboxPanel extends JScrollPane {
 		target.setBonus(chckbxBonusTask.isSelected());
 	}
 	
+	/**
+	 * Retrieve the model object representing the parent of the 
+	 * Checkbox providing the data.  This is used for deletion.
+	 * @return an instance of Mark representing the parent
+	 */
 	public Mark getParentTask() {
 		return parent;
 	}
