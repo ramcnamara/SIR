@@ -75,6 +75,8 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			Task newTask = new Task();
 			newTask.setName("New task");
 			scheme.add(newTask);
+			((CardLayout)cardArea.getLayout()).last(cardArea);
+			validate();
 		}
 		
 	}
