@@ -27,16 +27,16 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	public SIRCardPanel() {
 		setLayout(new MigLayout());
 		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 		JButton btnAddTask = new JButton("Add task");
 		btnAddTask.setActionCommand("Add task");
 		btnAddTask.addActionListener(this);
-		buttonPanel.add(btnAddTask);
+		buttonPanel.setLayout(new MigLayout("", "[95px]", "[23px][23px]"));
+		buttonPanel.add(btnAddTask, "cell 0 0,growx,aligny center");
 		
 		JButton btnRemoveTask = new JButton("Remove task");
 		btnRemoveTask.setActionCommand("Remove task");
 		btnRemoveTask.addActionListener(this);
-		buttonPanel.add(btnRemoveTask);	
+		buttonPanel.add(btnRemoveTask, "cell 0 1,alignx left,aligny center");	
 	}
 
 	private JPanel cardArea;

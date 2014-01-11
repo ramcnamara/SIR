@@ -129,7 +129,7 @@ public class SIRMainFrame extends JFrame {
 		controlPanel.add(new SIRMetadataPanel(null), "dock north, growy");
 		cardPanel = new SIRCardPanel();
 		treePanel.addTreeSelectionListener(cardPanel);
-		controlPanel.add(cardPanel, "dock center, growy");
+		controlPanel.add(cardPanel, "push ,grow");
 		treeSplitPane.setRightComponent(controlPanel);
 		treeSplitPane.setResizeWeight(0.2);
 	}
