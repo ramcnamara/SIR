@@ -40,7 +40,6 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	}
 
 	private JPanel cardArea;
-	private ComplexTask parent = null;
 	private static final long serialVersionUID = 1L;
 	private JPanel buttonPanel;
 
@@ -49,7 +48,6 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		if (!(scheme instanceof MarkingScheme))
 			return;
 		this.scheme = (MarkingScheme)scheme;
-		parent = null;
 		JTreeMaker treemaker = new JTreeMaker();
 		treemaker.doScheme(this.scheme);
 		cardArea = treemaker.getCardStack();
