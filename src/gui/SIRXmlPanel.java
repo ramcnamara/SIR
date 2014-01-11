@@ -20,9 +20,7 @@ import javax.swing.JScrollPane;
 import model.MarkingScheme;
 
 public class SIRXmlPanel extends JPanel implements Observer {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -3215744673653118442L;
 	
 	// TODO: fix problem with scrolling and sizing in XmlTextPane
@@ -50,7 +48,13 @@ public class SIRXmlPanel extends JPanel implements Observer {
 	}
 	
 	@Override
-	public void update(Observable scheme, Object arg1) {
+	/**
+	 * Handle changes in data model by rerendering it to XML.
+	 * 
+	 * @param scheme the MarkingScheme that comprises the data model
+	 * @param o not used
+	 */
+	public void update(Observable scheme, Object o) {
 		java.io.StringWriter sw = new StringWriter();
 
 		JAXBContext context;

@@ -14,12 +14,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-
 /**
  * Contains metadata for a marking scheme (unit code, activity name, preamble, and subtitle)
- * and allows these to be edited.  An instance of MarkingScheme must be passed to the constructor.
+ * and allows these to be edited.  The MarkingScheme to be edited must be passed to the constructor.
+ * If a null reference is passed to the constructor, the SIRMetadataPanel displays
+ * placeholder text.
  * 
- * Tasks and subtasks are not displayed here.
+ * Tasks and subtasks are not displayed here.  They are displayed in the SIRCardPanel.
  * @author Robyn
  *
  */

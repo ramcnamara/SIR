@@ -11,11 +11,15 @@ import javax.swing.event.TreeSelectionListener;
 import model.MarkingScheme;
 import formatters.JTreeMaker;
 
-
+/**
+ * This class is a ScrollPane that wraps a JTree displaying the marking
+ * scheme structure.  It is also responsible for handling the tree's response
+ * to events that change the data model.
+ * @author Robyn
+ *
+ */
 public class SIRTreePanel extends JScrollPane implements Observer {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	JTree tree;
 	
@@ -62,13 +66,16 @@ public class SIRTreePanel extends JScrollPane implements Observer {
 			i++;
 			j = tree.getRowCount();
 		}
-		
-		
+
 		// we have changed a component and need to redraw
 		repaint();
 	}
 
 
+	/**
+	 * Wrapper for JTree.addTreeSelectionListener().
+	 * @param listener
+	 */
 	public void addTreeSelectionListener(TreeSelectionListener listener) {
 		tree.addTreeSelectionListener(listener);		
 	}

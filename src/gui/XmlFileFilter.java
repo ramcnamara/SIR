@@ -4,6 +4,12 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+/**
+ * Allow the file chooser to be restricted to XML files
+ * 
+ * @author Robyn
+ *
+ */
 public class XmlFileFilter extends FileFilter {
 
 	@Override
