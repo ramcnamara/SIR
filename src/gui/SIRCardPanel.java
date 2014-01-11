@@ -62,7 +62,6 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	public void valueChanged(TreeSelectionEvent e) {
 		JTreeMaker.Node node = (Node) e.getNewLeadSelectionPath().getLastPathComponent();
 		((CardLayout) cardArea.getLayout()).show(cardArea, node.getId());
-		parent = node.getParentTask();
 		
 	}
 
