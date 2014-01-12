@@ -12,10 +12,14 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * A ComplexTask may have criteria and subtasks.
+ * Concrete subclasses of ComplexTask are Task and QTask.  Checkbox and Criterion are 
+ * not ComplexTasks.
  * 
  * @author Robyn
  *
  */
+
+//This markup tells JAXB that ComplexTask refers to Task or QTask.
 @XmlType(name="ComplexTask")
 @XmlSeeAlso({
 	Task.class,
@@ -23,6 +27,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 public abstract class ComplexTask extends Mark {
 	
+	/* ComplexTasks may have criteria, which in the XML representation will be wrapped in
+	 * a Criteria element. 
+	 */
 	@XmlElementWrapper(name="Criteria")
 	@XmlElement(name="Criterion")
 	protected ArrayList<Criterion> criteria;
@@ -46,12 +53,23 @@ public abstract class ComplexTask extends Mark {
 		return Collections.unmodifiableList(criteria);
 	}
 	
+	/**
+	 * Add a new Criterion to this task.
+	 * 
+	 * @param c the Criterion to add
+	 */
 	public void addCriterion(Criterion c) {
 		if (criteria == null)
 			criteria = new ArrayList<Criterion>();
 		criteria.add(c);
 	}
 	
+	/**
+	 * Add a new Criterion to this task.
+	 * 
+	 * @param description the name of the new criterion
+	 * @param scale the scale the new criterion will use
+	 */
 	public void addCriterion(String description, Scale scale) {
 		criteria.add(new Criterion(description, scale));
 	}
@@ -72,10 +90,7 @@ public abstract class ComplexTask extends Mark {
 		else endPosition = startIndex + offset + 1;
 		Collections.rotate(criteria.subList(startIndex, endPosition), (offset < 0? 1:-1));
 	}
-	
-	
-	
-	// Accessors and mutators
+
 	
 	/**
 	 * Returns true if this ComplexTask should allow marker comments.
