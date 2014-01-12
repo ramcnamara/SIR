@@ -33,6 +33,12 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 
 
 	@Override
+	/**
+	 * Add a new subtask.
+	 * 
+	 * @param task the subtask to add
+	 * @throws SubtaskTypeException if the given task isn't also a QTask
+	 */
 	public void addSubtask(Mark task) throws SubtaskTypeException {
 		if (subtasks == null)
 			subtasks = new ArrayList<QTask>();
@@ -43,6 +49,12 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	}
 
 	@Override
+	/**
+	 * Handle output callbacks.  Do this by outputting instance-related
+	 * data, then iterating through criteria and subtasks.
+	 * 
+	 * @param om the OutputMaker producing the formatted output
+	 */
 	public void makeOutput(OutputMaker om) {
 		om.doQTask(this);
 		if (criteria != null) {
@@ -56,25 +68,48 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 		
 	}
 	
+	/**
+	 * Default constructor, required by JAXB
+	 */
 	public QTask() {
 		this.scale = null;
 		this.subtasks = null;
 	}
 
+	/**
+	 * Accessor for scale.
+	 * 
+	 * @return this QTask's scale (if any)
+	 */
 	public Scale getScale() {
 		return scale;
 	}
 
+	/**
+	 * Mutator for scale.
+	 * 
+	 * @param scale the new scale
+	 */
 	public void setScale(Scale scale) {
 		this.scale = scale;
 	}
 
 	@Override
+	/**
+	 * Dummy function -- all QTasks have a maximum mark of zero.
+	 * 
+	 * @return 0.0f
+	 */
 	public float getMaxMark() {
-		return 0;
+		return 0.0f;
 	}
 
 	@Override
+	/**
+	 * Create and return an unmodifiable list of references to subtasks.
+	 * 
+	 * @return a List<Mark> of subtasks of this QTask
+	 */
 	public List<Mark> getSubtasks() {
 		ArrayList<Mark> newList = new ArrayList<Mark>();
 		for (QTask qt: subtasks)
@@ -83,11 +118,23 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	}
 	
 	@Override
+	/**
+	 * The String representation of any task is its name.  If
+	 * a more detailed representation is required, use an OutputMaker.
+	 */
 	public String toString() {
 		return getName();
 	}
 
 	@Override
+	/**
+	 * Remove and return the given subtask.
+	 * 
+	 * If the subtask is not found, returns null.  Does not
+	 * recurse through the subtasks.
+	 * 
+	 * @param task the subtask to remove
+	 */
 	public Mark removeSubtask(Mark task) {
 		int idx = subtasks.indexOf(task);
 		if (idx == -1)
@@ -95,6 +142,12 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 		return removeSubtask(idx);
 	}
 
+	/**
+	 * Remove and return the idx'th task in the subtask list.
+	 * Returns null if given an invalid index.
+	 * 
+	 * @param idx the index of the subtask to remove
+	 */
 	@Override
 	public Mark removeSubtask(int idx) {
 		return subtasks.remove(idx);
