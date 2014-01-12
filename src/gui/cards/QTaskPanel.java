@@ -18,6 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
 
+
+/**
+ * Panel allowing the perusal and editing of qualitative tasks  (QTasks).
+ * 
+ * @author Robyn
+ *
+ */
 public class QTaskPanel extends JScrollPane implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +40,8 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 
 	/**
 	 * Create the panel.
-	 * @param mark 
+	 * @param qtask the qualitative task to display and save to if required
+	 * @param mark qtask's parent, used for deletion
 	 */
 	public QTaskPanel(QTask qtask, Mark mark) {
 		target=qtask;
@@ -85,11 +93,21 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		contents.add(scalebox, "cell 2 0");
 	}
 	
+	/**
+	 * Add a new criterion to this qtask.
+	 * 
+	 * @param c the criterion to add
+	 */
 	public void addCriterion(Criterion c) {
 		cp.addCriterion(c);
 	}
 
 	
+	/**
+	 * setVisible is overloaded to reset the vertical scroll position to the top.
+	 * 
+	 * @param visible true to turn visibility on, false to turn it off 
+	 */
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 
@@ -99,6 +117,10 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		}
 	}
 	
+	/**
+	 * Re-reads the displayed data from the model, which has the
+	 * effect of cancelling any changes that were to have been made.
+	 */
 	public void reset() {
 		tfTaskName.setText(target.getName());
 		taDescription.setText(target.getDescription());
@@ -108,6 +130,9 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		chckbxGroupTask.setSelected(target.isGroup());
 	}
 	
+	/**
+	 * Stores displayed values back into the model.
+	 */
 	public void save() {
 		target.setName(tfTaskName.getText());
 		target.setDescription(taDescription.getText());
@@ -117,6 +142,11 @@ public class QTaskPanel extends JScrollPane implements CriterionContainer {
 		target.setGroup(chckbxGroupTask.isSelected());
 	}
 	
+	/**
+	 * Retrieve the model object representing the parent of the 
+	 * QTask providing the data.  This is used for deletion.
+	 * @return an instance of Mark representing the parent
+	 */
 	public Mark getParentTask() {
 		return parent;
 	}

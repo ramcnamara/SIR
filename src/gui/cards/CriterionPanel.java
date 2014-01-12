@@ -71,6 +71,9 @@ public class CriterionPanel extends JPanel implements ActionListener {
 	}
 
 	@Override
+	/**
+	 * Handle add/delete button clicks
+	 */
 	public void actionPerformed(ActionEvent ev) {
 		String cmd = ev.getActionCommand();
 		

@@ -19,6 +19,14 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Dialog displayed when a user has selected the "New scale..." option in a
+ * scale selection dropdown.
+ * 
+ * 
+ * @author Robyn
+ *
+ */
 public class NewScaleDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -70,6 +78,9 @@ public class NewScaleDialog extends JDialog implements ActionListener {
 	}
 
 	@Override
+	/**
+	 * Handle "Add level", "OK", and "Cancel" buttons
+	 */
 	public void actionPerformed(ActionEvent ev) {
 		String cmd = ev.getActionCommand();
 		if (cmd.equals("Add level")) {
@@ -97,6 +108,12 @@ public class NewScaleDialog extends JDialog implements ActionListener {
 
 	}
 	
+	
+	/**
+	 * Allow callers to access the new scale.
+	 * 
+	 * @return the Scale created in this dialog
+	 */
 	public Scale getScale() {
 		return theScale;
 	}

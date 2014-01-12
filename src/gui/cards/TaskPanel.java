@@ -17,6 +17,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 
+/**
+ * Panel that allows reading and editing of numerically-marked tasks.
+ * 
+ * @author Robyn
+ *
+ */
 public class TaskPanel extends JScrollPane implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +40,8 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 
 	/**
 	 * Create the panel.
-	 * @param mark 
+	 * @param task the Task to display and, if required, save to
+	 * @param mark parent task, or null if this is a top-level task (needed for saving)
 	 */
 	public TaskPanel(Task task, Mark mark) {
 		target = task;
@@ -97,10 +104,19 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		getVerticalScrollBar().setValue(0);
 	}
 
+	/**
+	 * Add a criterion to this task
+	 * 
+	 * @param c the criterion to add
+	 */
 	public void addCriterion(Criterion c) {
 		cp.addCriterion(c);
 	}
 	
+	/**
+	 * Re-reads the displayed data from the model, which has the
+	 * effect of cancelling any changes that were to have been made.
+	 */
 	public void reset() {
 		tfTaskName.setText(target.getName());
 		tfMaxMark.setText("" + target.getMaxMark());
@@ -112,6 +128,9 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		chckbxBonusTask.setSelected(target.getBonus());
 	}
 	
+	/**
+	 * Stores displayed values back into the model.
+	 */
 	public void save() {
 		target.setName(tfTaskName.getText());
 		try {
@@ -128,6 +147,11 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 	}
 
 
+	/**
+	 * Overload of setVisible so that it resets the vertical scrollbar to the top on redisplay.
+	 * 
+	 * @param true to set the panel visible, false to make it invisible
+	 */
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 
@@ -137,6 +161,11 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		}
 	}
 	
+	/**
+	 * Retrieve the model object representing the parent of the 
+	 * Task providing the data.  This is used for deletion.
+	 * @return an instance of Mark representing the parent
+	 */
 	public Mark getParentTask() {
 		return parent;
 	}

@@ -6,6 +6,12 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
+/**
+ * Table cell editor that displays a ScaleBox.
+ * 
+ * @author Robyn
+ *
+ */
 public class ScaleBoxCellEditor extends AbstractCellEditor implements TableCellEditor {
 	private ScaleBox box;
 

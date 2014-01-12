@@ -23,6 +23,11 @@ public class ScaleBox extends JComboBox implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 
+	/**
+	 * Inner class that wraps Scale, just in case ScaleBox needs to do anything dodgy with it.
+	 * @author Robyn
+	 *
+	 */
 	public class ScaleItem {
 		private Scale scale;
 		
@@ -43,10 +48,19 @@ public class ScaleBox extends JComboBox implements ActionListener {
 	}
 	
 	
+	/**
+	 * Constructor that creates the ScaleBox with the given criterion's Scale selected.
+	 * @param criterion the criterion whose scale should be selected
+	 */
 	ScaleBox(CriterionReferenced criterion) {
 		this(criterion.getScale());
 	}
 	
+	
+	/**
+	 * Constructor that creates the ScaleBox with the given scale selected.
+	 * @param scale the scale to be selected
+	 */
 	public ScaleBox(Scale scale) {
 		this();
 		
@@ -56,7 +70,10 @@ public class ScaleBox extends JComboBox implements ActionListener {
 		}
 	}
 
-	// Populate ScaleBox with all the Scales in the current model.
+	/**
+	 * Constructor that creates a ScaleBox containing all Scales currently registered
+	 * in the system, plus a "New scale" option. 
+	 */
 	public ScaleBox() {
 		for (Scale s: Scale.getScales()) {
 			ScaleItem item = new ScaleItem(s);
@@ -68,6 +85,11 @@ public class ScaleBox extends JComboBox implements ActionListener {
 		addActionListener(this);
 	}
 
+	
+	/**
+	 * Returns the currently-selected scale.  If no scale is selected, returns null.
+	 * @return
+	 */
 	public Scale getSelectedScale() {
 		Object item = getSelectedItem();
 		if (item != null && item instanceof ScaleItem)
@@ -75,13 +97,11 @@ public class ScaleBox extends JComboBox implements ActionListener {
 		return null;
 	}
 	
-	public Scale newScale() {
-		Scale s = null;
-		
-		// Display dialog
-		return s;
-	}
 	
+	/**
+	 * Find the root of the current container.  Needed in order to pass a reference to the containing JFrame to NewScaleDialog.
+	 * @return
+	 */
 	private Window findRoot() {
 		Container c = getParent();
 		while (c.getParent() != null)
@@ -93,6 +113,10 @@ public class ScaleBox extends JComboBox implements ActionListener {
 		
 	}
 	
+	
+	/**
+	 * Handle "new scale" command.
+	 */
 	public void actionPerformed(ActionEvent ev) {
 		if (ev.getActionCommand().equals("scalebox")) {
 			// Adding a scale?
