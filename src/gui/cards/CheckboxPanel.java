@@ -1,6 +1,10 @@
 package gui.cards;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +23,7 @@ import model.Mark;
  * @author Robyn
  *
  */
-public class CheckboxPanel extends JScrollPane {
+public class CheckboxPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private Checkbox target;
@@ -31,6 +35,7 @@ public class CheckboxPanel extends JScrollPane {
 	private JTextArea taMarkerInstructions;
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxBonusTask;
+	private JScrollPane scrollpane;
 
 	/**
 	 * Create the panel.
@@ -39,11 +44,26 @@ public class CheckboxPanel extends JScrollPane {
 	public CheckboxPanel(Checkbox checkbox, Mark mark) {
 		target = checkbox;
 		parent = mark;
-		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		setLayout(new MigLayout("fill", "[grow]", "[][grow]"));
+		scrollpane = new JScrollPane();
+		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
 		contents.setLayout(new MigLayout("", "[][grow]", "[][][][][][][]"));
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.setActionCommand("Save");
+		btnSave.addActionListener(this);
+		add(btnSave, "flowx,cell 0 0,alignx right");
 
+		JButton btnReset = new JButton("Reset");
+		btnReset.setActionCommand("Reset");
+		btnReset.addActionListener(this);
+		add(btnReset, "cell 0 0,alignx right");
+		
+
+		// Set up checkbox information
 		String taskName = "";
 		Float maxMark = 0.0f;
 		String description = "";
@@ -84,7 +104,7 @@ public class CheckboxPanel extends JScrollPane {
 		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 
-		setViewportView(contents);
+		scrollpane.setViewportView(contents);
 
 		chckbxGroupTask = new JCheckBox("Group task");
 		contents.add(chckbxGroupTask, "flowx,cell 1 5");
@@ -132,5 +152,17 @@ public class CheckboxPanel extends JScrollPane {
 	 */
 	public Mark getParentTask() {
 		return parent;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ev) {
+		String cmd = ev.getActionCommand();
+
+		if (cmd.equals("Reset"))
+			reset();
+
+		else if (cmd.equals("Save"))
+			save();
+		
 	}
 }
