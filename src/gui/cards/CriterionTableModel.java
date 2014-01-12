@@ -92,9 +92,8 @@ public class CriterionTableModel extends AbstractTableModel {
 			if (value instanceof Scale)
 				data.get(rowIndex).setScale((Scale)value);
 		}
-			
-				
 		
+		fireTableRowsUpdated(rowIndex, rowIndex);		
 	}
 	
 	
