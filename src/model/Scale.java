@@ -87,6 +87,9 @@ public class Scale {
 		schemes.remove(aScheme);
 	}
 	
+	/**
+	 * The string representation of a Scale comprises each of its levels, separated by " / ".
+	 */
 	@Override
 	public String toString() {
 		String out = "";

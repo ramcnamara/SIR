@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Trivial object creation methods required by JAXB. 
+ * 
+ * @author Robyn
+ *
+ */
 public class ObjectFactory {
 	public Checkbox createCheckbox() {
 		return new Checkbox();
