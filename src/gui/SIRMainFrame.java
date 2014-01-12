@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 
@@ -19,6 +20,9 @@ import javax.xml.bind.Unmarshaller;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import javax.swing.JSplitPane;
 
@@ -55,6 +59,7 @@ public class SIRMainFrame extends JFrame {
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmLoad = new JMenuItem("Load");
+		
 		mntmLoad.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -95,9 +100,37 @@ public class SIRMainFrame extends JFrame {
 				}
 			}
 		});
+		
 		mnFile.add(mntmLoad);
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				int fcval = fc.showSaveDialog(contentPane);
+				
+				if (fcval == JFileChooser.APPROVE_OPTION) {
+					File outfile = fc.getSelectedFile();
+
+						JAXBContext context;
+						try {
+							context = JAXBContext.newInstance(MarkingScheme.class);
+
+						Marshaller marshaller = context.createMarshaller();
+						OutputStream outstream = new FileOutputStream(outfile);
+						marshaller.marshal(theScheme, outstream);
+						} catch (JAXBException e1) {
+							// TODO Display some kind of sensible error message
+							e1.printStackTrace();
+						} catch (FileNotFoundException e1) {
+							// TODO put up a "file not found" dialog (although this shouldn't happen)
+							e1.printStackTrace();
+						}
+
+				}
+			}
+		});
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
