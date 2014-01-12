@@ -8,12 +8,18 @@ import java.util.Observable;
 import java.util.Observer;
 
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
+import model.Checkbox;
 import model.ComplexTask;
 import model.Mark;
 import model.MarkingScheme;
+import model.QTask;
 import model.Task;
 import net.miginfocom.swing.MigLayout;
 import formatters.JTreeMaker;
@@ -97,8 +103,40 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		
 		// Add new top-level task.
 		if (cmd.equals("Add task")) {
-			// TODO: support other task types
-			Task newTask = new Task();
+			// Bring up dialog to select task type
+			JRadioButton rbtask = new JRadioButton("Numerically-marked task");
+			JRadioButton rbqtask = new JRadioButton("Qualitatively-marked task");
+			JRadioButton rbcheckbox = new JRadioButton("Checkbox (done or not done, no intermediate grades)");
+			
+			ButtonGroup group = new ButtonGroup();
+			group.add(rbtask);
+			group.add(rbqtask);
+			group.add(rbcheckbox);
+			
+			Object[] components = {
+					new JLabel("What type of task do you wish to add?"),
+					rbtask,
+					rbqtask,
+					rbcheckbox
+			};
+			
+			int result = JOptionPane.showConfirmDialog(null, components, "Add task", JOptionPane.OK_CANCEL_OPTION);
+			
+			// User closed or cancelled out of the dialog
+			if (result == JOptionPane.CANCEL_OPTION || result == JOptionPane.CLOSED_OPTION)
+				return;
+			
+			Mark newTask;
+			
+			if (rbtask.isSelected())
+				newTask = new Task();
+			else if (rbqtask.isSelected())
+				newTask = new QTask();
+			else if (rbcheckbox.isSelected())
+				newTask = new Checkbox();
+			else
+				return;
+			
 			newTask.setName("New task");
 			scheme.add(newTask);
 			parent = null;

@@ -164,6 +164,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 	/**
 	 * Retrieve the model object representing the parent of the 
 	 * Task providing the data.  This is used for deletion.
+	 * 
 	 * @return an instance of Mark representing the parent
 	 */
 	public Mark getParentTask() {

@@ -64,6 +64,8 @@ public class ScaleBox extends JComboBox implements ActionListener {
 	public ScaleBox(Scale scale) {
 		this();
 		
+		if (scale == null)
+			return;
 		for (int i=0; i<getItemCount(); i++) {
 			if (scale.toString().equals(getItemAt(i)))
 				setSelectedIndex(i);
