@@ -1,12 +1,22 @@
 package gui.cards;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
-
+import model.Checkbox;
 import model.Criterion;
 import model.Mark;
+import model.MarkingScheme;
+import model.QTask;
+import model.SubtaskTypeException;
 import model.Task;
 
 import javax.swing.border.TitledBorder;
@@ -21,14 +31,16 @@ import javax.swing.JCheckBox;
  * Panel that allows reading and editing of numerically-marked tasks.
  * 
  * @author Robyn
- *
+ * 
  */
-public class TaskPanel extends JScrollPane implements CriterionContainer {
+public class TaskPanel extends JPanel implements CriterionContainer,
+		ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private Task target;
 	private Mark parent;
 	private JPanel contents;
+	private JScrollPane scrollpane;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
 	private JTextArea taDescription;
@@ -37,18 +49,47 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxAllowMarkerComment;
 	private JCheckBox chckbxBonusTask;
+	private JButton btnSave;
+	private JButton btnReset;
+	private JButton btnAddSubtask;
+	private MarkingScheme scheme;
 
 	/**
 	 * Create the panel.
-	 * @param task the Task to display and, if required, save to
-	 * @param mark parent task, or null if this is a top-level task (needed for saving)
+	 * 
+	 * @param task
+	 *            the Task to display and, if required, save to
+	 * @param mark
+	 *            parent task, or null if this is a top-level task (needed for
+	 *            saving)
+	 * @param scheme
+	 *            marking scheme (needed for change notification)
 	 */
-	public TaskPanel(Task task, Mark mark) {
+	public TaskPanel(Task task, Mark mark, MarkingScheme scheme) {
 		target = task;
 		parent = mark;
-		setAlignmentY(LEFT_ALIGNMENT);
+		this.scheme = scheme;
+
+		setLayout(new MigLayout("", "[grow]", "[][grow]"));
+
+		btnSave = new JButton("Save");
+		btnSave.setActionCommand("Save");
+		btnSave.addActionListener(this);
+		add(btnSave, "flowx,cell 0 0,alignx right");
+
+		btnReset = new JButton("Reset");
+		btnReset.setActionCommand("Reset");
+		btnReset.addActionListener(this);
+		add(btnReset, "cell 0 0,alignx right");
+
+		btnAddSubtask = new JButton("Add subtask");
+		btnAddSubtask.setActionCommand("Add subtask");
+		btnAddSubtask.addActionListener(this);
+		add(btnAddSubtask, "cell 0 0,alignx right");
+
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]", "[14px][][pref!,grow,top][][14px][][][fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]",
+				"[14px][][pref!,grow,top][][14px][][][fill]"));
 
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx right");
@@ -81,15 +122,16 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 
-		chckbxAllowMarkerComment = new JCheckBox(
-				"Allow marker comment", task.hasComment());
+		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment",
+				task.hasComment());
 		contents.add(chckbxAllowMarkerComment, "cell 1 6");
 		cp = new CriterionPanel();
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		contents.add(cp, "cell 0 7 2 1,aligny top,grow");
-		setViewportView(contents);
+		scrollpane = new JScrollPane(contents);
+		add(scrollpane, "cell 0 1, grow");
 
 		chckbxGroupTask = new JCheckBox("Group task", task.isGroup());
 		contents.add(chckbxGroupTask, "flowx,cell 1 4");
@@ -101,33 +143,34 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		else
 			tfMaxMark.setEnabled(false);
 
-		getVerticalScrollBar().setValue(0);
+		scrollpane.getVerticalScrollBar().setValue(0);
 	}
 
 	/**
 	 * Add a criterion to this task
 	 * 
-	 * @param c the criterion to add
+	 * @param c
+	 *            the criterion to add
 	 */
 	public void addCriterion(Criterion c) {
 		cp.addCriterion(c);
 	}
-	
+
 	/**
-	 * Re-reads the displayed data from the model, which has the
-	 * effect of cancelling any changes that were to have been made.
+	 * Re-reads the displayed data from the model, which has the effect of
+	 * cancelling any changes that were to have been made.
 	 */
 	public void reset() {
 		tfTaskName.setText(target.getName());
 		tfMaxMark.setText("" + target.getMaxMark());
 		taDescription.setText(target.getDescription());
 		taMarkerInstructions.setText(target.getMarkerInstruction());
-		
+
 		chckbxAllowMarkerComment.setSelected(target.hasComment());
 		chckbxGroupTask.setSelected(target.isGroup());
 		chckbxBonusTask.setSelected(target.getBonus());
 	}
-	
+
 	/**
 	 * Stores displayed values back into the model.
 	 */
@@ -140,15 +183,16 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		}
 		target.setDescription(taDescription.getText());
 		target.setMarkerInstruction(taMarkerInstructions.getText());
-		
+
 		target.setHasComment(chckbxAllowMarkerComment.isSelected());
 		target.setGroup(chckbxGroupTask.isSelected());
 		target.setBonus(chckbxBonusTask.isSelected());
+		scheme.refresh();
 	}
 
-
 	/**
-	 * Overload of setVisible so that it resets the vertical scrollbar to the top on redisplay.
+	 * Overload of setVisible so that it resets the vertical scrollbar to the
+	 * top on redisplay.
 	 * 
 	 * @param true to set the panel visible, false to make it invisible
 	 */
@@ -156,18 +200,77 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		super.setVisible(visible);
 
 		if (visible) {
-			getVerticalScrollBar().setValue(0);
+			scrollpane.getVerticalScrollBar().setValue(0);
 			repaint();
 		}
 	}
-	
+
 	/**
-	 * Retrieve the model object representing the parent of the 
-	 * Task providing the data.  This is used for deletion.
+	 * Retrieve the model object representing the parent of the Task providing
+	 * the data. This is used for deletion.
 	 * 
 	 * @return an instance of Mark representing the parent
 	 */
 	public Mark getParentTask() {
 		return parent;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ev) {
+		String cmd = ev.getActionCommand();
+
+		if (cmd.equals("Reset"))
+			reset();
+
+		else if (cmd.equals("Save"))
+			save();
+
+		else if (cmd.equals("Add subtask")) {
+			// Bring up dialog to select task type
+			JRadioButton rbtask = new JRadioButton("Numerically-marked task");
+			JRadioButton rbqtask = new JRadioButton("Qualitatively-marked task");
+			JRadioButton rbcheckbox = new JRadioButton(
+					"Checkbox (done or not done, no intermediate grades)");
+
+			ButtonGroup group = new ButtonGroup();
+			group.add(rbtask);
+			group.add(rbqtask);
+			group.add(rbcheckbox);
+
+			Object[] components = {
+					new JLabel("What type of task do you wish to add?"),
+					rbtask, rbqtask, rbcheckbox };
+
+			int result = JOptionPane.showConfirmDialog(null, components,
+					"Add task", JOptionPane.OK_CANCEL_OPTION);
+
+			// User closed or cancelled out of the dialog
+			if (result == JOptionPane.CANCEL_OPTION
+					|| result == JOptionPane.CLOSED_OPTION)
+				return;
+
+			Mark newTask;
+
+			if (rbtask.isSelected())
+				newTask = new Task();
+			else if (rbqtask.isSelected())
+				newTask = new QTask();
+			else if (rbcheckbox.isSelected())
+				newTask = new Checkbox();
+			else
+				return;
+
+			newTask.setName("New task");
+
+			try {
+				target.addSubtask(newTask);
+			} catch (SubtaskTypeException e) {
+				System.out
+						.println("Somehow adding a QTask is causing a SubtaskTypeException.");
+			}
+
+			scheme.refresh();
+		}
+
 	}
 }

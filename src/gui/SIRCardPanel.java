@@ -144,7 +144,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			validate();
 		}
 		
-		// Remove currently-visible (no matter what type it is)
+		// Remove currently-visible task (no matter what type it is)
 		else if (cmd.equals("Remove task")) {
 			if (parent == null) {
 				scheme.delete(task);
@@ -153,7 +153,6 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 				parent.removeSubtask(task);
 			scheme.refresh();
 			validate();
-		}
-		
+		}		
 	}
 }

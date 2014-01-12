@@ -144,6 +144,7 @@ public class JTreeMaker implements OutputMaker {
 	private CriterionContainer lastcard;
 	private Stack<Node> path = new Stack<Node>();
 	private Integer tasknum = 0;
+	private MarkingScheme scheme;
 
 	@Override
 	public void doCheckbox(Checkbox checkbox) {
@@ -179,7 +180,7 @@ public class JTreeMaker implements OutputMaker {
 		parent.add(child);
 		path.push(parent);
 		path.push(child);
-		QTaskPanel card = new QTaskPanel(qtask, parent.getMark());
+		QTaskPanel card = new QTaskPanel(qtask, parent.getMark(), scheme);
 		panel.add(card, idstr);
 		lastcard = card;
 	}
@@ -198,7 +199,7 @@ public class JTreeMaker implements OutputMaker {
 		path.push(parent);
 		path.push(child);
 
-		TaskPanel card = new TaskPanel(task, parent.getMark());
+		TaskPanel card = new TaskPanel(task, parent.getMark(), scheme);
 		lastcard = card;
 		panel.add(card, idstr);
 	}
@@ -210,6 +211,7 @@ public class JTreeMaker implements OutputMaker {
 
 	@Override
 	public void doScheme(MarkingScheme markingScheme) {
+		this.scheme = markingScheme;
 		root = new Node("0", null, markingScheme.getActivityName());
 		path.push(root);
 
