@@ -50,6 +50,8 @@ public class JTreeMaker implements OutputMaker {
 		
 
 		public String toString() {
+			if (userObject == null)
+				return "";
 			return userObject.toString();
 		}
 

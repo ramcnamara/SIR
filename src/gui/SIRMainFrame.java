@@ -58,8 +58,31 @@ public class SIRMainFrame extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		JMenuItem mntmLoad = new JMenuItem("Load");
+		JMenuItem mntmNew = new JMenuItem("New");
+		mntmNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				theScheme = new MarkingScheme();
+				schemePanel.setScheme(theScheme);
+				
+				// Set up observers
+				theScheme.addObserver(xmlPanel);
+				theScheme.addObserver(treePanel);
+				theScheme.addObserver(cardPanel);
+				theScheme.addObserver(schemePanel);
+				theScheme.refresh();
+				
+				// Instantiate scheme editor panel
+				//schemePanel = new SIRMetadataPanel(theScheme);
+				controlPanel.removeAll();
+				controlPanel.add(schemePanel, "dock north, growy");
+				controlPanel.add(cardPanel, "dock south, growy");
+				validate();
+			}
+		});
+		mnFile.add(mntmNew);
+
 		
+		JMenuItem mntmLoad = new JMenuItem("Load");
 		mntmLoad.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -82,14 +105,11 @@ public class SIRMainFrame extends JFrame {
 						e1.printStackTrace();
 					}
 
-					// Get things displaying on the XML Pane and Tree
+					// Set up observers
 					theScheme.addObserver(xmlPanel);
 					theScheme.addObserver(treePanel);
 					theScheme.addObserver(cardPanel);
-					xmlPanel.update(theScheme, null);
-					treePanel.update(theScheme, null);
-					cardPanel.update(theScheme, null);
-					treePanel.addTreeSelectionListener(cardPanel);
+					theScheme.refresh();
 					
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
@@ -159,11 +179,15 @@ public class SIRMainFrame extends JFrame {
 		treeSplitPane.setLeftComponent(treePanel);
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new MigLayout("fill", "", ""));
-		controlPanel.add(new SIRMetadataPanel(null), "dock north, growy");
+		schemePanel = new SIRMetadataPanel(null);
+		controlPanel.add(schemePanel, "dock north, growy");
 		cardPanel = new SIRCardPanel();
 		treePanel.addTreeSelectionListener(cardPanel);
 		controlPanel.add(cardPanel, "push ,grow");
 		treeSplitPane.setRightComponent(controlPanel);
 		treeSplitPane.setResizeWeight(0.2);
+		
+		// Get things displaying on the XML Pane and Tree
+		treePanel.addTreeSelectionListener(cardPanel);
 	}
 }

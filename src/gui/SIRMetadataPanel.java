@@ -3,6 +3,7 @@ package gui;
 import java.awt.Component;
 import java.awt.Font;
 
+import javax.swing.AbstractButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -12,6 +13,8 @@ import model.MarkingScheme;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
@@ -24,19 +27,24 @@ import java.awt.event.ActionEvent;
  * @author Robyn
  *
  */
-public class SIRMetadataPanel extends JPanel implements ActionListener {
+public class SIRMetadataPanel extends JPanel implements ActionListener, Observer {
 
 	private static final long serialVersionUID = 1L;
-	MarkingScheme theScheme;
+	private MarkingScheme theScheme;
 	private JLabel lblUnitCode;
 	private JLabel lblActivityName;
 	private JLabel lblSubtitle;
 	private JTextPane preambleTextPane;
+	private EditButton btnEditUnitCode;
+	private EditButton btnEditSubtitle;
+	private EditButton btnEditPreamble;
+	private EditButton btnEditActivityName;
 
 	/**
 	 * Create the panel.
 	 */
 	public SIRMetadataPanel(MarkingScheme scheme) {
+		theScheme = scheme;
 		
 		String notLoadedString = new String("<no marking scheme loaded>");
 		String unitCode = notLoadedString;
@@ -57,28 +65,28 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 		JLabel lblUCtext = new JLabel("Unit code");
 		lblUnitCode = new JLabel(unitCode);
 		lblUnitCode.setFont(new Font("Tahoma", Font.BOLD, 14));
-		EditButton btnEditUnitCode = new EditButton();
+		 btnEditUnitCode = new EditButton();
 		btnEditUnitCode.setActionCommand("Unit code");
 		
 		
 		JLabel lblANtext = new JLabel("Activity name");
 		lblActivityName = new JLabel(activityName);
 		lblActivityName.setFont(new Font("Tahoma", Font.BOLD, 14));
-		EditButton btnEditActivityName = new EditButton();
+		btnEditActivityName = new EditButton();
 		btnEditActivityName.setActionCommand("Activity name");
 
 
 		JLabel lblST = new JLabel("Subtitle");
 		lblSubtitle = new JLabel(subtitle);
 		lblSubtitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-		EditButton btnEditSubtitle = new EditButton();
+		btnEditSubtitle = new EditButton();
 		btnEditSubtitle.setActionCommand("Subtitle");
 		
 		JLabel lblPreamble = new JLabel("Preamble");
 		preambleTextPane = new JTextPane();
 		preambleTextPane.setEditable(false);
 		preambleTextPane.setText(preamble);
-		EditButton btnEditPreamble = new EditButton();
+		btnEditPreamble = new EditButton();
 
 		btnEditPreamble.setActionCommand("Preamble");
 		
@@ -113,9 +121,13 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 		repaint();
 	}
 
+	public void setScheme(MarkingScheme scheme) {
+		theScheme = scheme;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Respond to edit button clicks.  Pop up a dialog with appropriate controls.
+	
 		String action = e.getActionCommand();
 		String currentValue = "";
 		
@@ -132,6 +144,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 		SIREditDialog dlg = new SIREditDialog(action, currentValue);
 		dlg.setVisible(true);
 		String newValue = dlg.getValue();
+
 		
 		if (action.equals("Activity name")) {
 			lblActivityName.setText(newValue);
@@ -150,4 +163,30 @@ public class SIRMetadataPanel extends JPanel implements ActionListener {
 			theScheme.setSubtitle(newValue);
 		}
 	}
-}
+
+	@Override
+	public void update(Observable schemeobject, Object o) {
+		if (schemeobject == null || !(schemeobject instanceof MarkingScheme))
+			return;
+		
+		MarkingScheme scheme = (MarkingScheme) schemeobject;
+		
+			String unitCode = (scheme.getUnitCode() == null? "" : scheme.getUnitCode());
+			String activityName = (scheme.getActivityName() == null? "" : scheme.getActivityName());
+			String subtitle = (scheme.getSubtitle() == null? "":scheme.getSubtitle());
+			String preamble = (scheme.getPreamble() == null? "":scheme.getPreamble());
+			
+			lblUnitCode.setText(unitCode);
+			lblActivityName.setText(activityName);
+			lblSubtitle.setText(subtitle);
+			preambleTextPane.setText(preamble);
+			
+			if (scheme != null) {
+				btnEditUnitCode.addActionListener(this);
+				btnEditActivityName.addActionListener(this);
+				btnEditSubtitle.addActionListener(this);
+				btnEditPreamble.addActionListener(this);
+			}
+		}
+		
+	}
