@@ -34,7 +34,7 @@ public class CriterionPanel extends JPanel implements ActionListener {
 	 * a panel of buttons for insertion and deletion.
 	 */
 	public CriterionPanel() {
-		setLayout(new MigLayout("fill", "[fill]", "[pref!,grow][]"));
+		setLayout(new MigLayout("fill", "[fill]", "[grow][]"));
 		// create button panel
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -61,7 +61,7 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		contents = new JScrollPane(criteria);
 		
 		// get everything to display
-		add(contents, "cell 0 0,push ,grow");
+		add(contents, "cell 0 0,push,grow");
 		add(buttonPanel, "dock south");
 	}
 	

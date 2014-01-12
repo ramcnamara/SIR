@@ -3,6 +3,7 @@ package gui.cards;
 import java.util.ArrayList;
 
 import model.Criterion;
+import model.Scale;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -76,6 +77,24 @@ public class CriterionTableModel extends AbstractTableModel {
 		
 		// invalid column
 		return null;
+	}
+	
+	public void setValueAt(Object value, int rowIndex, int columnIndex) {
+		if (rowIndex < 0 || rowIndex >= data.size())
+			// invalid row -- TODO should throw an exception
+			return;
+		
+		if (columnIndex == 0) {
+			if (value instanceof String)
+				data.get(rowIndex).setName(value.toString());
+		}
+		else if (columnIndex == 1) {
+			if (value instanceof Scale)
+				data.get(rowIndex).setScale((Scale)value);
+		}
+			
+				
+		
 	}
 	
 	

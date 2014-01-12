@@ -101,7 +101,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 				c.setEnabled(false);
 			}
 		
-		setLayout(new MigLayout("fill", "[align right][grow,fill][pref!]", "[][][][fill]"));
+		setLayout(new MigLayout("", "[align right][grow,fill][pref!]", "[][][][grow]"));
 		add(lblUCtext, "cell 0 0");
 		add(lblANtext, "cell 0 1");
 		add(lblST, "cell 0 2");
