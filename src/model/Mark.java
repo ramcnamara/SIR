@@ -41,7 +41,7 @@ public abstract class Mark {
 
 	public abstract void makeOutput(OutputMaker om);
 	
-	public abstract float getMark();
+	public abstract float getMaxMark();
 	
 	public String getName() {
 		return name;

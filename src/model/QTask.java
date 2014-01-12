@@ -70,7 +70,7 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	}
 
 	@Override
-	public float getMark() {
+	public float getMaxMark() {
 		return 0;
 	}
 

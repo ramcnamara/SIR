@@ -61,9 +61,6 @@ public class Task extends ComplexTask {
 		
 	}
 
-	public float getMaxMark() {
-		return maxMark;
-	}
 
 	public void setMaxMark(float maxMark) {
 		this.maxMark = maxMark;
@@ -78,11 +75,11 @@ public class Task extends ComplexTask {
 	}
 
 	@Override
-	public float getMark() {
+	public float getMaxMark() {
 		float myMark = this.maxMark;
 		if (subtasks != null)
 			for (Mark m: subtasks)
-				myMark += m.getMark();
+				myMark += m.getMaxMark();
 		return myMark;
 	}
 

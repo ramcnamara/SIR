@@ -54,7 +54,7 @@ public class Criterion extends Mark implements CriterionReferenced {
 		return markerInstruction;
 	}
 	@Override
-	public float getMark() {
+	public float getMaxMark() {
 		return 0;
 	}
 	@Override

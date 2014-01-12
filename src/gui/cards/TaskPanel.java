@@ -53,7 +53,7 @@ public class TaskPanel extends JScrollPane implements CriterionContainer {
 		JLabel lblMaxMark = new JLabel("Max. mark");
 		contents.add(lblMaxMark, "cell 0 1,alignx right");
 
-		tfMaxMark = new JTextField("" + task.getMark());
+		tfMaxMark = new JTextField("" + task.getMaxMark());
 		contents.add(tfMaxMark, "flowx,cell 1 1,alignx left,aligny baseline");
 		tfMaxMark.setColumns(10);
 
