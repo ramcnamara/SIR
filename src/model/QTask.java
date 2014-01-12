@@ -27,7 +27,7 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	@XmlElement(name="QTask", type=QTask.class)
 	private ArrayList<QTask> subtasks;
 	
-	@XmlElement(name="Scale", required=false)
+	@XmlElement(name="Scale", required=false, nillable=false)
 	@XmlJavaTypeAdapter(ScaleAdapter.class)
 	private Scale scale;
 

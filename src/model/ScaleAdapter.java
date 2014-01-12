@@ -22,6 +22,8 @@ public class ScaleAdapter extends XmlAdapter<AdaptedScale,Scale> {
 	 * @param scale the Scale to be converted
 	 */
 	public AdaptedScale marshal(Scale scale) throws Exception {
+		if (scale == null)
+			return null;
 		AdaptedScale newScale = new AdaptedScale();
 		newScale.levels = new ArrayList<String>();
 		for (String lev: scale.asArray()) {
