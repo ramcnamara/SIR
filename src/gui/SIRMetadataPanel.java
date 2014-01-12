@@ -3,7 +3,6 @@ package gui;
 import java.awt.Component;
 import java.awt.Font;
 
-import javax.swing.AbstractButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
