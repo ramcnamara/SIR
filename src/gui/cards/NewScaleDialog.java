@@ -1,7 +1,6 @@
 package gui.cards;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -18,6 +17,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.UIManager;
 
 /**
  * Dialog displayed when a user has selected the "New scale..." option in a
@@ -45,14 +45,15 @@ public class NewScaleDialog extends JDialog implements ActionListener {
 		contentPanel.setLayout(new MigLayout("", "[grow]", "[][grow][][]"));
 		JLabel lblPrompt = new JLabel("Enter new scale:");
 		contentPanel.add(lblPrompt, "cell 0 0,alignx left,aligny top");
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getContentPane().add(contentPanel, BorderLayout.NORTH);
 		
 		Object[][] emptyStrings = new Object[][]{{""},{""}};
 		String[] columnheader = {"Level"};
 		DefaultTableModel m = new DefaultTableModel(emptyStrings, columnheader);
 		levelTable = new JTable(m);
+		levelTable.setFillsViewportHeight(false);
 		levelTable.setShowGrid(true);
-		levelTable.setGridColor(Color.BLUE);
+		levelTable.setGridColor(UIManager.getColor("Table.foreground"));
 		levelTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		contentPanel.add(levelTable, "cell 0 1,grow");
 
