@@ -67,7 +67,7 @@ public class QTaskPanel extends JPanel implements CriterionContainer, ActionList
 		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollpane, "cell 0 1,alignx left,aligny top");
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill][]", "[][][][pref!,grow,top][][][][pref!,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill][]", "[][][][pref!,grow,top][][][][pref!,grow,fill]"));
 		
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 1,alignx right");

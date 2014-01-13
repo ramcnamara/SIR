@@ -66,7 +66,7 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		contents.setBackground(UIManager.getColor("Panel.background"));
 		contents.getViewport().setBackground(UIManager.getColor("Panel.background"));
 		// get everything to display
-		add(contents, "cell 0 0,push,grow");
+		add(contents, "cell 0 0,grow");
 		add(buttonPanel, "dock south");
 	}
 	
