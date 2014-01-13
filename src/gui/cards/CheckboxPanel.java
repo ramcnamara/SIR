@@ -45,7 +45,7 @@ public class CheckboxPanel extends JPanel implements ActionListener {
 		target = checkbox;
 		parent = mark;
 		
-		setLayout(new MigLayout("fill,debug", "[grow]", "[][grow]"));
+		setLayout(new MigLayout("fill", "[grow]", "[][grow]"));
 		scrollpane = new JScrollPane();
 		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
