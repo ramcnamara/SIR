@@ -14,6 +14,7 @@ import net.miginfocom.swing.MigLayout;
 import model.Criterion;
 import java.awt.Dimension;
 import java.awt.Component;
+import javax.swing.UIManager;
 
 /**
  * A JPanel that displays assessment criteria for a particular Task or QTask, and
@@ -53,13 +54,17 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		CriterionTableModel m = new CriterionTableModel();
 
 		criteria = new JTable(m);
+		criteria.setSurrendersFocusOnKeystroke(true);
+		criteria.setGridColor(UIManager.getColor("Table.dropLineColor"));
 		criteria.setPreferredScrollableViewportSize(new Dimension(450, 40));
 		criteria.setRowSelectionAllowed(true);
 		criteria.setColumnSelectionAllowed(false);
+		criteria.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		TableColumn scales = criteria.getColumnModel().getColumn(1);
 		scales.setCellEditor(new ScaleBoxCellEditor());
 		contents = new JScrollPane(criteria);
-		
+		contents.setBackground(UIManager.getColor("Panel.background"));
+		contents.getViewport().setBackground(UIManager.getColor("Panel.background"));
 		// get everything to display
 		add(contents, "cell 0 0,push,grow");
 		add(buttonPanel, "dock south");
