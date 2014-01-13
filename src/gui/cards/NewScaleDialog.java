@@ -53,6 +53,7 @@ public class NewScaleDialog extends JDialog implements ActionListener {
 		levelTable = new JTable(m);
 		levelTable.setShowGrid(true);
 		levelTable.setGridColor(Color.BLUE);
+		levelTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		contentPanel.add(levelTable, "cell 0 1,grow");
 
 		JButton btnNewButton = new JButton("Add level");
