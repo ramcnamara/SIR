@@ -45,12 +45,12 @@ public class CheckboxPanel extends JPanel implements ActionListener {
 		target = checkbox;
 		parent = mark;
 		
-		setLayout(new MigLayout("fill", "[grow]", "[][grow]"));
+		setLayout(new MigLayout("fill,debug", "[grow]", "[][grow]"));
 		scrollpane = new JScrollPane();
 		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow]", "[][][][][][][]"));
+		contents.setLayout(new MigLayout("debug", "[][grow]", "[][][][][][][]"));
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.setActionCommand("Save");
@@ -104,13 +104,16 @@ public class CheckboxPanel extends JPanel implements ActionListener {
 		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 
-		scrollpane.setViewportView(contents);
 
 		chckbxGroupTask = new JCheckBox("Group task");
 		contents.add(chckbxGroupTask, "flowx,cell 1 5");
 		
 		chckbxBonusTask = new JCheckBox("Bonus task");
 		contents.add(chckbxBonusTask, "flowx, cell 1 6");
+		
+		scrollpane.setViewportView(contents);
+		add(scrollpane, "cell 0 1, growx, growy");
+
 	}
 	
 	/**
@@ -143,6 +146,20 @@ public class CheckboxPanel extends JPanel implements ActionListener {
 		
 		target.setGroup(chckbxGroupTask.isSelected());
 		target.setBonus(chckbxBonusTask.isSelected());
+	}
+	
+	/**
+	 * setVisible is overloaded to reset the vertical scroll position to the top.
+	 * 
+	 * @param visible true to turn visibility on, false to turn it off 
+	 */
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+
+		if (visible) {
+			scrollpane.getVerticalScrollBar().setValue(0);
+			repaint();
+		}
 	}
 	
 	/**
