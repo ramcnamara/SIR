@@ -76,9 +76,6 @@ public class QTaskPanel extends JPanel implements CriterionContainer, ActionList
 		contents.add(tfTaskName, "cell 1 1,growx");
 		tfTaskName.setColumns(10);
 
-		
-		JLabel lblComputed = new JLabel("(from subtasks)");
-		contents.add(lblComputed, "cell 1 2,growx,alignx left,aligny baseline");
 		JLabel lblDescription = new JLabel("Description");
 		contents.add(lblDescription, "cell 0 3,alignx right");
 		
@@ -204,6 +201,7 @@ public class QTaskPanel extends JPanel implements CriterionContainer, ActionList
 		
 		else if (cmd.equals("Add subtask")) {
 			QTask newqtask = new QTask();
+			newqtask.setName("New task");
 			try {
 				target.addSubtask(newqtask);
 			} catch (SubtaskTypeException e) {
