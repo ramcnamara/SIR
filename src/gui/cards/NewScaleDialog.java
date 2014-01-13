@@ -40,7 +40,7 @@ public class NewScaleDialog extends JDialog implements ActionListener {
 	
 	public NewScaleDialog(Window parent) {
 		super(parent, "Add scale", JDialog.ModalityType.APPLICATION_MODAL);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 280, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new MigLayout("", "[grow]", "[][grow][][]"));
 		JLabel lblPrompt = new JLabel("Enter new scale:");
