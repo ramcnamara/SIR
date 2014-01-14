@@ -24,6 +24,7 @@ import model.Task;
 import net.miginfocom.swing.MigLayout;
 import formatters.JTreeMaker;
 import formatters.JTreeMaker.Node;
+import gui.cards.Card;
 
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -96,6 +97,41 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		((CardLayout) cardArea.getLayout()).show(cardArea, node.getId());
 		
 	}
+	
+	private Card getCurrentCard() {
+		Component panels[] = cardArea.getComponents();
+		
+		// Card area is empty, so don't bother
+		if (panels == null || panels.length == 0)
+			return null;
+		
+		for (Component current : panels) {
+			if (current.isVisible()) {
+				if (current instanceof Card)
+					return (Card) current;
+				return null;
+			}
+		}
+		
+		// nothing is visible (no Cards, anyway)
+		return null;
+	}
+	
+	public void seekToCard(Mark mark){
+		// remember where the first card is	
+		CardLayout cl = (CardLayout) cardArea.getLayout();
+		cl.first(cardArea);
+		Card firstCard = getCurrentCard();
+		do {
+			cl.next(cardArea);
+			if (getCurrentCard().getTask() == mark) {
+				cardArea.repaint();
+				return;
+			}
+				
+		}
+		while (getCurrentCard() != firstCard);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
@@ -152,6 +188,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			else
 				parent.removeSubtask(task);
 			scheme.refresh();
+			seekToCard(parent);
 			validate();
 		}		
 	}

@@ -33,8 +33,7 @@ import javax.swing.JCheckBox;
  * @author Robyn
  * 
  */
-public class TaskPanel extends JPanel implements CriterionContainer,
-		ActionListener {
+public class TaskPanel extends JPanel implements CriterionContainer, Card, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private Task target;
@@ -88,8 +87,7 @@ public class TaskPanel extends JPanel implements CriterionContainer,
 		add(btnAddSubtask, "cell 0 0,alignx right");
 
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]",
-				"[14px][][pref!,grow,top][][14px][][][fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[14px][][pref!,grow,top][][14px][][][grow,fill]"));
 
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx right");
@@ -272,5 +270,10 @@ public class TaskPanel extends JPanel implements CriterionContainer,
 			scheme.refresh();
 		}
 
+	}
+
+	@Override
+	public Mark getTask() {
+		return target;
 	}
 }

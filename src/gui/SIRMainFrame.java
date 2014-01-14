@@ -74,8 +74,8 @@ public class SIRMainFrame extends JFrame {
 				// Instantiate scheme editor panel
 				//schemePanel = new SIRMetadataPanel(theScheme);
 				controlPanel.removeAll();
-				controlPanel.add(schemePanel, "dock north, growy");
-				controlPanel.add(cardPanel, "dock south, growy");
+				controlPanel.add(schemePanel, "dock north");
+				controlPanel.add(cardPanel, "dock center, aligny top, growy");
 				validate();
 			}
 		});
@@ -114,8 +114,8 @@ public class SIRMainFrame extends JFrame {
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
 					controlPanel.removeAll();
-					controlPanel.add(schemePanel, "dock north, growy");
-					controlPanel.add(cardPanel, "dock south, growy");
+					controlPanel.add(schemePanel, "dock north");
+					controlPanel.add(cardPanel, "dock center, aligny top, growy");
 					validate();
 				}
 			}

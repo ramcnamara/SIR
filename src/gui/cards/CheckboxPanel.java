@@ -23,7 +23,7 @@ import model.Mark;
  * @author Robyn
  *
  */
-public class CheckboxPanel extends JPanel implements ActionListener {
+public class CheckboxPanel extends JPanel implements ActionListener, Card {
 
 	private static final long serialVersionUID = 1L;
 	private Checkbox target;
@@ -181,5 +181,10 @@ public class CheckboxPanel extends JPanel implements ActionListener {
 		else if (cmd.equals("Save"))
 			save();
 		
+	}
+
+	@Override
+	public Mark getTask() {
+		return target;
 	}
 }
