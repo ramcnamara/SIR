@@ -11,7 +11,6 @@ import model.Criterion;
 import model.Mark;
 import model.MarkingScheme;
 import model.QTask;
-import model.SubtaskTypeException;
 
 import javax.swing.border.TitledBorder;
 
@@ -22,8 +21,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 /**
@@ -32,7 +29,7 @@ import java.awt.event.ActionListener;
  * @author Robyn
  *
  */
-public class QTaskPanel extends JPanel implements CriterionContainer, ActionListener, Card {
+public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 
 	private static final long serialVersionUID = 1L;
 	private QTask target;
@@ -174,30 +171,6 @@ public class QTaskPanel extends JPanel implements CriterionContainer, ActionList
 		JButton newButton = new JButton("Add subtask");
 		newButton.setActionCommand("Add QTask");
 		return newButton;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent ev) {
-		String cmd = ev.getActionCommand();
-		
-		if (cmd.equals("Reset"))
-			reset();
-		
-		else if (cmd.equals("Save"))
-			save();
-		
-		else if (cmd.equals("Add subtask")) {
-			QTask newqtask = new QTask();
-			newqtask.setName("New task");
-			try {
-				target.addSubtask(newqtask);
-			} catch (SubtaskTypeException e) {
-				System.out.println("Somehow adding a QTask is causing a SubtaskTypeException.");
-			}
-			
-			scheme.refresh();
-		}
-		
 	}
 
 	@Override

@@ -1,22 +1,13 @@
 package gui.cards;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
-import model.Checkbox;
 import model.Criterion;
 import model.Mark;
 import model.MarkingScheme;
-import model.QTask;
-import model.SubtaskTypeException;
 import model.Task;
 
 import javax.swing.border.TitledBorder;
@@ -33,7 +24,7 @@ import javax.swing.JCheckBox;
  * @author Robyn
  * 
  */
-public class TaskPanel extends JPanel implements CriterionContainer, Card, ActionListener {
+public class TaskPanel extends JPanel implements CriterionContainer, Card {
 
 	private static final long serialVersionUID = 1L;
 	private Task target;
@@ -193,61 +184,6 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card, Actio
 	 */
 	public Mark getParentTask() {
 		return parent;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent ev) {
-		String cmd = ev.getActionCommand();
-
-		if (cmd.equals("Add subtask")) {
-			// Bring up dialog to select task type
-			JRadioButton rbtask = new JRadioButton("Numerically-marked task");
-			JRadioButton rbqtask = new JRadioButton("Qualitatively-marked task");
-			JRadioButton rbcheckbox = new JRadioButton(
-					"Checkbox (done or not done, no intermediate grades)");
-
-			ButtonGroup group = new ButtonGroup();
-			group.add(rbtask);
-			group.add(rbqtask);
-			group.add(rbcheckbox);
-
-			Object[] components = {
-					new JLabel("What type of task do you wish to add?"),
-					rbtask, rbqtask, rbcheckbox };
-
-			int result = JOptionPane.showConfirmDialog(null, components,
-					"Add task", JOptionPane.OK_CANCEL_OPTION);
-
-			// User closed or cancelled out of the dialog
-			if (result == JOptionPane.CANCEL_OPTION
-					|| result == JOptionPane.CLOSED_OPTION)
-				return;
-
-			Mark newTask;
-
-			if (rbtask.isSelected())
-				newTask = new Task();
-			else if (rbqtask.isSelected())
-				newTask = new QTask();
-			else if (rbcheckbox.isSelected())
-				newTask = new Checkbox();
-			else
-				return;
-
-			newTask.setName("New task");
-
-			try {
-				target.addSubtask(newTask);
-			} catch (SubtaskTypeException e) {
-				System.out
-						.println("Somehow adding a QTask is causing a SubtaskTypeException.");
-			}
-
-			scheme.refresh();
-		}
-		
-		
-
 	}
 
 	@Override
