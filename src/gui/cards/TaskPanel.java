@@ -88,7 +88,7 @@ public class TaskPanel extends JPanel implements CriterionContainer,
 		add(btnAddSubtask, "cell 0 0,alignx right");
 
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]", "[14px][][pref!,grow,top][][14px][][][grow,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][pref!,grow,top][][][][][grow,fill]"));
 
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx right");
