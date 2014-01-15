@@ -52,16 +52,6 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		contents = new JPanel();
 		contents.setLayout(new MigLayout("debug", "[][grow]", "[][][][][][][]"));
 		
-		JButton btnSave = new JButton("Save");
-		btnSave.setActionCommand("Save");
-		btnSave.addActionListener(this);
-		add(btnSave, "flowx,cell 0 0,alignx right");
-
-		JButton btnReset = new JButton("Reset");
-		btnReset.setActionCommand("Reset");
-		btnReset.addActionListener(this);
-		add(btnReset, "cell 0 0,alignx right");
-		
 
 		// Set up checkbox information
 		String taskName = "";
@@ -186,5 +176,12 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 	@Override
 	public Mark getTask() {
 		return target;
+	}
+
+	@Override
+	public JButton getAddSubtaskButton() {
+		JButton newButton = new JButton("Add subtask");
+		newButton.setEnabled(false);
+		return newButton;
 	}
 }

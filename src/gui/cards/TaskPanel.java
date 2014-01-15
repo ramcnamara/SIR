@@ -48,9 +48,6 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card, Actio
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxAllowMarkerComment;
 	private JCheckBox chckbxBonusTask;
-	private JButton btnSave;
-	private JButton btnReset;
-	private JButton btnAddSubtask;
 	private MarkingScheme scheme;
 
 	/**
@@ -69,22 +66,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card, Actio
 		parent = mark;
 		this.scheme = scheme;
 
-		setLayout(new MigLayout("", "[grow]", "[][grow]"));
-
-		btnSave = new JButton("Save");
-		btnSave.setActionCommand("Save");
-		btnSave.addActionListener(this);
-		add(btnSave, "flowx,cell 0 0,alignx right");
-
-		btnReset = new JButton("Reset");
-		btnReset.setActionCommand("Reset");
-		btnReset.addActionListener(this);
-		add(btnReset, "cell 0 0,alignx right");
-
-		btnAddSubtask = new JButton("Add subtask");
-		btnAddSubtask.setActionCommand("Add subtask");
-		btnAddSubtask.addActionListener(this);
-		add(btnAddSubtask, "cell 0 0,alignx right");
+		setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		contents = new JPanel();
 		contents.setLayout(new MigLayout("", "[][grow,fill]", "[14px][][pref!,grow,top][][14px][][][grow,fill]"));
@@ -129,7 +111,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card, Actio
 				TitledBorder.TOP, null, null));
 		contents.add(cp, "cell 0 7 2 1,aligny top,grow");
 		scrollpane = new JScrollPane(contents);
-		add(scrollpane, "cell 0 1, grow");
+		add(scrollpane, "cell 0 0,grow");
 
 		chckbxGroupTask = new JCheckBox("Group task", task.isGroup());
 		contents.add(chckbxGroupTask, "flowx,cell 1 4");
@@ -217,13 +199,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card, Actio
 	public void actionPerformed(ActionEvent ev) {
 		String cmd = ev.getActionCommand();
 
-		if (cmd.equals("Reset"))
-			reset();
-
-		else if (cmd.equals("Save"))
-			save();
-
-		else if (cmd.equals("Add subtask")) {
+		if (cmd.equals("Add subtask")) {
 			// Bring up dialog to select task type
 			JRadioButton rbtask = new JRadioButton("Numerically-marked task");
 			JRadioButton rbqtask = new JRadioButton("Qualitatively-marked task");
@@ -269,11 +245,19 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card, Actio
 
 			scheme.refresh();
 		}
+		
+		
 
 	}
 
 	@Override
 	public Mark getTask() {
 		return target;
+	}
+
+	public JButton getAddSubtaskButton() {
+		JButton newButton = new JButton("Add subtask");
+		newButton.setActionCommand("Add subtask");
+		return newButton;
 	}
 }
