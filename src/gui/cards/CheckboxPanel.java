@@ -23,7 +23,7 @@ import model.Mark;
  * @author Robyn
  *
  */
-public class CheckboxPanel extends JPanel implements ActionListener {
+public class CheckboxPanel extends JPanel implements ActionListener, Card {
 
 	private static final long serialVersionUID = 1L;
 	private Checkbox target;
@@ -51,16 +51,6 @@ public class CheckboxPanel extends JPanel implements ActionListener {
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
 		contents.setLayout(new MigLayout("debug", "[][grow]", "[][][][][][][]"));
-		
-		JButton btnSave = new JButton("Save");
-		btnSave.setActionCommand("Save");
-		btnSave.addActionListener(this);
-		add(btnSave, "flowx,cell 0 0,alignx right");
-
-		JButton btnReset = new JButton("Reset");
-		btnReset.setActionCommand("Reset");
-		btnReset.addActionListener(this);
-		add(btnReset, "cell 0 0,alignx right");
 		
 
 		// Set up checkbox information
@@ -181,5 +171,17 @@ public class CheckboxPanel extends JPanel implements ActionListener {
 		else if (cmd.equals("Save"))
 			save();
 		
+	}
+
+	@Override
+	public Mark getTask() {
+		return target;
+	}
+
+	@Override
+	public JButton getAddSubtaskButton() {
+		JButton newButton = new JButton("Add subtask");
+		newButton.setEnabled(false);
+		return newButton;
 	}
 }

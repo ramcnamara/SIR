@@ -1,22 +1,13 @@
 package gui.cards;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
-import model.Checkbox;
 import model.Criterion;
 import model.Mark;
 import model.MarkingScheme;
-import model.QTask;
-import model.SubtaskTypeException;
 import model.Task;
 
 import javax.swing.border.TitledBorder;
@@ -33,8 +24,7 @@ import javax.swing.JCheckBox;
  * @author Robyn
  * 
  */
-public class TaskPanel extends JPanel implements CriterionContainer,
-		ActionListener {
+public class TaskPanel extends JPanel implements CriterionContainer, Card {
 
 	private static final long serialVersionUID = 1L;
 	private Task target;
@@ -49,9 +39,6 @@ public class TaskPanel extends JPanel implements CriterionContainer,
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxAllowMarkerComment;
 	private JCheckBox chckbxBonusTask;
-	private JButton btnSave;
-	private JButton btnReset;
-	private JButton btnAddSubtask;
 	private MarkingScheme scheme;
 
 	/**
@@ -70,25 +57,11 @@ public class TaskPanel extends JPanel implements CriterionContainer,
 		parent = mark;
 		this.scheme = scheme;
 
-		setLayout(new MigLayout("", "[grow]", "[][grow]"));
-
-		btnSave = new JButton("Save");
-		btnSave.setActionCommand("Save");
-		btnSave.addActionListener(this);
-		add(btnSave, "flowx,cell 0 0,alignx right");
-
-		btnReset = new JButton("Reset");
-		btnReset.setActionCommand("Reset");
-		btnReset.addActionListener(this);
-		add(btnReset, "cell 0 0,alignx right");
-
-		btnAddSubtask = new JButton("Add subtask");
-		btnAddSubtask.setActionCommand("Add subtask");
-		btnAddSubtask.addActionListener(this);
-		add(btnAddSubtask, "cell 0 0,alignx right");
+		setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		contents = new JPanel();
 		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][pref!,grow,top][][][][][grow,fill]"));
+
 
 		JLabel lblName = new JLabel("Task name");
 		contents.add(lblName, "cell 0 0,alignx right");
@@ -130,7 +103,7 @@ public class TaskPanel extends JPanel implements CriterionContainer,
 				TitledBorder.TOP, null, null));
 		contents.add(cp, "cell 0 7 2 1,aligny top,grow");
 		scrollpane = new JScrollPane(contents);
-		add(scrollpane, "cell 0 1, grow");
+		add(scrollpane, "cell 0 0,grow");
 
 		chckbxGroupTask = new JCheckBox("Group task", task.isGroup());
 		contents.add(chckbxGroupTask, "flowx,cell 1 4");
@@ -215,61 +188,13 @@ public class TaskPanel extends JPanel implements CriterionContainer,
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent ev) {
-		String cmd = ev.getActionCommand();
+	public Mark getTask() {
+		return target;
+	}
 
-		if (cmd.equals("Reset"))
-			reset();
-
-		else if (cmd.equals("Save"))
-			save();
-
-		else if (cmd.equals("Add subtask")) {
-			// Bring up dialog to select task type
-			JRadioButton rbtask = new JRadioButton("Numerically-marked task");
-			JRadioButton rbqtask = new JRadioButton("Qualitatively-marked task");
-			JRadioButton rbcheckbox = new JRadioButton(
-					"Checkbox (done or not done, no intermediate grades)");
-
-			ButtonGroup group = new ButtonGroup();
-			group.add(rbtask);
-			group.add(rbqtask);
-			group.add(rbcheckbox);
-
-			Object[] components = {
-					new JLabel("What type of task do you wish to add?"),
-					rbtask, rbqtask, rbcheckbox };
-
-			int result = JOptionPane.showConfirmDialog(null, components,
-					"Add task", JOptionPane.OK_CANCEL_OPTION);
-
-			// User closed or cancelled out of the dialog
-			if (result == JOptionPane.CANCEL_OPTION
-					|| result == JOptionPane.CLOSED_OPTION)
-				return;
-
-			Mark newTask;
-
-			if (rbtask.isSelected())
-				newTask = new Task();
-			else if (rbqtask.isSelected())
-				newTask = new QTask();
-			else if (rbcheckbox.isSelected())
-				newTask = new Checkbox();
-			else
-				return;
-
-			newTask.setName("New task");
-
-			try {
-				target.addSubtask(newTask);
-			} catch (SubtaskTypeException e) {
-				System.out
-						.println("Somehow adding a QTask is causing a SubtaskTypeException.");
-			}
-
-			scheme.refresh();
-		}
-
+	public JButton getAddSubtaskButton() {
+		JButton newButton = new JButton("Add subtask");
+		newButton.setActionCommand("Add subtask");
+		return newButton;
 	}
 }
