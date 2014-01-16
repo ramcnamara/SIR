@@ -228,7 +228,11 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		
 		// Save current task
 		else if (cmd.equals("Save task")) {
+			// We will need to manually reset the card selection 
+			// because saving will trigger the card display to be rebuilt
+			Mark ourTask = getCurrentCard().getTask();
 			getCurrentCard().save();
+			seekToCard(ourTask);
 		}
 		
 		// Reset current task

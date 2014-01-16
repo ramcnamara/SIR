@@ -23,6 +23,7 @@ import javax.swing.JCheckBox;
 import java.awt.Component;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
+import javax.swing.Box;
 
 
 /**
@@ -45,6 +46,11 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxAllowMarkerComment;
 	private JScrollPane scrollpane;
+	private JLabel lblLabel;
+	private JTextField tfLabel;
+	private Component horizontalGlue;
+	private ScaleBox scalebox;
+	private JLabel lblName;
 
 	/**
 	 * Create the panel.
@@ -59,6 +65,21 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 		this.scheme = scheme;
 		setLayout(new MigLayout("fill", "[]","[]"));
 		
+		String label = "";
+		String taskName = "";
+		String description = "";
+		String markerInstruction = "";
+		
+		if (qtask != null) {
+			label += (qtask.getLabel() == null? "Task" : qtask.getLabel());
+			taskName += (qtask.getName() == null? "": qtask.getName());
+			description += (qtask.getDescription() == null? "": qtask.getDescription());
+			markerInstruction += (qtask.getMarkerInstruction() == null? "": qtask.getMarkerInstruction());
+		}
+		
+		if (label.length() == 0)
+			label = "Task";
+
 
 		scrollpane = new JScrollPane();
 		scrollpane.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -67,45 +88,56 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 		contents = new JPanel();
 		contents.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 
-		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][][][][][grow,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][][][][][][grow,fill]"));
 		
-		JLabel lblName = new JLabel("Task name");
-		contents.add(lblName, "cell 0 0,alignx right");
+		lblLabel = new JLabel("Label");
+		contents.add(lblLabel, "cell 0 0,alignx trailing");
 		
-		tfTaskName = new JTextField(qtask.getName());
-		contents.add(tfTaskName, "cell 1 0,growx");
+		tfLabel = new JTextField(label);
+		contents.add(tfLabel, "flowx,cell 1 0,alignx left");
+		tfLabel.setColumns(10);
+		
+		lblName = new JLabel(label + " name");
+		contents.add(lblName, "cell 0 1,alignx right");
+		
+		tfTaskName = new JTextField(taskName);
+		contents.add(tfTaskName, "cell 1 1,growx");
 		tfTaskName.setColumns(10);
 		
 
-		ScaleBox scalebox = new ScaleBox(qtask);
+		scalebox = new ScaleBox(qtask);
 		scalebox.addItem("None");
-		contents.add(scalebox, "cell 1 1");
+		contents.add(scalebox, "cell 1 2");
 
 		JLabel lblDescription = new JLabel("Description");
-		contents.add(lblDescription, "cell 0 3,alignx right");
+		contents.add(lblDescription, "cell 0 4,alignx right");
 		
-		taDescription = new JTextArea(qtask.getDescription());
+		taDescription = new JTextArea(description);
 		taDescription.setLineWrap(true);
-		contents.add(taDescription, "cell 1 3,wmin 10,grow");
+		contents.add(taDescription, "cell 1 4,wmin 10,grow");
 		taDescription.setColumns(10);
 		
 		JLabel lblInstructionsToMarkers = new JLabel("Instructions to markers");
-		contents.add(lblInstructionsToMarkers, "cell 0 4,alignx trailing");
+		contents.add(lblInstructionsToMarkers, "cell 0 5,alignx trailing");
 		
-		taMarkerInstructions = new JTextArea(qtask.getMarkerInstruction());
-		contents.add(taMarkerInstructions, "cell 1 4,wmin 10,grow");
+		taMarkerInstructions = new JTextArea(markerInstruction);
+		contents.add(taMarkerInstructions, "cell 1 5,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 		
 		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment", qtask.hasComment());
-		contents.add(chckbxAllowMarkerComment, "cell 1 6");
+		contents.add(chckbxAllowMarkerComment, "cell 1 7");
 		cp = new CriterionPanel();
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 7 2 2,aligny top,grow");
+		contents.add(cp, "cell 0 8 2 2,aligny top,grow");
 		scrollpane.setViewportView(contents);
 		
 		chckbxGroupTask = new JCheckBox("Group task", qtask.isGroup());
-		contents.add(chckbxGroupTask, "flowx,cell 1 5");
+		contents.add(chckbxGroupTask, "flowx,cell 1 6");
+		
+		horizontalGlue = Box.createHorizontalGlue();
+		contents.add(horizontalGlue, "cell 1 0");
+		
 		if (qtask.getScale() == null) {
 			scalebox.setSelectedIndex(scalebox.getItemCount() - 1);
 		}
@@ -140,24 +172,32 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 	 * effect of cancelling any changes that were to have been made.
 	 */
 	public void reset() {
+		tfLabel.setText(target.getLabel() == null || target.getLabel().length() == 0? "Task":target.getLabel());
+		lblName.setText(tfLabel.getText() + " name");
 		tfTaskName.setText(target.getName());
 		taDescription.setText(target.getDescription());
 		taMarkerInstructions.setText(target.getMarkerInstruction());
 		
 		chckbxAllowMarkerComment.setSelected(target.hasComment());
 		chckbxGroupTask.setSelected(target.isGroup());
+		
+		validate();
 	}
 	
 	/**
 	 * Stores displayed values back into the model.
 	 */
 	public void save() {
+		String labelField = tfLabel.getText();
+		String label = (labelField == null || labelField.length() == 0? "Task":labelField);
+		target.setLabel(label);
+		lblName.setText(label + " name");
 		target.setName(tfTaskName.getText());
 		target.setDescription(taDescription.getText());
 		target.setMarkerInstruction(taMarkerInstructions.getText());
-		
 		target.setHasComment(chckbxAllowMarkerComment.isSelected());
 		target.setGroup(chckbxGroupTask.isSelected());
+		target.setScale(scalebox.getSelectedScale());
 		
 		// tell the marking scheme it's changed
 		scheme.refresh();

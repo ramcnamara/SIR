@@ -36,6 +36,9 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxBonusTask;
 	private JScrollPane scrollpane;
+	private JLabel lblLabel;
+	private JTextField tfLabel;
+	private JLabel lblName;
 
 	/**
 	 * Create the panel.
@@ -50,56 +53,68 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("debug", "[][grow]", "[][][][][][][]"));
+		contents.setLayout(new MigLayout("debug", "[][grow]", "[][][][][][][][]"));
 		
 
 		// Set up checkbox information
+		String label = "";
 		String taskName = "";
 		Float maxMark = 0.0f;
 		String description = "";
 		String markerInst = "";
 		
 		if (checkbox != null) {
-			taskName = taskName + checkbox.getName();
+			label = label + (checkbox.getLabel() == null? "": checkbox.getLabel());
+			taskName = taskName + (checkbox.getName() == null? "" : checkbox.getName());
 			maxMark += checkbox.getMaxMark();
-			description = description + checkbox.getDescription();
-			markerInst = markerInst + checkbox.getMarkerInstruction();
+			description = description + (checkbox.getDescription() == null? "": checkbox.getDescription());
+			markerInst = markerInst + (checkbox.getMarkerInstruction() == null? "" : checkbox.getMarkerInstruction());
 		}
 		
-		JLabel lblName = new JLabel("Task name");
-		contents.add(lblName, "cell 0 0,alignx trailing");
+		if (label.length() == 0)
+			label = "Task";
+		
+		lblLabel = new JLabel("Label");
+		contents.add(lblLabel, "cell 0 0,alignx trailing,aligny baseline");
+		
+		tfLabel = new JTextField(label);
+		contents.add(tfLabel, "cell 1 0,alignx left");
+		tfLabel.setColumns(10);
+		
+		lblName = new JLabel(label + " name");
+		contents.add(lblName, "cell 0 1,alignx trailing");
 
 		tfTaskName = new JTextArea(taskName);
-		contents.add(tfTaskName, "cell 1 0,growx");
+		contents.add(tfTaskName, "cell 1 1,growx");
 		tfTaskName.setColumns(10);
 
 		JLabel lblMaxMark = new JLabel("Mark");
-		contents.add(lblMaxMark, "cell 0 1,alignx trailing");
+		contents.add(lblMaxMark, "cell 0 2,alignx trailing");
 
 		tfMark = new JTextField(maxMark.toString());
-		contents.add(tfMark, "cell 1 1");
+		contents.add(tfMark, "cell 1 2");
 		tfMark.setColumns(5);
 		
 		JLabel lblDescription = new JLabel("Description");
-		contents.add(lblDescription, "cell 0 2,alignx trailing");
+		contents.add(lblDescription, "cell 0 3,alignx trailing");
 
 		taDescription = new JTextArea(description);
-		contents.add(taDescription, "cell 1 2,growx");
+		contents.add(taDescription, "cell 1 3,grow");
 		taDescription.setColumns(10);
 		
 		JLabel lblInstructionsToMarkers = new JLabel("Instructions to markers");
-		contents.add(lblInstructionsToMarkers, "cell 0 3,alignx trailing");
+		contents.add(lblInstructionsToMarkers, "cell 0 4,alignx trailing");
 
 		taMarkerInstructions = new JTextArea(markerInst);
-		contents.add(taMarkerInstructions, "cell 1 3,wmin 10,grow");
+		contents.add(taMarkerInstructions, "cell 1 4,grow");
 		taMarkerInstructions.setColumns(10);
 
 
 		chckbxGroupTask = new JCheckBox("Group task");
-		contents.add(chckbxGroupTask, "flowx,cell 1 5");
+		contents.add(chckbxGroupTask, "flowx,cell 1 6");
 		
 		chckbxBonusTask = new JCheckBox("Bonus task");
-		contents.add(chckbxBonusTask, "flowx, cell 1 6");
+		contents.add(chckbxBonusTask, "flowx,cell 1 7");
 		
 		scrollpane.setViewportView(contents);
 		add(scrollpane, "cell 0 1, growx, growy");
@@ -111,6 +126,8 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 	 * effect of cancelling any changes that were to have been made.
 	 */
 	public void reset() {
+		tfLabel.setText(target.getLabel() == null || target.getLabel().length() == 0? "Task":target.getLabel());
+		lblName.setText(tfLabel.getText() + " name");
 		tfTaskName.setText(target.getName());
 		tfMark.setText("" + target.getMaxMark());
 		taDescription.setText(target.getDescription());
@@ -118,6 +135,7 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		
 		chckbxGroupTask.setSelected(target.isGroup());
 		chckbxBonusTask.setSelected(target.getBonus());
+		validate();
 	}
 	
 	
@@ -125,6 +143,10 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 	 * Stores displayed values back into the model.
 	 */
 	public void save() {
+		String labelField = tfLabel.getText();
+		String label = (labelField == null || labelField.length() == 0? "Task":labelField);
+		target.setLabel(label);
+		lblName.setText(label + " name");
 		target.setName(tfTaskName.getText());
 		try {
 			target.setMaxMark(Float.parseFloat(tfMark.getText()));
