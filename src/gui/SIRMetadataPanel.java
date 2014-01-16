@@ -159,7 +159,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		}
 		else if (action.equals("Preamble")) {
 			preambleTextPane.setText(newValue);
-			theScheme.setSubtitle(newValue);
+			theScheme.setPreamble(newValue);
 		}
 	}
 
