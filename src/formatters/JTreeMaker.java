@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Stack;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.tree.MutableTreeNode;
@@ -27,18 +28,26 @@ import model.QTask;
 import model.Task;
 
 public class JTreeMaker implements OutputMaker {
-
+	public static final ImageIcon taskIcon = new ImageIcon(JTreeMaker.class.getResource("/resources/diamond.png"));
+	public static final ImageIcon qtaskIcon = new ImageIcon(JTreeMaker.class.getResource("/resources/square.png"));
+	public static final ImageIcon checkboxIcon = new ImageIcon(JTreeMaker.class.getResource("/resources/star.png"));
+	public static final ImageIcon criterionIcon = new ImageIcon(JTreeMaker.class.getResource("/resources/circle.png"));
+	public static final ImageIcon schemeIcon = new ImageIcon(JTreeMaker.class.getResource("/resources/diamond.png"));
+	
 	public class Node implements MutableTreeNode {
+		
 		public final String id;
+		private ImageIcon icon;
 		private MutableTreeNode parent;
 		private ArrayList<MutableTreeNode> children;
 		private Object userObject;
 
-		Node(String id, Node parent, Object userObject) {
+		Node(String id, Node parent, Object userObject, ImageIcon icon) {
 			this.id = id;
 			this.parent = parent;
 			this.userObject = userObject;
 			children = new ArrayList<MutableTreeNode>();
+			this.icon = icon;
 		}
 		
 		public ComplexTask getParentTask() {
@@ -53,6 +62,10 @@ public class JTreeMaker implements OutputMaker {
 			if (userObject == null)
 				return "";
 			return userObject.toString();
+		}
+		
+		public ImageIcon getIcon() {
+			return icon;
 		}
 
 		@Override
@@ -152,7 +165,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doCheckbox(Checkbox checkbox) {
 		Node parent = path.pop();
 		String idstr = (++tasknum).toString();
-		parent.add(new Node(idstr, parent, checkbox));
+		parent.add(new Node(idstr, parent, checkbox, checkboxIcon));
 		path.push(parent);
 		panel.add(new CheckboxPanel(checkbox, parent.getMark()), idstr);
 	}
@@ -165,7 +178,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doCriterion(Criterion criterion) {
 		Node parent = path.pop();
 		String uuid = parent.getId();
-		parent.add(new Node(uuid, parent, criterion));
+		parent.add(new Node(uuid, parent, criterion, criterionIcon));
 		path.push(parent);
 		lastcard.addCriterion(criterion);
 	}
@@ -178,7 +191,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doQTask(QTask qtask) {
 		Node parent = path.pop();
 		String idstr = (++tasknum).toString();
-		Node child = new Node(idstr, parent, qtask);
+		Node child = new Node(idstr, parent, qtask, qtaskIcon);
 		parent.add(child);
 		path.push(parent);
 		path.push(child);
@@ -196,7 +209,7 @@ public class JTreeMaker implements OutputMaker {
 	public void doTask(Task task) {
 		Node parent = path.pop();
 		String idstr = (++tasknum).toString();
-		Node child = new Node(idstr, parent, task);
+		Node child = new Node(idstr, parent, task, taskIcon);
 		parent.add(child);
 		path.push(parent);
 		path.push(child);
@@ -214,7 +227,7 @@ public class JTreeMaker implements OutputMaker {
 	@Override
 	public void doScheme(MarkingScheme markingScheme) {
 		this.scheme = markingScheme;
-		root = new Node("0", null, markingScheme.getActivityName());
+		root = new Node("0", null, markingScheme.getActivityName(), schemeIcon);
 		path.push(root);
 
 		for (Mark m : markingScheme.getSubtasks()) {
@@ -232,6 +245,7 @@ public class JTreeMaker implements OutputMaker {
 		JTree tree = new JTree(root);
 		tree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
+		tree.setCellRenderer(new SIRTreeCellRenderer());
 
 		return tree;
 	}
