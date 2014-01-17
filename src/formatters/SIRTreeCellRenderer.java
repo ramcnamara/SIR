@@ -9,6 +9,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 public class SIRTreeCellRenderer extends DefaultTreeCellRenderer {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel label = new JLabel();
 
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
