@@ -23,7 +23,7 @@ import model.SubtaskTypeException;
 import model.Task;
 import net.miginfocom.swing.MigLayout;
 import formatters.tree.JTreeMaker;
-import formatters.tree.JTreeMaker.Node;
+import formatters.tree.SIRNode;
 import gui.cards.Card;
 
 import javax.swing.event.TreeSelectionEvent;
@@ -110,7 +110,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	 * Respond to TreeSelectionEvents by showing the task selected in the tree.
 	 */
 	public void valueChanged(TreeSelectionEvent e) {
-		JTreeMaker.Node node = (Node) e.getNewLeadSelectionPath().getLastPathComponent();
+		SIRNode node = (SIRNode) e.getNewLeadSelectionPath().getLastPathComponent();
 		parent = node.getParentTask();
 		task = node.getMark();
 		((CardLayout) cardArea.getLayout()).show(cardArea, node.getId());
