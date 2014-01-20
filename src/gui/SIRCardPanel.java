@@ -22,8 +22,8 @@ import model.QTask;
 import model.SubtaskTypeException;
 import model.Task;
 import net.miginfocom.swing.MigLayout;
-import formatters.JTreeMaker;
-import formatters.JTreeMaker.Node;
+import formatters.tree.JTreeMaker;
+import formatters.tree.JTreeMaker.Node;
 import gui.cards.Card;
 
 import javax.swing.event.TreeSelectionEvent;

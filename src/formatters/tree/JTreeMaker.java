@@ -1,4 +1,4 @@
-package formatters;
+package formatters.tree;
 
 import gui.cards.CheckboxPanel;
 import gui.cards.CriterionContainer;
@@ -13,7 +13,6 @@ import java.util.Stack;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.JTree;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreeSelectionModel;
@@ -239,10 +238,10 @@ public class JTreeMaker implements OutputMaker {
 	public void endScheme(MarkingScheme markingScheme) {
 	}
 
-	public JTree getJTree() {
+	public SIRTree getJTree() {
 		if (root == null)
 			return null;
-		JTree tree = new JTree(root);
+		SIRTree tree = new SIRTree(root);
 		tree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.setCellRenderer(new SIRTreeCellRenderer());

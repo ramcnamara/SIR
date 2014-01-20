@@ -9,7 +9,7 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.event.TreeSelectionListener;
 
 import model.MarkingScheme;
-import formatters.JTreeMaker;
+import formatters.tree.JTreeMaker;
 
 /**
  * This class is a ScrollPane that wraps a JTree displaying the marking

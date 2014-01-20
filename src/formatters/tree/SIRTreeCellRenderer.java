@@ -1,4 +1,4 @@
-package formatters;
+package formatters.tree;
 
 import java.awt.Component;
 
