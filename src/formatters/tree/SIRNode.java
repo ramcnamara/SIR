@@ -1,8 +1,5 @@
 package formatters.tree;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +12,7 @@ import javax.swing.tree.TreeNode;
 import model.ComplexTask;
 import model.Mark;
 
-public class SIRNode implements MutableTreeNode, Transferable {
+public class SIRNode implements MutableTreeNode {
 	
 	public final String id;
 	private ImageIcon icon;
@@ -132,27 +129,5 @@ public class SIRNode implements MutableTreeNode, Transferable {
 		if (userObject != null && userObject instanceof Mark)
 			return (Mark)userObject;
 		return null;
-	}
-
-	/*
-	 * Methods from Transferable
-	 */
-	@Override
-	public Object getTransferData(DataFlavor arg0)
-			throws UnsupportedFlavorException, IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public DataFlavor[] getTransferDataFlavors() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isDataFlavorSupported(DataFlavor arg0) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
