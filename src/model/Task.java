@@ -185,6 +185,8 @@ public class Task extends ComplexTask {
 
 	@Override
 	public void insertSubtask(int index, Mark subtask) {
+		if (subtasks == null)
+			subtasks = new ArrayList<Mark>();
 		subtasks.add(index, subtask);		
 	}
 

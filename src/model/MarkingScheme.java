@@ -205,5 +205,9 @@ public class MarkingScheme extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+
+	public void removeTask(Mark theMark) {
+		tasks.remove(theMark);		
+	}
 }
 

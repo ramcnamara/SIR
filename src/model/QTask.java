@@ -175,8 +175,11 @@ public class QTask extends ComplexTask implements CriterionReferenced,
 	@Override
 	public void insertSubtask(int index, Mark subtask)
 			throws SubtaskTypeException {
-		if (subtask instanceof QTask)
+		if (subtask instanceof QTask) {
+			if (subtasks == null)
+				subtasks = new ArrayList<QTask>();
 			subtasks.add(index, (QTask) subtask);
+		}
 		throw new SubtaskTypeException();
 	}
 

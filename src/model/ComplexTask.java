@@ -85,6 +85,8 @@ public abstract class ComplexTask extends Mark {
 	 * @param c the criterion to be added
 	 */
 	public void insertCriterion(int index, Criterion c) {
+		if (criteria == null)
+			criteria = new ArrayList<Criterion>();
 		criteria.add(index, c);
 	}
 	

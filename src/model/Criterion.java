@@ -145,8 +145,9 @@ public class Criterion extends Mark implements CriterionReferenced {
 	@Override
 	public Criterion clone() {
 		Criterion newCriterion = new Criterion(getName(), getScale());
-		newCriterion.setMarkerInstruction(getMarkerInstruction());
-		newCriterion.setDescription(getDescription());
+		newCriterion.setName(name);
+		newCriterion.setMarkerInstruction(markerInstruction);
+		newCriterion.setDescription(description);
 		
 		return newCriterion;
 	}
