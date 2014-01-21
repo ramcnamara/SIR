@@ -201,25 +201,24 @@ public class Task extends ComplexTask {
 	@Override
 	public Task clone() {
 		Task newTask = new Task();
+		if (subtasks != null)
+			for (Mark t : subtasks)
+				try {
+					newTask.addSubtask(t.clone());
+				} catch (SubtaskTypeException e) {
+					// This shouldn't happen unless something's gone wrong.
+					// Should be able to add anything to a Task.
+					e.printStackTrace();
+				}
+		
+		if (criteria != null)
+			for (Criterion c : criteria)
+				newTask.addCriterion(c.clone());
+
+		newTask.setName(name);
 		newTask.setMaxMark(maxMark);
-		newTask.setBonus(bonus);
-		newTask.setGroup(group);
 		newTask.setDescription(description);
 		newTask.setMarkerInstruction(markerInstruction);
-		
-		for (Criterion c:criteria) {
-			newTask.addCriterion(c.clone());
-		}
-		
-		for (Mark m: subtasks) {
-			try {
-				newTask.addSubtask(m);
-			} catch (SubtaskTypeException e) {
-				// Really shouldn't happen, because you can add any subtask type to a Task
-				e.printStackTrace();
-			}
-		}
-		
 		return newTask;
 	}
 }

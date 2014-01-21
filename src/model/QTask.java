@@ -12,28 +12,28 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * A QTask is a qualitative Task.  It can have qualitatively-marked subtasks but not 
- * numerically-marked subtasks.  It may have a Scale for qualitative marking, but this is
- * optional.  It may also have subcriteria.
+ * A QTask is a qualitative Task. It can have qualitatively-marked subtasks but
+ * not numerically-marked subtasks. It may have a Scale for qualitative marking,
+ * but this is optional. It may also have subcriteria.
  * 
  * 
  * @author Robyn
- *
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QualitativeType")
-public class QTask extends ComplexTask implements CriterionReferenced {
+public class QTask extends ComplexTask implements CriterionReferenced,
+		Cloneable {
 
 	private static final long serialVersionUID = 8196928245062238063L;
 
-	@XmlElementWrapper(name="Subtasks", required=false)
-	@XmlElement(name="QTask", type=QTask.class)
+	@XmlElementWrapper(name = "Subtasks", required = false)
+	@XmlElement(name = "QTask", type = QTask.class)
 	private ArrayList<QTask> subtasks;
-	
-	@XmlElement(name="Scale", required=false, nillable=false)
+
+	@XmlElement(name = "Scale", required = false, nillable = false)
 	@XmlJavaTypeAdapter(ScaleAdapter.class)
 	private Scale scale;
-
 
 	@Override
 	/**
@@ -47,8 +47,9 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 			subtasks = new ArrayList<QTask>();
 		// Check that prospective subtask is qualitative
 		if (task instanceof QTask)
-			subtasks.add((QTask)task);
-		else throw new SubtaskTypeException();
+			subtasks.add((QTask) task);
+		else
+			throw new SubtaskTypeException();
 	}
 
 	@Override
@@ -61,16 +62,16 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	public void makeOutput(OutputMaker om) {
 		om.doQTask(this);
 		if (criteria != null) {
-			for (Criterion c: criteria)
+			for (Criterion c : criteria)
 				c.makeOutput(om);
 		}
 		if (subtasks != null)
-			for (QTask qt: subtasks)
+			for (QTask qt : subtasks)
 				qt.makeOutput(om);
 		om.endQTask(this);
-		
+
 	}
-	
+
 	/**
 	 * Default constructor, required by JAXB
 	 */
@@ -91,7 +92,8 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	/**
 	 * Mutator for scale.
 	 * 
-	 * @param scale the new scale
+	 * @param scale
+	 *            the new scale
 	 */
 	public void setScale(Scale scale) {
 		this.scale = scale;
@@ -115,11 +117,11 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	 */
 	public List<Mark> getSubtasks() {
 		ArrayList<Mark> newList = new ArrayList<Mark>();
-		for (QTask qt: subtasks)
+		for (QTask qt : subtasks)
 			newList.add(qt);
 		return Collections.unmodifiableList(newList);
 	}
-	
+
 	@Override
 	/**
 	 * The String representation of any task is its name.  If
@@ -146,56 +148,59 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	}
 
 	/**
-	 * Remove and return the idx'th task in the subtask list.
-	 * Returns null if given an invalid index.
+	 * Remove and return the idx'th task in the subtask list. Returns null if
+	 * given an invalid index.
 	 * 
-	 * @param idx the index of the subtask to remove
+	 * @param idx
+	 *            the index of the subtask to remove
 	 */
 	@Override
 	public Mark removeSubtask(int idx) {
 		return subtasks.remove(idx);
 	}
 
-	
 	@Override
 	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
 		if (childTask instanceof Criterion)
-			insertCriterion(index, (Criterion)childTask);
-		
+			insertCriterion(index, (Criterion) childTask);
+
 		else if (childTask instanceof QTask)
-			insertSubtask(index, (QTask)childTask);
-		
+			insertSubtask(index, (QTask) childTask);
+
 		else
 			throw new SubtaskTypeException();
-		
+
 	}
 
 	@Override
-	public void insertSubtask(int index, Mark subtask) throws SubtaskTypeException {
+	public void insertSubtask(int index, Mark subtask)
+			throws SubtaskTypeException {
 		if (subtask instanceof QTask)
-			subtasks.add(index, (QTask)subtask);	
+			subtasks.add(index, (QTask) subtask);
 		throw new SubtaskTypeException();
 	}
 
 	@Override
 	public QTask clone() {
 		QTask newTask = new QTask();
-		for (QTask qt:subtasks)
-			try {
-				newTask.addSubtask(qt.clone());
-			} catch (SubtaskTypeException e) {
-				// This shouldn't happen unless something's gone seriously wrong.
-				// We are inserting QTask subtasks into a QTask; should be legal.
-				e.printStackTrace();
-			}
+		if (subtasks != null)
+			for (Mark qt : subtasks)
+				try {
+					newTask.addSubtask(qt.clone());
+				} catch (SubtaskTypeException e) {
+					// This shouldn't happen unless something's gone wrong.
+					// We are inserting QTasks under a QTask; should be OK
+					e.printStackTrace();
+				}
 		
-		for (Criterion c: criteria)
-			newTask.addCriterion(c.clone());
-		
+		if (criteria != null)
+			for (Criterion c : criteria)
+				newTask.addCriterion(c.clone());
+
+		newTask.setName(name);
 		newTask.setScale(scale);
 		newTask.setDescription(description);
 		newTask.setMarkerInstruction(markerInstruction);
-		
 		return newTask;
 	}
 
