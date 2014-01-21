@@ -178,4 +178,45 @@ public class Task extends ComplexTask {
 			return null;
 		return subtasks.remove(idx);
 	}
+
+
+	@Override
+	public void insertSubtask(int index, Mark subtask) {
+		subtasks.add(index, subtask);		
+	}
+
+
+	@Override
+	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
+		if (childTask instanceof Criterion)
+			insertCriterion(index, (Criterion)childTask);
+		
+		insertSubtask(index, childTask);		
+	}
+
+
+	@Override
+	public Task clone() {
+		Task newTask = new Task();
+		newTask.setMaxMark(maxMark);
+		newTask.setBonus(bonus);
+		newTask.setGroup(group);
+		newTask.setDescription(description);
+		newTask.setMarkerInstruction(markerInstruction);
+		
+		for (Criterion c:criteria) {
+			newTask.addCriterion(c.clone());
+		}
+		
+		for (Mark m: subtasks) {
+			try {
+				newTask.addSubtask(m);
+			} catch (SubtaskTypeException e) {
+				// Really shouldn't happen, because you can add any subtask type to a Task
+				e.printStackTrace();
+			}
+		}
+		
+		return newTask;
+	}
 }

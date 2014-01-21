@@ -83,4 +83,18 @@ public class Checkbox extends Mark {
 		return getName();
 	}
 
+	@Override
+	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
+		throw new SubtaskTypeException();
+	}
+
+	@Override
+	public Mark clone() {
+		// TODO Auto-generated method stub
+		Checkbox newBox = new Checkbox();
+		newBox.setBonus(bonus);
+		newBox.setMaxMark(maxMark);
+		return newBox;
+	}
+
 }

@@ -76,6 +76,18 @@ public abstract class ComplexTask extends Mark {
 	
 	
 	/**
+	 * Insert a new Criterion at a specific point in the list.
+	 * This method is used for reordering criteria.
+	 * 
+	 * @param index the index for the new criterion
+	 * @param c the criterion to be added
+	 */
+	public void insertCriterion(int index, Criterion c) {
+		criteria.add(index, c);
+	}
+	
+	
+	/**
 	 * Move the criterion initially at startIndex by the number of positions given by offset.
 	 * 
 	 * @param startIndex initial position of the item to move
@@ -107,6 +119,12 @@ public abstract class ComplexTask extends Mark {
 	 */
 	public void setHasComment(boolean hasComment) {
 		this.hasComment = hasComment;
+	}
+	
+	public abstract void insertSubtask(int index, Mark subtask) throws SubtaskTypeException;
+	public void removeCriterion(Mark theMark) {
+		criteria.remove(theMark);
+		
 	}
 
 }

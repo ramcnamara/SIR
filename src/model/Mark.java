@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 		ComplexTask.class,
 		Criterion.class
 })
-public abstract class Mark {
+public abstract class Mark implements Cloneable {
 
 	@XmlElement(name="Name", required=true, nillable=false)
 	protected String name;
@@ -177,4 +177,8 @@ public abstract class Mark {
 	}
 	
 	public abstract String toString();
+
+	public abstract void insertAt(int index, Mark childTask) throws SubtaskTypeException;
+	
+	public abstract Mark clone();
 }

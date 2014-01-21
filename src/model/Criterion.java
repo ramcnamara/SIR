@@ -134,4 +134,19 @@ public class Criterion extends Mark implements CriterionReferenced {
 	public String toString() {
 		return getName();
 	}
+
+	@Override
+	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
+		throw new SubtaskTypeException();
+		
+	}
+
+	@Override
+	public Criterion clone() {
+		Criterion newCriterion = new Criterion(getName(), getScale());
+		newCriterion.setMarkerInstruction(getMarkerInstruction());
+		newCriterion.setDescription(getDescription());
+		
+		return newCriterion;
+	}
 }

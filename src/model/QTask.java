@@ -153,4 +153,47 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 		return subtasks.remove(idx);
 	}
 
+	
+	@Override
+	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
+		if (childTask instanceof Criterion)
+			insertCriterion(index, (Criterion)childTask);
+		
+		else if (childTask instanceof QTask)
+			insertSubtask(index, (QTask)childTask);
+		
+		else
+			throw new SubtaskTypeException();
+		
+	}
+
+	@Override
+	public void insertSubtask(int index, Mark subtask) throws SubtaskTypeException {
+		if (subtask instanceof QTask)
+			subtasks.add(index, (QTask)subtask);	
+		throw new SubtaskTypeException();
+	}
+
+	@Override
+	public QTask clone() {
+		QTask newTask = new QTask();
+		for (QTask qt:subtasks)
+			try {
+				newTask.addSubtask(qt.clone());
+			} catch (SubtaskTypeException e) {
+				// This shouldn't happen unless something's gone seriously wrong.
+				// We are inserting QTask subtasks into a QTask; should be legal.
+				e.printStackTrace();
+			}
+		
+		for (Criterion c: criteria)
+			newTask.addCriterion(c.clone());
+		
+		newTask.setScale(scale);
+		newTask.setDescription(description);
+		newTask.setMarkerInstruction(markerInstruction);
+		
+		return newTask;
+	}
+
 }
