@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name="Checkbox")
 public class Checkbox extends Mark {
 	
+	private static final long serialVersionUID = -2323175496709406435L;
+
 	@XmlAttribute
 	private float maxMark;
 	
@@ -90,10 +92,11 @@ public class Checkbox extends Mark {
 
 	@Override
 	public Mark clone() {
-		// TODO Auto-generated method stub
 		Checkbox newBox = new Checkbox();
 		newBox.setBonus(bonus);
 		newBox.setMaxMark(maxMark);
+		newBox.setName(name);
+		newBox.setGroup(group);
 		return newBox;
 	}
 

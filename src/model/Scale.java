@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,13 +19,12 @@ import java.util.List;
  * @author ram
  *
  */
-public class Scale {
+public class Scale implements Serializable {
 	
 	/**
 	 * Set of all unique rating schemes.
 	 */
 	private static ArrayList<Scale> schemes = new ArrayList<Scale>();
-	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 1L;
 	
 	/**

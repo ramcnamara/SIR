@@ -26,6 +26,9 @@ import javax.xml.bind.annotation.XmlType;
  *
  */
 public class Task extends ComplexTask {
+
+	private static final long serialVersionUID = -3343401615567901898L;
+
 	@XmlElementWrapper(name="Subtasks", required=false, nillable=false)
 	@XmlElements({ @XmlElement(name="Task", type=Task.class),
 		@XmlElement(name="QTask", type=QTask.class),

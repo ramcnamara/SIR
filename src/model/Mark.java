@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -24,7 +26,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 		ComplexTask.class,
 		Criterion.class
 })
-public abstract class Mark implements Cloneable {
+public abstract class Mark implements Cloneable, Serializable {
+
+	private static final long serialVersionUID = 2644920807147460137L;
 
 	@XmlElement(name="Name", required=true, nillable=false)
 	protected String name;

@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name="Criterion")
 public class Criterion extends Mark implements CriterionReferenced {
 	
+	private static final long serialVersionUID = -3497740853288213985L;
 	@XmlElement(name="Scale")
 	@XmlJavaTypeAdapter(ScaleAdapter.class)
 	private Scale scale;

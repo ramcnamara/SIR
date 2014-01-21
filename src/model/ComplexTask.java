@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 public abstract class ComplexTask extends Mark {
 	
+	private static final long serialVersionUID = -5481059819688917260L;
+
 	/* ComplexTasks may have criteria, which in the XML representation will be wrapped in
 	 * a Criteria element. 
 	 */
