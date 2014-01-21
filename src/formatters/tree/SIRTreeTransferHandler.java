@@ -14,6 +14,7 @@ import model.Checkbox;
 import model.ComplexTask;
 import model.Criterion;
 import model.Mark;
+import model.MarkingScheme;
 import model.SubtaskTypeException;
 import model.Task;
 
@@ -105,15 +106,37 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		}
 		
 		Mark childTask = node.getMark().clone();
+		MarkingScheme scheme = null;
+		Component c = supp.getComponent();
+		if (c instanceof SIRTree)
+			scheme = ((SIRTree) c).getMarkingScheme();
+			
 		
 		SIRNode parentNode = (SIRNode)path.getLastPathComponent();
-		if (parentNode == null)
-			System.out.println("Null parent!  Insert at root?");
-		int index = loc.getChildIndex();
-		if (index == -1)
-			index = parentNode.getChildCount();
+		if (parentNode == null) {
+			if (scheme != null) {
+				scheme.add(childTask);
+				return true;
+			}
+		}
 		
 		Mark parentTask = parentNode.getMark();
+		int index = loc.getChildIndex();
+		if (index == -1) {
+			// dropped on the path, insert at end
+			index = parentNode.getChildCount();
+		}
+		
+		// Are we dealing with a criterion?
+		if (childTask instanceof Criterion && parentTask instanceof ComplexTask) {
+			((ComplexTask)parentTask).insertCriterion(index, (Criterion)childTask);
+			if (scheme != null)
+				scheme.refresh();
+			return true;
+		}
+		
+
+		// we have a Checkbox, Task or QTask
 		try {
 			parentTask.insertAt(index, childTask);
 		} catch (SubtaskTypeException ex) {
@@ -121,19 +144,18 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			return false;
 		}
 		
-		Component c = supp.getComponent();
-		if (c instanceof SIRTree)
-			((SIRTree)c).getMarkingScheme().refresh();
-		else
-			System.out.println("Not a tree. (?!)");
+		scheme.refresh();
 		return true;
 	}
 	
 	@Override
 	public void exportDone(JComponent source, Transferable data, int action) {
 		
-		// Nothing to do if it was a copy
-		if (action != MOVE) 
+		// Nothing to do if it was a copy or null action
+		if (action == COPY) 
+			return;
+		
+		if (action == NONE)
 			return;
 		
 		// It was a move, so delete node from its current position
