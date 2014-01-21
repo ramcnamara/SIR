@@ -10,7 +10,6 @@ import java.util.Stack;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.tree.TreeSelectionModel;
 
 import model.Checkbox;
 import model.Criterion;
@@ -115,10 +114,7 @@ public class JTreeMaker implements OutputMaker {
 	public SIRTree getJTree() {
 		if (root == null)
 			return null;
-		SIRTree tree = new SIRTree(root);
-		tree.getSelectionModel().setSelectionMode(
-				TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tree.setCellRenderer(new SIRTreeCellRenderer());
+		SIRTree tree = new SIRTree(root, scheme);
 
 		return tree;
 	}
