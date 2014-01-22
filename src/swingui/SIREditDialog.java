@@ -1,4 +1,4 @@
-package gui;
+package swingui;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;

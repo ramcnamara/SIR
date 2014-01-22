@@ -1,4 +1,4 @@
-package gui.xml;
+package swingui.xml;
 
 import java.awt.Color;
 import java.awt.Graphics;

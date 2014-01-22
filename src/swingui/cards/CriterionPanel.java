@@ -1,4 +1,4 @@
-package gui.cards;
+package swingui.cards;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,16 +1,15 @@
 package formatters.tree;
 
-import gui.cards.CheckboxPanel;
-import gui.cards.CriterionContainer;
-import gui.cards.QTaskPanel;
-import gui.cards.TaskPanel;
-
 import java.awt.CardLayout;
 import java.util.Stack;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import swingui.cards.CheckboxPanel;
+import swingui.cards.CriterionContainer;
+import swingui.cards.QTaskPanel;
+import swingui.cards.TaskPanel;
 import model.Checkbox;
 import model.Criterion;
 import model.Mark;

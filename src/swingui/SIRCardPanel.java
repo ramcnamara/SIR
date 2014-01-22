@@ -1,4 +1,4 @@
-package gui;
+package swingui;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -24,11 +24,12 @@ import model.Task;
 import net.miginfocom.swing.MigLayout;
 import formatters.tree.JTreeMaker;
 import formatters.tree.SIRNode;
-import gui.cards.Card;
 
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.JSeparator;
+
+import swingui.cards.Card;
 /**
  * The SIRCardPanel is responsible for displaying the Tasks, QTasks, and Checkboxes
  * that comprise SIR's data model.  It also allows the user to perform task-level

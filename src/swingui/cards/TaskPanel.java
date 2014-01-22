@@ -1,4 +1,4 @@
-package gui.cards;
+package swingui.cards;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;

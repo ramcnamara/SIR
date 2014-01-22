@@ -1,4 +1,4 @@
-package gui;
+package swingui;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

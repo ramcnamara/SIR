@@ -1,6 +1,4 @@
-package gui;
-import gui.xml.XmlTextPane;
-
+package swingui;
 import java.io.StringWriter;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 
+import swingui.xml.XmlTextPane;
 import model.MarkingScheme;
 
 public class SIRXmlPanel extends JPanel implements Observer {
