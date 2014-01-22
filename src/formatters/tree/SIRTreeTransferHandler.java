@@ -23,7 +23,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 
 	private SIRTree tree;
 	private SIRNode mover = null;
-	private SIRNode parent = null;
 	
 	public SIRTreeTransferHandler(SIRTree tree) {
 		super();
@@ -47,10 +46,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	public Transferable createTransferable(JComponent c) {
 		TreePath path = tree.getSelectionPath();
 		mover = (SIRNode) path.getLastPathComponent();
-
-		if (mover == null)
-			parent = null;
-		else parent = (SIRNode) path.getParentPath().getLastPathComponent();
 		return mover;
 	}
 
@@ -110,7 +105,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		}
 		
 		JTree.DropLocation loc = (JTree.DropLocation) supp.getDropLocation();
-		TreePath path = loc.getPath();
 		
 		Transferable data = supp.getTransferable();
 		
@@ -129,23 +123,25 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		if (tree != null)
 			scheme = tree.getMarkingScheme();
 			
-		if (parent == null) {
+		// find destination node
+		SIRNode dest = (SIRNode) loc.getPath().getLastPathComponent();
+		if (dest == null) {
 			if (scheme != null) {
 				scheme.add(childTask);
 				return true;
 			}
 		}
 		
-		Mark parentTask = parent.getMark();
+		Mark newParentTask = dest.getMark();
 		int index = loc.getChildIndex();
 		if (index == -1) {
 			// dropped on the path, insert at end
-			index = parent.getChildCount();
+			index = dest.getChildCount();
 		}
 		
 		// Are we dealing with a criterion?
-		if (childTask instanceof Criterion && parentTask instanceof ComplexTask) {
-			((ComplexTask)parentTask).insertCriterion(index, (Criterion)childTask);
+		if (childTask instanceof Criterion && newParentTask instanceof ComplexTask) {
+			((ComplexTask)newParentTask).insertCriterion(index, (Criterion)childTask);
 			if (scheme != null)
 				scheme.refresh();
 			return true;
@@ -154,7 +150,7 @@ final class SIRTreeTransferHandler extends TransferHandler {
 
 		// we have a Checkbox, Task or QTask
 		try {
-			parentTask.insertAt(index, childTask);
+			newParentTask.insertAt(index, childTask);
 		} catch (SubtaskTypeException ex) {
 			return false;
 		}
