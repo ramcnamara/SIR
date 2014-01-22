@@ -40,6 +40,15 @@ public class Criterion extends Mark implements CriterionReferenced {
 
 
 	/**
+	 * Copy constructor
+	 * @param c the Criterion to be copied
+	 */
+	public Criterion(Criterion c) {
+		super(c);
+		scale = c.getScale();
+	}
+
+	/**
 	 * Accessor for scale.
 	 * 
 	 * @return this criterion's rating scale
@@ -142,13 +151,12 @@ public class Criterion extends Mark implements CriterionReferenced {
 		
 	}
 
+	/**
+	 * Generates a clone of the current object by calling the copy constructor.
+	 * Allows copy-constructor cloning via polymorphism.
+	 */
 	@Override
-	public Criterion clone() {
-		Criterion newCriterion = new Criterion(getName(), getScale());
-		newCriterion.setName(name);
-		newCriterion.setMarkerInstruction(markerInstruction);
-		newCriterion.setDescription(description);
-		
-		return newCriterion;
+	public Mark getCopy() {
+		return new Criterion(this);
 	}
 }

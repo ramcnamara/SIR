@@ -124,7 +124,7 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			return false;
 		}
 		
-		Mark childTask = node.getMark().clone();
+		Mark childTask = node.getMark().getCopy();
 		MarkingScheme scheme = null;
 		if (tree != null)
 			scheme = tree.getMarkingScheme();

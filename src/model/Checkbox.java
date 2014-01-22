@@ -21,6 +21,24 @@ public class Checkbox extends Mark {
 	@XmlAttribute
 	private boolean bonus;
 
+	/**
+	 * Copy constructor.
+	 * 
+	 * @param old the Checkbox to copy
+	 */
+	public Checkbox(Checkbox old) {
+		super(old);
+		
+		bonus = old.getBonus();
+		maxMark = old.getMaxMark();
+	}
+	
+	/**
+	 * Default constructor, required by JAXB
+	 */
+	public Checkbox() {
+	}
+
 	@Override
 	/**
 	 * Callback for output creation classes.
@@ -90,14 +108,12 @@ public class Checkbox extends Mark {
 		throw new SubtaskTypeException();
 	}
 
+	/**
+	 * Generates a clone of the current object by calling the copy constructor.
+	 * Allows copy-constructor cloning via polymorphism.
+	 */
 	@Override
-	public Mark clone() {
-		Checkbox newBox = new Checkbox();
-		newBox.setBonus(bonus);
-		newBox.setMaxMark(maxMark);
-		newBox.setName(name);
-		newBox.setGroup(group);
-		return newBox;
+	public Mark getCopy() {
+		return new Checkbox(this);
 	}
-
 }

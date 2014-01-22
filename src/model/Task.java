@@ -45,6 +45,28 @@ public class Task extends ComplexTask {
 	@XmlAttribute
 	private boolean bonus;
 	
+	
+	/**
+	 * Copy constructor, required by JAXB
+	 * 
+	 * @param old the Task to be copied
+	 */
+	public Task(Task old) {
+		super(old);
+		
+		bonus = old.getBonus();
+		maxMark = old.getMaxMark();
+		
+		if (old.subtasks != null)
+			for (Mark m: old.subtasks)
+				try {
+					addSubtask(m.getCopy());
+				} catch (SubtaskTypeException e) {
+					// Can't happen, you can add anything to a Task
+					e.printStackTrace();
+				}
+	}
+	
 	@Override
 	/**
 	 * Creates and returns an unmodifiable copy of this Task's subtasks.
@@ -199,28 +221,12 @@ public class Task extends ComplexTask {
 		insertSubtask(index, childTask);		
 	}
 
-
 	@Override
-	public Task clone() {
-		Task newTask = new Task();
-		if (subtasks != null)
-			for (Mark t : subtasks)
-				try {
-					newTask.addSubtask(t.clone());
-				} catch (SubtaskTypeException e) {
-					// This shouldn't happen unless something's gone wrong.
-					// Should be able to add anything to a Task.
-					e.printStackTrace();
-				}
-		
-		if (criteria != null)
-			for (Criterion c : criteria)
-				newTask.addCriterion(c.clone());
-
-		newTask.setName(name);
-		newTask.setMaxMark(maxMark);
-		newTask.setDescription(description);
-		newTask.setMarkerInstruction(markerInstruction);
-		return newTask;
+	/**
+	 * Generates a clone of the current object by calling the copy constructor.
+	 * Allows copy-constructor cloning via polymorphism.
+	 */
+	public Mark getCopy() {
+		return new Task(this);
 	}
 }

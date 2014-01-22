@@ -22,8 +22,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "QualitativeType")
-public class QTask extends ComplexTask implements CriterionReferenced,
-		Cloneable {
+public class QTask extends ComplexTask implements CriterionReferenced {
 
 	private static final long serialVersionUID = 8196928245062238063L;
 
@@ -78,6 +77,31 @@ public class QTask extends ComplexTask implements CriterionReferenced,
 	public QTask() {
 		this.scale = null;
 		this.subtasks = null;
+		
+		// default values
+		this.hasComment = true;
+		this.label = "Task";
+	}
+	
+	/**
+	 * Copy constructor
+	 * 
+	 * @param old
+	 */
+	public QTask(QTask old) {
+		super(old);
+		
+		if (old.subtasks != null)
+			for (QTask q:old.subtasks)
+				try {
+					addSubtask(new QTask(q));
+				} catch (SubtaskTypeException e) {
+					// Can only happen if somebody has either been using reflection
+					// to get around type restrictions, or sorcery.
+					e.printStackTrace();
+				}
+		
+		scale = old.getScale();
 	}
 
 	/**
@@ -183,28 +207,13 @@ public class QTask extends ComplexTask implements CriterionReferenced,
 		else throw new SubtaskTypeException();
 	}
 
+	/**
+	 * Generates a clone of the current object by calling the copy constructor.
+	 * Allows copy-constructor cloning via polymorphism.
+	 */
 	@Override
-	public QTask clone() {
-		QTask newTask = new QTask();
-		if (subtasks != null)
-			for (Mark qt : subtasks)
-				try {
-					newTask.addSubtask(qt.clone());
-				} catch (SubtaskTypeException e) {
-					// This shouldn't happen unless something's gone wrong.
-					// We are inserting QTasks under a QTask; should be OK
-					e.printStackTrace();
-				}
-		
-		if (criteria != null)
-			for (Criterion c : criteria)
-				newTask.addCriterion(c.clone());
-
-		newTask.setName(name);
-		newTask.setScale(scale);
-		newTask.setDescription(description);
-		newTask.setMarkerInstruction(markerInstruction);
-		return newTask;
+	public Mark getCopy() {
+		// TODO Auto-generated method stub
+		return new QTask(this);
 	}
-
 }

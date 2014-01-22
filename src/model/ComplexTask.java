@@ -39,6 +39,28 @@ public abstract class ComplexTask extends Mark {
 	@XmlAttribute
 	protected boolean hasComment;
 	
+	/**
+	 * Default constructor.  Should be called only from subclasses, so is protected.
+	 */
+	protected ComplexTask() {
+		hasComment = true;
+	}
+	
+	
+	/**
+	 * Copy constructor
+	 * 
+	 * @param old the ComplexTask to be copied
+	 */
+	public ComplexTask(ComplexTask old) {
+		super(old);
+		
+		if (old.criteria != null)
+			for (Criterion c: criteria)
+				addCriterion(new Criterion(c));
+	}
+	
+	
 	public abstract List<Mark> getSubtasks(); 
 	public abstract void addSubtask(Mark task) throws SubtaskTypeException;
 	public abstract Mark removeSubtask(Mark task);

@@ -26,11 +26,15 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 		ComplexTask.class,
 		Criterion.class
 })
-public abstract class Mark implements Cloneable, Serializable {
+public abstract class Mark implements Serializable {
 
+	protected Mark() {
+		
+	}
+	
 	private static final long serialVersionUID = 2644920807147460137L;
 
-	@XmlElement(name="Name", required=true, nillable=false)
+	@XmlElement(name="Name", required=true, nillable=true)
 	protected String name;
 	
 	@XmlElement(name="Description", required=false, nillable=false)
@@ -44,6 +48,14 @@ public abstract class Mark implements Cloneable, Serializable {
 	
 	@XmlAttribute
 	protected boolean group;
+
+	public Mark(Mark old) {
+		description = old.getDescription();
+		group = old.isGroup();
+		label = old.getLabel();
+		markerInstruction = old.getMarkerInstruction();
+		name = old.getName();
+	}
 
 	// Subclasses of Mark need to be able to tell an OutputMaker how to deal with their structure.
 	public abstract void makeOutput(OutputMaker om);
@@ -183,6 +195,6 @@ public abstract class Mark implements Cloneable, Serializable {
 	public abstract String toString();
 
 	public abstract void insertAt(int index, Mark childTask) throws SubtaskTypeException;
-	
-	public abstract Mark clone();
+
+	public abstract Mark getCopy();
 }
