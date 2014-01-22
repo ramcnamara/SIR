@@ -39,7 +39,7 @@ final class SIRTreeTransferHandler extends TransferHandler {
 
 	/**
 	 * Returns a reference to the SIRNode that is being transferred.  Also
-	 * stores references to the moving node and its parents, for tree structure
+	 * stores references to the moving node, for tree structure
 	 * hygiene and tidying up purposes.
 	 */
 	@Override
