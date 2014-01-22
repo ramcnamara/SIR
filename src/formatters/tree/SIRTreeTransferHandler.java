@@ -22,44 +22,67 @@ import model.Task;
 final class SIRTreeTransferHandler extends TransferHandler {
 	private static final long serialVersionUID = 1L;
 
+	private SIRTree tree;
+	private SIRNode mover = null;
+	private SIRNode parent = null;
+	
+	public SIRTreeTransferHandler(SIRTree tree) {
+		super();
+		this.tree = tree;
+	}
 
+	/**
+	 * SIRTrees support copy and move operations.
+	 */
 	@Override
 	public int getSourceActions(JComponent c) {
 		return COPY_OR_MOVE;
 	}
 
+	/**
+	 * Returns a reference to the SIRNode that is being transferred.  Also
+	 * stores references to the moving node and its parents, for tree structure
+	 * hygiene and tidying up purposes.
+	 */
 	@Override
 	public Transferable createTransferable(JComponent c) {
-		if (!(c instanceof SIRTree))
-			return null;
-		
-		SIRTree tree = (SIRTree) c;
-		SIRNode selectedNode = (SIRNode) tree.getSelectionPath().getLastPathComponent();
-		return selectedNode;
+		TreePath path = tree.getSelectionPath();
+		mover = (SIRNode) path.getLastPathComponent();
+
+		if (mover == null)
+			parent = null;
+		else parent = (SIRNode) path.getParentPath().getLastPathComponent();
+		return mover;
 	}
 
+	
 	@Override
 	public boolean canImport(TransferHandler.TransferSupport supp) {
 		// currently, we only support drag and drop
 		// TODO: change this when we implement cut and paste
 		if (!supp.isDrop()) {
-			System.out.println("Not drop");
 			return false;
 		}
 		
 		JTree.DropLocation loc = (JTree.DropLocation) supp.getDropLocation();
 		// loc is guaranteed non-null
-		TreePath path = loc.getPath();
+		TreePath path = loc.getPath();	
 		if (path == null) {
-			System.out.println("Null path");
 			return false;
+		}
+		
+		// can't drop a node onto one of its children
+		for (Object o: path.getPath()) {
+			if (o.equals(mover)) {
+				return false;
+			}
 		}
 		
 		Object node = path.getLastPathComponent();
 		if (!(node instanceof SIRNode)) {
-			System.out.println("Invalid node");
 			return false;
 		}
+
 		
 		Mark m = ((SIRNode) node).getMark();
 		
@@ -84,7 +107,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	
 	public boolean importData(TransferHandler.TransferSupport supp) {
 		if (!canImport(supp)) {
-			System.out.println("Can't drop here.");
 			return false;
 		}
 		
@@ -98,10 +120,8 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			node = (SIRNode) data.getTransferData(supp.getDataFlavors()[0]);
 		}
 		catch (IOException ex) {
-			System.out.println("IO Exception");
 			return false;
 		} catch (UnsupportedFlavorException ex) {
-			System.out.println("Unsupported flavor");
 			return false;
 		}
 		
@@ -140,7 +160,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		try {
 			parentTask.insertAt(index, childTask);
 		} catch (SubtaskTypeException ex) {
-			System.out.println("Invalid subtask type");
 			return false;
 		}
 		
@@ -160,7 +179,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		
 		// It was a move, so delete node from its current position
 		if (!(data instanceof SIRNode)) {
-			System.out.println("Not a node");
 			return;
 		}
 		

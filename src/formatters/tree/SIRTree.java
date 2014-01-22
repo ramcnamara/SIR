@@ -45,7 +45,7 @@ public class SIRTree extends JTree {
 		
 		setDragEnabled(true);
 		setDropMode(DropMode.ON_OR_INSERT);
-		setTransferHandler(new SIRTreeTransferHandler());
+		setTransferHandler(new SIRTreeTransferHandler(this));
 		setRootVisible(false);
 		setShowsRootHandles(true);
 	}
