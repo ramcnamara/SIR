@@ -25,12 +25,13 @@ public class SIRTree extends JTree {
 	
 	/*
 	 * Data flavors -- one per kind of task.
+	 * Criterion_Flavor is public to allow drag-n-drop onto tables of criteria.
 	 */
 	
 	static final DataFlavor TASK_FLAVOR = new DataFlavor(Task.class, "TaskFlavor");
 	static final DataFlavor QTASK_FLAVOR = new DataFlavor(QTask.class, "QTaskFlavor");
 	static final DataFlavor CHECKBOX_FLAVOR = new DataFlavor(Checkbox.class, "CheckboxFlavor");
-	static final DataFlavor CRITERION_FLAVOR = new DataFlavor(Criterion.class, "CriterionFlavor");
+	public static final DataFlavor CRITERION_FLAVOR = new DataFlavor(Criterion.class, "CriterionFlavor");
 
 	/**
 	 * Wrapper for JTree constructor.

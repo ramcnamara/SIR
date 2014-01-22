@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,8 +13,10 @@ import javax.swing.table.TableColumn;
 
 import net.miginfocom.swing.MigLayout;
 import model.Criterion;
+
 import java.awt.Dimension;
 import java.awt.Component;
+
 import javax.swing.UIManager;
 
 /**
@@ -59,7 +62,13 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		criteria.setPreferredScrollableViewportSize(new Dimension(450, 40));
 		criteria.setRowSelectionAllowed(true);
 		criteria.setColumnSelectionAllowed(false);
+		criteria.setFillsViewportHeight(true);	// for dnd on empty table
 		criteria.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+		criteria.setDragEnabled(true);
+		criteria.setDropMode(DropMode.INSERT_ROWS);
+		
+		criteria.setTransferHandler(new SIRCriteriaTransferHandler());
+		
 		TableColumn scales = criteria.getColumnModel().getColumn(1);
 		scales.setCellEditor(new ScaleBoxCellEditor());
 		contents = new JScrollPane(criteria);
