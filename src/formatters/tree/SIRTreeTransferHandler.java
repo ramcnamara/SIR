@@ -1,6 +1,5 @@
 package formatters.tree;
 
-import java.awt.Component;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -127,24 +126,21 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		
 		Mark childTask = node.getMark().clone();
 		MarkingScheme scheme = null;
-		Component c = supp.getComponent();
-		if (c instanceof SIRTree)
-			scheme = ((SIRTree) c).getMarkingScheme();
+		if (tree != null)
+			scheme = tree.getMarkingScheme();
 			
-		
-		SIRNode parentNode = (SIRNode)path.getLastPathComponent();
-		if (parentNode == null) {
+		if (parent == null) {
 			if (scheme != null) {
 				scheme.add(childTask);
 				return true;
 			}
 		}
 		
-		Mark parentTask = parentNode.getMark();
+		Mark parentTask = parent.getMark();
 		int index = loc.getChildIndex();
 		if (index == -1) {
 			// dropped on the path, insert at end
-			index = parentNode.getChildCount();
+			index = parent.getChildCount();
 		}
 		
 		// Are we dealing with a criterion?
