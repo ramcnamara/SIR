@@ -63,6 +63,7 @@ public abstract class ComplexTask extends Mark {
 	
 	public abstract List<Mark> getSubtasks(); 
 	public abstract void addSubtask(Mark task) throws SubtaskTypeException;
+	public abstract void clearSubtasks();
 	public abstract Mark removeSubtask(Mark task);
 	public abstract Mark removeSubtask(int idx);
 	
@@ -75,6 +76,13 @@ public abstract class ComplexTask extends Mark {
 	public List<Criterion> getCriteria() {
 		if (criteria == null) return null;
 		return Collections.unmodifiableList(criteria);
+	}
+	
+	/**
+	 * Remove all criteria in task
+	 */
+	public void clearCriteria() {
+		criteria = new ArrayList<Criterion>();
 	}
 	
 	/**

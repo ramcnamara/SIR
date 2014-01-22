@@ -229,4 +229,13 @@ public class Task extends ComplexTask {
 	public Mark getCopy() {
 		return new Task(this);
 	}
+
+	@Override
+	/**
+	 * Remove all subtasks.
+	 */
+	public void clearSubtasks() {
+		subtasks = new ArrayList<Mark>();
+		
+	}
 }

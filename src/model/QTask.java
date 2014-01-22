@@ -216,4 +216,13 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 		// TODO Auto-generated method stub
 		return new QTask(this);
 	}
+
+	@Override
+	/**
+	 * Remove all subtasks.
+	 */
+	public void clearSubtasks() {
+		subtasks = new ArrayList<QTask>();
+		
+	}
 }

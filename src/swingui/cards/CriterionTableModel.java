@@ -79,6 +79,7 @@ public class CriterionTableModel extends AbstractTableModel {
 		return null;
 	}
 	
+	
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 		if (rowIndex < 0 || rowIndex >= data.size())
 			// invalid row -- TODO should throw an exception
@@ -119,6 +120,15 @@ public class CriterionTableModel extends AbstractTableModel {
 			data.remove(row);
 			fireTableRowsDeleted(row, row);
 		}
+	}
+
+	/**
+	 * Return the current list of criteria stored in this table.
+	 * 
+	 * @return
+	 */
+	public ArrayList<Criterion> getCriteria() {
+		return data;
 	}
 
 }

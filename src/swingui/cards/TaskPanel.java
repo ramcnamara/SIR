@@ -196,6 +196,11 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		} catch (NumberFormatException e) {
 			target.setMaxMark(0);
 		}
+		
+		target.clearCriteria();
+		for (Criterion c: cp.getCriteria()) {
+			target.addCriterion(c);
+		}
 		target.setDescription(taDescription.getText());
 		target.setMarkerInstruction(taMarkerInstructions.getText());
 

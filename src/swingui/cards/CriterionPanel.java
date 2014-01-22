@@ -16,6 +16,7 @@ import model.Criterion;
 
 import java.awt.Dimension;
 import java.awt.Component;
+import java.util.ArrayList;
 
 import javax.swing.UIManager;
 
@@ -101,6 +102,11 @@ public class CriterionPanel extends JPanel implements ActionListener {
 			((CriterionTableModel) criteria.getModel()).removeRow(row);
 		}
 		
+	}
+	
+	public ArrayList<Criterion> getCriteria() {
+		CriterionTableModel model = (CriterionTableModel) criteria.getModel();
+		return model.getCriteria();
 	}
 }
 	

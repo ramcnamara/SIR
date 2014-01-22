@@ -199,6 +199,11 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 		target.setGroup(chckbxGroupTask.isSelected());
 		target.setScale(scalebox.getSelectedScale());
 		
+		target.clearCriteria();
+		for (Criterion c: cp.getCriteria()) {
+			target.addCriterion(c);
+		}
+		
 		// tell the marking scheme it's changed
 		scheme.refresh();
 	}
