@@ -34,7 +34,7 @@ public abstract class Mark implements Serializable {
 	
 	private static final long serialVersionUID = 2644920807147460137L;
 
-	@XmlElement(name="Name", required=true, nillable=true)
+	@XmlElement(name="Name", required=true, nillable=false)
 	protected String name;
 	
 	@XmlElement(name="Description", required=false, nillable=false)
@@ -74,6 +74,8 @@ public abstract class Mark implements Serializable {
 	 * @return the name of this Mark
 	 */
 	public String getName() {
+		if (name != null && name.length() == 0)
+			return null;
 		return name;
 	}
 
@@ -103,6 +105,8 @@ public abstract class Mark implements Serializable {
 	 * @return the description of this mark
 	 */
 	public String getDescription() {
+		if (description != null && description.length() == 0)
+			return null;
 		return description;
 	}
 
@@ -130,6 +134,8 @@ public abstract class Mark implements Serializable {
 	 * @return this Mark's marker instruction
 	 */
 	public String getMarkerInstruction() {
+		if (markerInstruction != null && markerInstruction.length() == 0)
+			return null;
 		return markerInstruction;
 	}
 
@@ -155,6 +161,8 @@ public abstract class Mark implements Serializable {
 	 * @return the label of this Mark
 	 */
 	public String getLabel() {
+		if (label != null && label.length() == 0)
+			return null;
 		return label;
 	}
 

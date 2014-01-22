@@ -36,6 +36,20 @@ public abstract class ComplexTask extends Mark {
 	@XmlElement(name="Criterion")
 	protected ArrayList<Criterion> criteria;
 	
+	
+	/**
+	 * Private accessor for JAXB's benefit.  This will suppress empty Criteria
+	 * tags if not criteria are present.
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private ArrayList<Criterion> getCriteria() {
+		if (criteria == null || criteria.size() == 0)
+			return null;
+		return criteria;
+	}
+	
 	@XmlAttribute
 	protected boolean hasComment;
 	
@@ -73,7 +87,7 @@ public abstract class ComplexTask extends Mark {
 	 * 
 	 * @return a read-only List<Criterion> of this ComplexTask's criteria
 	 */
-	public List<Criterion> getCriteria() {
+	public List<Criterion> getCriteriaList() {
 		if (criteria == null) return null;
 		return Collections.unmodifiableList(criteria);
 	}

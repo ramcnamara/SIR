@@ -71,7 +71,7 @@ public class ConsoleMaker implements OutputMaker {
 	private void doComplexTask(ComplexTask ct) {
 		doMark(ct);
 		
-		List<Criterion> cl = ct.getCriteria();
+		List<Criterion> cl = ct.getCriteriaList();
 		if (cl != null && cl.size() > 0)
 			for (Criterion c: cl) {
 				c.makeOutput(this);
