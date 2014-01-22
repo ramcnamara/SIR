@@ -180,7 +180,7 @@ public class QTask extends ComplexTask implements CriterionReferenced,
 				subtasks = new ArrayList<QTask>();
 			subtasks.add(index, (QTask) subtask);
 		}
-		throw new SubtaskTypeException();
+		else throw new SubtaskTypeException();
 	}
 
 	@Override
