@@ -10,11 +10,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NumericType")
-
+@XmlRootElement(name="Task")
 /**
  * A Task is a numerically-marked component of a marking scheme.  It may either be marked "by hand"
  * or have a mark that is the sum of that of its subtasks.

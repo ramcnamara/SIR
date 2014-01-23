@@ -1,6 +1,7 @@
 package model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -11,6 +12,7 @@ import javax.xml.bind.annotation.XmlType;
  *
  */
 @XmlType(name="Checkbox")
+@XmlRootElement(name="Checkbox")
 public class Checkbox extends Mark {
 	
 	private static final long serialVersionUID = -2323175496709406435L;
