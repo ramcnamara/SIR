@@ -68,7 +68,7 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		criteria.setDragEnabled(true);
 		criteria.setDropMode(DropMode.INSERT_ROWS);
 		
-		criteria.setTransferHandler(new SIRCriteriaTransferHandler());
+// TODO		criteria.setTransferHandler();
 		
 		TableColumn scales = criteria.getColumnModel().getColumn(1);
 		scales.setCellEditor(new ScaleBoxCellEditor());

@@ -1,16 +1,11 @@
 package formatters.tree;
 
-import java.awt.datatransfer.DataFlavor;
-
 import javax.swing.DropMode;
 import javax.swing.JTree;
 import javax.swing.tree.TreeSelectionModel;
 
-import model.Checkbox;
-import model.Criterion;
+
 import model.MarkingScheme;
-import model.QTask;
-import model.Task;
 
 /**
  * An extension of JTree that implements drag and drop.
@@ -27,11 +22,7 @@ public class SIRTree extends JTree {
 	 * Data flavors -- one per kind of task.
 	 * Criterion_Flavor is public to allow drag-n-drop onto tables of criteria.
 	 */
-	
-	static final DataFlavor TASK_FLAVOR = new DataFlavor(Task.class, "TaskFlavor");
-	static final DataFlavor QTASK_FLAVOR = new DataFlavor(QTask.class, "QTaskFlavor");
-	static final DataFlavor CHECKBOX_FLAVOR = new DataFlavor(Checkbox.class, "CheckboxFlavor");
-	public static final DataFlavor CRITERION_FLAVOR = new DataFlavor(Criterion.class, "CriterionFlavor");
+
 
 	/**
 	 * Wrapper for JTree constructor.
