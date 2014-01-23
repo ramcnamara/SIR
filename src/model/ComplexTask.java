@@ -131,7 +131,10 @@ public abstract class ComplexTask extends Mark {
 	public void insertCriterion(int index, Criterion c) {
 		if (criteria == null)
 			criteria = new ArrayList<Criterion>();
-		criteria.add(index, c);
+		if (index < criteria.size())
+			criteria.add(index, c);
+		else
+			criteria.add(c);
 	}
 	
 	

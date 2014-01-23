@@ -1,10 +1,5 @@
 package formatters.tree;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -13,15 +8,11 @@ import javax.swing.ImageIcon;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-import model.Checkbox;
 import model.ComplexTask;
 import model.Mark;
-import model.QTask;
-import model.Task;
 
-public class SIRNode implements MutableTreeNode, Transferable, Serializable {
+public class SIRNode implements MutableTreeNode {
 	
-	private static final long serialVersionUID = 1L;
 	public final String id;
 	private ImageIcon icon;
 	private MutableTreeNode parent;
@@ -137,42 +128,5 @@ public class SIRNode implements MutableTreeNode, Transferable, Serializable {
 		if (userObject != null && userObject instanceof Mark)
 			return (Mark)userObject;
 		return null;
-	}
-	
-	private DataFlavor getFlavor() {
-		if (userObject instanceof Task)
-			return SIRTree.TASK_FLAVOR;
-		
-		if (userObject instanceof QTask)
-			return SIRTree.QTASK_FLAVOR;
-					
-		if (userObject instanceof Checkbox)
-			return SIRTree.CHECKBOX_FLAVOR;
-
-		return SIRTree.CRITERION_FLAVOR;
-
-	}
-
-	/*
-	 * Methods inherited from Transferable
-	 */
-	@Override
-	public Object getTransferData(DataFlavor flavor)
-			throws UnsupportedFlavorException, IOException {
-		if (isDataFlavorSupported(flavor))
-			return this;		
-		throw new UnsupportedFlavorException(flavor);
-	}
-
-	@Override
-	public DataFlavor[] getTransferDataFlavors() {
-		
-		return new DataFlavor[] {getFlavor()};
-	}
-
-	@Override
-	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		
-		return flavor == getFlavor();
 	}
 }

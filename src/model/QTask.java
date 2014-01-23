@@ -191,8 +191,9 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 			insertCriterion(index, (Criterion) childTask);
 
 		else if (childTask instanceof QTask)
-			insertSubtask(index, (QTask) childTask);
-
+			if (subtasks != null && index < subtasks.size())
+				insertSubtask(index, childTask);		
+			else addSubtask(childTask);
 		else
 			throw new SubtaskTypeException();
 

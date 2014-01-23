@@ -218,8 +218,9 @@ public class Task extends ComplexTask {
 	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
 		if (childTask instanceof Criterion)
 			insertCriterion(index, (Criterion)childTask);
-		
-		insertSubtask(index, childTask);		
+		if (index < subtasks.size())
+			insertSubtask(index, childTask);		
+		else addSubtask(childTask);
 	}
 
 	@Override
