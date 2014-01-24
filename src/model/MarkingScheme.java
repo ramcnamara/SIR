@@ -209,5 +209,15 @@ public class MarkingScheme extends Observable {
 	public void removeTask(Mark theMark) {
 		tasks.remove(theMark);		
 	}
+
+	public void insertAt(int index, Mark incoming) {
+		if (tasks == null)
+			tasks = new ArrayList<Mark>();
+		if (index < tasks.size())
+			tasks.add(index, incoming);
+		else
+			tasks.add(incoming);
+		
+	}
 }
 
