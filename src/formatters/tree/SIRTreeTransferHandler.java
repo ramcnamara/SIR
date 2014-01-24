@@ -52,7 +52,15 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	 */
 	@Override
 	public Transferable createTransferable(JComponent c) {
+		mover = null;
+		relinquishingParent = null;
+		incoming = null;
+		
 		TreePath path = tree.getSelectionPath();
+		
+		// Don't allow drag of root node
+		if (path.getPathCount() == 1)
+			return null;
 		mover = (SIRNode) path.getLastPathComponent();
 		return toXml(mover.getMark(), mover);
 	}
@@ -109,7 +117,11 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		}
 
 		// You can't drop Tasks or Checkboxes on QTasks
-		return (incoming instanceof QTask || incoming instanceof Criterion);
+		if (m instanceof QTask)
+			return (incoming instanceof QTask || incoming instanceof Criterion);
+		
+		// The only thing you can't drop on the root node is a Criterion.
+		return !(incoming instanceof Criterion);
 	}
 
 	private boolean parseXml(TransferHandler.TransferSupport supp) {
@@ -166,15 +178,23 @@ final class SIRTreeTransferHandler extends TransferHandler {
 
 		// find destination node
 		SIRNode dest = (SIRNode) loc.getPath().getLastPathComponent();
-		if (dest == null) {
+		int index = loc.getChildIndex();
+		
+		if (dest == null || dest.getMark() == null) {
 			if (scheme != null) {
-				scheme.add(incoming);
+				if (index == -1)
+					scheme.add(incoming);
+				else
+					scheme.insertAt(index, incoming);
 				return true;
+			}
+			else {
+				return false;
 			}
 		}
 
 		Mark newParentTask = dest.getMark();
-		int index = loc.getChildIndex();
+
 		if (index == -1) {
 			// dropped on the path, insert at end
 			index = dest.getChildCount();
