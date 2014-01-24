@@ -18,10 +18,7 @@ public class SIRTree extends JTree {
 	private static final long serialVersionUID = 1L;
 	private MarkingScheme theScheme;
 	
-	/*
-	 * Data flavors -- one per kind of task.
-	 * Criterion_Flavor is public to allow drag-n-drop onto tables of criteria.
-	 */
+
 
 
 	/**
