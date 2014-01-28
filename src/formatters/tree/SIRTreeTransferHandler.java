@@ -8,6 +8,7 @@ import java.io.StringReader;
 import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -67,6 +68,7 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		if (path.getPathCount() == 1)
 			return null;
 		mover = (SIRNode) path.getLastPathComponent();
+		relinquishingParent = ((SIRNode)mover.getParent()).getParentTask();
 		return toXml(mover.getMark(), mover);
 	}
 
@@ -80,6 +82,8 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	 * @return
 	 */
 	private Transferable toXml(Mark mark, SIRNode n) {
+		relinquishingParent = n.getParentTask();
+			
 		return new SIRXmlBundle(mark, n);
 	}
 
