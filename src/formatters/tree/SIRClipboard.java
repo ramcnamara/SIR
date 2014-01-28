@@ -9,12 +9,12 @@ import java.awt.datatransfer.Clipboard;
  *
  */
 public class SIRClipboard {
-	private Clipboard clipboard = null;
+	private static Clipboard clipboard = null;
 	
 	private SIRClipboard() {
 	}
 	
-	public Clipboard getClipboard() {
+	public static Clipboard getClipboard() {
 		if (clipboard == null)
 			clipboard = new Clipboard("SIR");
 		
