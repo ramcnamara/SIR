@@ -134,6 +134,12 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		return !(incoming instanceof Criterion);
 	}
 
+	/**
+	 * Parses the XML data being transferred and sets up sundry fields.
+	 * 
+	 * @param supp the TransferSupport object containing the XML to be parsed
+	 * @return true if the data was successfully parsed to a Mark object
+	 */
 	private boolean parseXml(TransferHandler.TransferSupport supp) {
 		Object parsedXml = null;
 		Object xferData = null;
@@ -142,9 +148,11 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			xferData = trans.getTransferData(SIRXmlBundle.SIRXml);
 		} catch (UnsupportedFlavorException e) {
 			System.out.println("Data tastes funny");
+			return false;
 		} catch (IOException e) {
 			System.out.println("An IOException that couldn't happen, happened");
 			e.printStackTrace();
+			return false;
 		}
 		try {
 			JAXBContext context = JAXBContext.newInstance(MarkingScheme.class);
@@ -164,13 +172,20 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			} catch (IOException e) {
 				// IO exception? Shouldn't happen.
 				e.printStackTrace();
+				return false;
 			}
 		}
 		else
+			// didn't parse to anything we know about
 			return false;
 		return true;
 	}
 
+	
+	/**
+	 * Import dragged data into a SIRTree.  Drag and drop into other Components is done in other
+	 * TransferHandlers.
+	 */
 	public boolean importData(TransferHandler.TransferSupport supp) {
 		if (!canImport(supp)) {
 			return false;
