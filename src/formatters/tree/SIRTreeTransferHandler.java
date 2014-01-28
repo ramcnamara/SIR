@@ -102,6 +102,14 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			JTree.DropLocation loc = (JTree.DropLocation) supp.getDropLocation();
 			// loc is guaranteed non-null
 			path = loc.getPath();
+			
+			// can't drop a node onto one of its children
+			// (can paste a copy though, so this has to be guarded by isDrop())
+			for (Object o : path.getPath()) {
+				if (o.equals(mover)) {
+					return false;
+				}
+			}
 		} else {
 			path = ((SIRTree) supp.getComponent()).getSelectionPath();
 		}
@@ -109,12 +117,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			return false;
 		}
 
-		// can't drop a node onto one of its children
-		for (Object o : path.getPath()) {
-			if (o.equals(mover)) {
-				return false;
-			}
-		}
 
 		Object node = path.getLastPathComponent();
 		if (!(node instanceof SIRNode)) {

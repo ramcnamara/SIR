@@ -59,7 +59,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		btnSaveTask.addActionListener(this);
 		taskControlPanel.add(btnSaveTask, "cell 0 0, growx, aligny center");
 		
-		JButton btnResetTask = new JButton("Reset task");
+		JButton btnResetTask = new JButton("Revert task");
 		btnResetTask.addActionListener(this);
 		taskControlPanel.add(btnResetTask, "cell 0 1, growx, aligny center");
 		
@@ -175,6 +175,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			JRadioButton rbtask = new JRadioButton("Numerically-marked task");
 			JRadioButton rbqtask = new JRadioButton("Qualitatively-marked task");
 			JRadioButton rbcheckbox = new JRadioButton("Checkbox (done or not done, no intermediate grades)");
+			rbcheckbox.setEnabled(false);
 			
 			ButtonGroup group = new ButtonGroup();
 			group.add(rbtask);
@@ -293,7 +294,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			seekToCard(newTask);
 		}
 		
-		else if (cmd.equals("Add subtask")) {
+		else if (cmd.equals("Add QTask")) {
 			if (!(task instanceof ComplexTask))
 				return;
 			QTask newqtask = new QTask();

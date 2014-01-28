@@ -15,18 +15,18 @@ public class SIRTreeContextMenu extends JPopupMenu {
 	
 	public SIRTreeContextMenu(final SIRTree tree) {
 		
-		Action copyAction = SIRTreeTransferHandler.getCopyAction();
-		Action cutAction = SIRTreeTransferHandler.getCutAction();
-		Action pasteAction = SIRTreeTransferHandler.getPasteAction();
+		Action copyAction = CutCopyPasteHelper.getCopyAction();
+		Action cutAction = CutCopyPasteHelper.getCutAction();
+		Action pasteAction = CutCopyPasteHelper.getPasteAction();
 		TransferActionListener al = new TransferActionListener();
 		
 		cut.setAction(cutAction);
 		copy.setAction(copyAction);
 		paste.setAction(pasteAction);
 		
-		cut.setActionCommand((String)SIRTreeTransferHandler.getCutAction().getValue(Action.NAME));
-		copy.setActionCommand((String)SIRTreeTransferHandler.getCopyAction().getValue(Action.NAME));
-		paste.setActionCommand((String)SIRTreeTransferHandler.getPasteAction().getValue(Action.NAME));
+		cut.setActionCommand((String)CutCopyPasteHelper.getCutAction().getValue(Action.NAME));
+		copy.setActionCommand((String)CutCopyPasteHelper.getCopyAction().getValue(Action.NAME));
+		paste.setActionCommand((String)CutCopyPasteHelper.getPasteAction().getValue(Action.NAME));
 		
 		add(cut);
 		add(copy);
