@@ -13,7 +13,17 @@ public class SIRTreeContextMenu extends JPopupMenu {
 	JMenuItem cut = new JMenuItem("Cut");
 	JMenuItem paste = new JMenuItem("Paste");
 	
-	public SIRTreeContextMenu() {
+	public SIRTreeContextMenu(final SIRTree tree) {
+		
+		Action copyAction = SIRTreeTransferHandler.getCopyAction();
+		Action cutAction = SIRTreeTransferHandler.getCutAction();
+		Action pasteAction = SIRTreeTransferHandler.getPasteAction();
+		TransferActionListener al = new TransferActionListener();
+		
+		cut.setAction(cutAction);
+		copy.setAction(copyAction);
+		paste.setAction(pasteAction);
+		
 		cut.setActionCommand((String)SIRTreeTransferHandler.getCutAction().getValue(Action.NAME));
 		copy.setActionCommand((String)SIRTreeTransferHandler.getCopyAction().getValue(Action.NAME));
 		paste.setActionCommand((String)SIRTreeTransferHandler.getPasteAction().getValue(Action.NAME));
@@ -21,6 +31,10 @@ public class SIRTreeContextMenu extends JPopupMenu {
 		add(cut);
 		add(copy);
 		add(paste);
+		
+		cut.addActionListener(al);
+		copy.addActionListener(al);
+		paste.addActionListener(al);
 	}
 	
 	public void enablePaste(boolean enable) {

@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NumericType")
-@XmlRootElement(name="Task")
+@XmlRootElement(name = "Task")
 /**
  * A Task is a numerically-marked component of a marking scheme.  It may either be marked "by hand"
  * or have a mark that is the sum of that of its subtasks.
@@ -30,36 +30,35 @@ public class Task extends ComplexTask {
 
 	private static final long serialVersionUID = -3343401615567901898L;
 
-	@XmlElementWrapper(name="Subtasks", required=false, nillable=false)
-	@XmlElements({ @XmlElement(name="Task", type=Task.class),
-		@XmlElement(name="QTask", type=QTask.class),
-		@XmlElement(name="Checkbox", type=Checkbox.class)
-	})
+	@XmlElementWrapper(name = "Subtasks", required = false, nillable = false)
+	@XmlElements({ @XmlElement(name = "Task", type = Task.class),
+			@XmlElement(name = "QTask", type = QTask.class),
+			@XmlElement(name = "Checkbox", type = Checkbox.class) })
 	private ArrayList<Mark> subtasks;
-	
+
 	@XmlAttribute
 	private float maxMark;
-	
+
 	@XmlAttribute
 	private float minMark;
-	
+
 	@XmlAttribute
 	private boolean bonus;
-	
-	
+
 	/**
 	 * Copy constructor, required by JAXB
 	 * 
-	 * @param old the Task to be copied
+	 * @param old
+	 *            the Task to be copied
 	 */
 	public Task(Task old) {
 		super(old);
-		
+
 		bonus = old.getBonus();
 		maxMark = old.getMaxMark();
-		
+
 		if (old.subtasks != null)
-			for (Mark m: old.subtasks)
+			for (Mark m : old.subtasks)
 				try {
 					addSubtask(m.getCopy());
 				} catch (SubtaskTypeException e) {
@@ -67,7 +66,7 @@ public class Task extends ComplexTask {
 					e.printStackTrace();
 				}
 	}
-	
+
 	@Override
 	/**
 	 * Creates and returns an unmodifiable copy of this Task's subtasks.
@@ -76,11 +75,11 @@ public class Task extends ComplexTask {
 	 * 
 	 */
 	public List<Mark> getSubtasks() {
-		if (subtasks == null) return null;
+		if (subtasks == null)
+			return null;
 		return Collections.unmodifiableList(subtasks);
 	}
-	
-	
+
 	/**
 	 * Default constructor, required by JAXB.
 	 */
@@ -97,7 +96,7 @@ public class Task extends ComplexTask {
 		if (subtasks == null)
 			subtasks = new ArrayList<Mark>();
 		subtasks.add(task);
-		
+
 	}
 
 	@Override
@@ -107,20 +106,20 @@ public class Task extends ComplexTask {
 	public void makeOutput(OutputMaker om) {
 		om.doTask(this);
 		if (criteria != null)
-			for (Criterion c: criteria)
+			for (Criterion c : criteria)
 				c.makeOutput(om);
 		if (subtasks != null)
-			for (Mark m: subtasks)
+			for (Mark m : subtasks)
 				m.makeOutput(om);
 		om.endTask(this);
-		
-	}
 
+	}
 
 	/**
 	 * Mutator for maximum mark.
 	 * 
-	 * @param maxMark the new maximum mark
+	 * @param maxMark
+	 *            the new maximum mark
 	 */
 	public void setMaxMark(float maxMark) {
 		this.maxMark = maxMark;
@@ -130,8 +129,8 @@ public class Task extends ComplexTask {
 	 * Accessor for bonus status.
 	 * 
 	 * Bonus tasks attract marks but do not contribute to the computation of
-	 * maximum total mark.  This allows students to get more than 100% on a task or
-	 * activity.
+	 * maximum total mark. This allows students to get more than 100% on a task
+	 * or activity.
 	 * 
 	 * @return true if and only if this is a bonus task.
 	 */
@@ -143,8 +142,8 @@ public class Task extends ComplexTask {
 	 * Mutator for bonus status.
 	 * 
 	 * Bonus tasks attract marks but do not contribute to the computation of
-	 * maximum total mark.  This allows students to get more than 100% on a task or
-	 * activity.
+	 * maximum total mark. This allows students to get more than 100% on a task
+	 * or activity.
 	 * 
 	 * param true if this is a bonus task.
 	 */
@@ -163,11 +162,11 @@ public class Task extends ComplexTask {
 	 */
 	public float getMaxMark() {
 		float myMark = 0.0f;
-		
+
 		if (subtasks != null)
-			for (Mark m: subtasks)
+			for (Mark m : subtasks)
 				myMark += m.getMaxMark();
-		return (myMark > 0? myMark : this.maxMark);
+		return (myMark > 0 ? myMark : this.maxMark);
 	}
 
 	@Override
@@ -191,12 +190,12 @@ public class Task extends ComplexTask {
 		return removeSubtask(idx);
 	}
 
-	
 	/**
-	 * Remove and return the idx'th task in the subtask list.
-	 * Returns null if given an invalid index.
+	 * Remove and return the idx'th task in the subtask list. Returns null if
+	 * given an invalid index.
 	 * 
-	 * @param idx the index of the subtask to remove
+	 * @param idx
+	 *            the index of the subtask to remove
 	 */
 	@Override
 	public Mark removeSubtask(int idx) {
@@ -205,22 +204,26 @@ public class Task extends ComplexTask {
 		return subtasks.remove(idx);
 	}
 
-
 	@Override
 	public void insertSubtask(int index, Mark subtask) {
 		if (subtasks == null)
 			subtasks = new ArrayList<Mark>();
-		subtasks.add(index, subtask);		
+		subtasks.add(index, subtask);
 	}
-
 
 	@Override
 	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
 		if (childTask instanceof Criterion)
-			insertCriterion(index, (Criterion)childTask);
-		if (index < subtasks.size())
-			insertSubtask(index, childTask);		
-		else addSubtask(childTask);
+			insertCriterion(index, (Criterion) childTask);
+		else {
+			if (subtasks == null)
+				subtasks = new ArrayList<Mark>();
+
+			if (index < subtasks.size())
+				insertSubtask(index, childTask);
+			else
+				addSubtask(childTask);
+		}
 	}
 
 	@Override
@@ -238,6 +241,6 @@ public class Task extends ComplexTask {
 	 */
 	public void clearSubtasks() {
 		subtasks = new ArrayList<Mark>();
-		
+
 	}
 }

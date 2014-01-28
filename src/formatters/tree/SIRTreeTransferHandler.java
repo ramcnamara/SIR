@@ -51,16 +51,18 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	 * reference to the moving node, for tree structure hygiene and tidying up
 	 * purposes.
 	 * 
-	 * @param c the JComponent that contains the moving object (in practice, a SIRTree)
+	 * @param c
+	 *            the JComponent that contains the moving object (in practice, a
+	 *            SIRTree)
 	 */
 	@Override
 	public Transferable createTransferable(JComponent c) {
 		mover = null;
 		relinquishingParent = null;
 		incoming = null;
-		
+
 		TreePath path = tree.getSelectionPath();
-		
+
 		// Don't allow drag of root node
 		if (path.getPathCount() == 1)
 			return null;
@@ -71,8 +73,10 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	/**
 	 * Creates the SIRXmlBundle.
 	 * 
-	 * @param mark the Mark that is being moved or copied
-	 * @param n the SIRNode in which the Mark is stored
+	 * @param mark
+	 *            the Mark that is being moved or copied
+	 * @param n
+	 *            the SIRNode in which the Mark is stored
 	 * @return
 	 */
 	private Transferable toXml(Mark mark, SIRNode n) {
@@ -81,11 +85,6 @@ final class SIRTreeTransferHandler extends TransferHandler {
 
 	@Override
 	public boolean canImport(TransferHandler.TransferSupport supp) {
-		// currently, we only support drag and drop
-		// TODO: change this when we implement cut and paste
-		if (!supp.isDrop()) {
-			return false;
-		}
 
 		// check flavour: are we looking at a SIRXmlBundle?
 		if (!supp.isDataFlavorSupported(SIRXmlBundle.SIRXml))
@@ -97,9 +96,15 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			if (!parseXml(supp))
 				return false;
 
-		JTree.DropLocation loc = (JTree.DropLocation) supp.getDropLocation();
-		// loc is guaranteed non-null
-		TreePath path = loc.getPath();
+		TreePath path;
+
+		if (supp.isDrop()) {
+			JTree.DropLocation loc = (JTree.DropLocation) supp.getDropLocation();
+			// loc is guaranteed non-null
+			path = loc.getPath();
+		} else {
+			path = ((SIRTree) supp.getComponent()).getSelectionPath();
+		}
 		if (path == null) {
 			return false;
 		}
@@ -129,7 +134,7 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		// You can't drop Tasks or Checkboxes on QTasks
 		if (m instanceof QTask)
 			return (incoming instanceof QTask || incoming instanceof Criterion);
-		
+
 		// The only thing you can't drop on the root node is a Criterion.
 		return !(incoming instanceof Criterion);
 	}
@@ -137,7 +142,8 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	/**
 	 * Parses the XML data being transferred and sets up sundry fields.
 	 * 
-	 * @param supp the TransferSupport object containing the XML to be parsed
+	 * @param supp
+	 *            the TransferSupport object containing the XML to be parsed
 	 * @return true if the data was successfully parsed to a Mark object
 	 */
 	private boolean parseXml(TransferHandler.TransferSupport supp) {
@@ -166,7 +172,8 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		if (parsedXml instanceof Mark) {
 			incoming = (Mark) parsedXml;
 			try {
-				relinquishingParent = ((SIRNode) trans.getTransferData(SIRXmlBundle.SIRNode)).getParentTask();
+				relinquishingParent = ((SIRNode) trans
+						.getTransferData(SIRXmlBundle.SIRNode)).getParentTask();
 			} catch (UnsupportedFlavorException e) {
 				System.out.println("Can't get node flavor");
 			} catch (IOException e) {
@@ -174,37 +181,46 @@ final class SIRTreeTransferHandler extends TransferHandler {
 				e.printStackTrace();
 				return false;
 			}
-		}
-		else
+		} else
 			// didn't parse to anything we know about
 			return false;
 		return true;
 	}
 
-	
 	/**
-	 * Import dragged data into a SIRTree.  Drag and drop into other Components is done in other
-	 * TransferHandlers.
+	 * Import dragged data into a SIRTree. Drag and drop into other Components
+	 * is done in other TransferHandlers.
 	 */
 	public boolean importData(TransferHandler.TransferSupport supp) {
 		if (!canImport(supp)) {
 			return false;
 		}
 
-		JTree.DropLocation loc = (JTree.DropLocation) supp.getDropLocation();
+		SIRNode dest;
+		int index = -1;
+		
 
+		// set up the marking scheme
+		MarkingScheme scheme = tree.getMarkingScheme();
+		
+		if (supp.isDrop())	{
+			JTree.DropLocation loc = (JTree.DropLocation) supp.getDropLocation();
 		// incoming will have been set up by canImport but checking is cheap
 		if (incoming == null)
 			if (!parseXml(supp))
 				return false;
-		
-		// set up the marking scheme
-		MarkingScheme scheme = tree.getMarkingScheme();
+
 
 		// find destination node
-		SIRNode dest = (SIRNode) loc.getPath().getLastPathComponent();
-		int index = loc.getChildIndex();
+		dest = (SIRNode) loc.getPath().getLastPathComponent();
+		index = loc.getChildIndex();
+		}
 		
+		else {
+			TreePath path = ((SIRTree) supp.getComponent()).getSelectionPath();
+			dest = (SIRNode) path.getLastPathComponent();
+		}
+
 		if (dest == null || dest.getMark() == null) {
 			if (scheme != null) {
 				if (index == -1)
@@ -212,8 +228,7 @@ final class SIRTreeTransferHandler extends TransferHandler {
 				else
 					scheme.insertAt(index, incoming);
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
@@ -260,7 +275,7 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		if (!(data instanceof SIRXmlBundle)) {
 			return;
 		}
-		
+
 		SIRNode nodeToDelete = null;
 		Mark markToDelete = null;
 		try {
