@@ -46,9 +46,12 @@ final class SIRTreeTransferHandler extends TransferHandler {
 	}
 
 	/**
-	 * Returns a reference to the SIRNode that is being transferred. Also stores
-	 * references to the moving node, for tree structure hygiene and tidying up
+	 * Returns a bundle containing an XML representation of the Mark to be
+	 * transferred and a reference to the node itself. Also locally stores a
+	 * reference to the moving node, for tree structure hygiene and tidying up
 	 * purposes.
+	 * 
+	 * @param c the JComponent that contains the moving object (in practice, a SIRTree)
 	 */
 	@Override
 	public Transferable createTransferable(JComponent c) {
@@ -65,6 +68,13 @@ final class SIRTreeTransferHandler extends TransferHandler {
 		return toXml(mover.getMark(), mover);
 	}
 
+	/**
+	 * Creates the SIRXmlBundle.
+	 * 
+	 * @param mark the Mark that is being moved or copied
+	 * @param n the SIRNode in which the Mark is stored
+	 * @return
+	 */
 	private Transferable toXml(Mark mark, SIRNode n) {
 		return new SIRXmlBundle(mark, n);
 	}

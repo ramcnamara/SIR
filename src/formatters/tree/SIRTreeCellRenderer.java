@@ -17,7 +17,16 @@ public class SIRTreeCellRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Returns a tree cell renderer but with the icon set to the one defined in value.getIcon().
+	 * Returns a version of the default tree cell renderer but with the
+	 * icon set to the one defined in value.getIcon().
+	 *  
+	 * @param tree the JTree to be rendered
+	 * @param value the value of the node
+	 * @param selected true if and only if the node to be rendered is selected
+	 * @param expanded true if and only if the node to be rendered is expanded
+	 * @param leaf true if the node to be rendered has no children
+	 * @param row the index of the row the node is in
+	 * @param hasFocus true if and only if the node to be rendered has keyboard focus 
 	 */
 	public Component getTreeCellRendererComponent(JTree tree, Object value,
 			boolean selected, boolean expanded, boolean leaf, int row,
