@@ -102,7 +102,7 @@ public class Checkbox extends Mark {
 	 * @return the name of this task
 	 */
 	public String toString() {
-		return getName();
+		return "(" + getMaxMark() + "marks) " + getName();
 	}
 
 	@Override
