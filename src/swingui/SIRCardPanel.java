@@ -103,7 +103,8 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		this.add(cardArea, "dock center");
 		this.add(taskControlPanel, "dock east");
 		cardArea.setAlignmentY(Component.LEFT_ALIGNMENT);
-		seekToCard(task);
+		if (task != null)
+			seekToCard(task);
 		this.repaint();
 	}
 
@@ -153,7 +154,10 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		Card firstCard = getCurrentCard();
 		do {
 			cl.next(cardArea);
-			if (getCurrentCard().getTask() != null && getCurrentCard().getTask() == mark) {
+			Card card = getCurrentCard();
+			if (card != null 
+					&& card.getTask() != null 
+					&& card.getTask() == mark) {
 				task = mark;
 				replaceAddSubtaskButton();
 				repaint();
