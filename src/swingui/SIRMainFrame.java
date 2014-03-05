@@ -113,6 +113,7 @@ public class SIRMainFrame extends JFrame {
 					
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
+					theScheme.addObserver(schemePanel);
 					schemePanel.rereadTotalMark();
 					controlPanel.removeAll();
 					controlPanel.add(schemePanel, "dock north");

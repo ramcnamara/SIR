@@ -190,7 +190,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		lblActivityName.setText(activityName);
 		lblSubtitle.setText(subtitle);
 		preambleTextPane.setText(preamble);
-		mark.setText("" + scheme.getAvailableMarks());
+		rereadTotalMark();
 
 		if (scheme != null && btnEditUnitCode.getActionListeners().length == 0) {
 			btnEditUnitCode.addActionListener(this);

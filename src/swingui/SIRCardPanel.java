@@ -103,6 +103,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		this.add(cardArea, "dock center");
 		this.add(taskControlPanel, "dock east");
 		cardArea.setAlignmentY(Component.LEFT_ALIGNMENT);
+		seekToCard(task);
 		this.repaint();
 	}
 
