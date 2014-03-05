@@ -166,4 +166,9 @@ public class Criterion extends Mark implements CriterionReferenced {
 	public boolean isPenalty() {
 		return false;
 	}
+
+	@Override
+	public boolean isBonus() {
+		return false;
+	}
 }

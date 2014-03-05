@@ -216,9 +216,11 @@ public abstract class Mark implements Serializable {
 	}
 
 	public float getEffectiveMaxMark() {
-		if (isPenalty())
+		if (isPenalty() || isBonus())
 			return 0;
 		
 		return this.getMaxMark();
 	}
+
+	public abstract boolean isBonus();
 }

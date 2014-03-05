@@ -232,4 +232,9 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	public boolean isPenalty() {
 		return false;
 	}
+
+	@Override
+	public boolean isBonus() {
+		return false;
+	}
 }
