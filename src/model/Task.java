@@ -164,8 +164,13 @@ public class Task extends ComplexTask {
 		float myMark = 0.0f;
 
 		if (subtasks != null)
-			for (Mark m : subtasks)
-				myMark += m.getMaxMark();
+			for (Mark m : subtasks) {
+				// Bonus subtasks don't count toward the total unless this is a bonus task
+				// Likewise for penalty subtasks
+				// I wonder if this would be more readable if I applied DeMorgan's Law?
+				if (!((!isBonus() && m.isBonus()) || (!isPenalty() && m.isPenalty())))
+					myMark += m.getMaxMark();
+			}
 		return (myMark > 0 ? myMark : this.maxMark);
 	}
 
