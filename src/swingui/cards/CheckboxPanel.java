@@ -54,7 +54,7 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		setAlignmentY(LEFT_ALIGNMENT);
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("debug", "[][grow]", "[][][][][][][][]"));
+		contents.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]"));
 		
 
 		// Set up checkbox information
