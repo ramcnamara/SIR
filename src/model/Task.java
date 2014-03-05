@@ -54,7 +54,7 @@ public class Task extends ComplexTask {
 	public Task(Task old) {
 		super(old);
 
-		bonus = old.getBonus();
+		bonus = old.isBonus();
 		maxMark = old.getMaxMark();
 
 		if (old.subtasks != null)
@@ -134,7 +134,7 @@ public class Task extends ComplexTask {
 	 * 
 	 * @return true if and only if this is a bonus task.
 	 */
-	public boolean getBonus() {
+	public boolean isBonus() {
 		return bonus;
 	}
 

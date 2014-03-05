@@ -35,6 +35,7 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 	private JTextArea taMarkerInstructions;
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxBonusTask;
+	private JCheckBox chckbxPenaltyTask;
 	private JScrollPane scrollpane;
 	private JLabel lblLabel;
 	private JTextField tfLabel;
@@ -62,6 +63,9 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		Float maxMark = 0.0f;
 		String description = "";
 		String markerInst = "";
+		boolean group = false;
+		boolean bonus = false;
+		boolean penalty = false;
 		
 		if (checkbox != null) {
 			label = label + (checkbox.getLabel() == null? "": checkbox.getLabel());
@@ -69,6 +73,9 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 			maxMark += checkbox.getMaxMark();
 			description = description + (checkbox.getDescription() == null? "": checkbox.getDescription());
 			markerInst = markerInst + (checkbox.getMarkerInstruction() == null? "" : checkbox.getMarkerInstruction());
+			group = checkbox.isGroup();
+			bonus = checkbox.isBonus();
+			penalty = checkbox.isPenalty();
 		}
 		
 		if (label.length() == 0)
@@ -110,11 +117,14 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		taMarkerInstructions.setColumns(10);
 
 
-		chckbxGroupTask = new JCheckBox("Group task");
+		chckbxGroupTask = new JCheckBox("Group task", group);
 		contents.add(chckbxGroupTask, "flowx,cell 1 6");
 		
-		chckbxBonusTask = new JCheckBox("Bonus task");
+		chckbxBonusTask = new JCheckBox("Bonus task", bonus);
 		contents.add(chckbxBonusTask, "flowx,cell 1 7");
+		
+		chckbxPenaltyTask = new JCheckBox("Penalty task", penalty);
+		contents.add(chckbxPenaltyTask, "flowx,cell 1 8");
 		
 		scrollpane.setViewportView(contents);
 		add(scrollpane, "cell 0 1, growx, growy");
@@ -134,7 +144,7 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		taMarkerInstructions.setText(target.getMarkerInstruction());
 		
 		chckbxGroupTask.setSelected(target.isGroup());
-		chckbxBonusTask.setSelected(target.getBonus());
+		chckbxBonusTask.setSelected(target.isBonus());
 		validate();
 	}
 	

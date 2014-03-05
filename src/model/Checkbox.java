@@ -31,7 +31,7 @@ public class Checkbox extends Mark {
 	public Checkbox(Checkbox old) {
 		super(old);
 		
-		bonus = old.getBonus();
+		bonus = old.isBonus();
 		maxMark = old.getMaxMark();
 	}
 	
@@ -90,7 +90,7 @@ public class Checkbox extends Mark {
 	 * bonus tasks may allow students to score more than 100% on an activity.
 	 * @return
 	 */
-	public boolean getBonus() {
+	public boolean isBonus() {
 		return bonus;
 	}
 

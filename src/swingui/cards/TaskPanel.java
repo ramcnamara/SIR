@@ -41,6 +41,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 	private JCheckBox chckbxGroupTask;
 	private JCheckBox chckbxAllowMarkerComment;
 	private JCheckBox chckbxBonusTask;
+	private JCheckBox chckbxPenaltyTask;
 	private MarkingScheme scheme;
 	private JLabel lblLabel;
 	private JTextField tfLabel;
@@ -66,7 +67,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][][grow,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][][][grow,fill]"));
 		
 		// String and numeric data
 		String label = "";
@@ -129,20 +130,23 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 
 		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment",
 				task.hasComment());
-		contents.add(chckbxAllowMarkerComment, "cell 1 7");
+		contents.add(chckbxAllowMarkerComment, "cell 1 8");
 		cp = new CriterionPanel();
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 8 2 1,aligny top,grow");
+		contents.add(cp, "cell 0 9 2 1,aligny top,grow");
 		scrollpane = new JScrollPane(contents);
 		add(scrollpane, "cell 0 0,grow");
 
 		chckbxGroupTask = new JCheckBox("Group task", task.isGroup());
 		contents.add(chckbxGroupTask, "flowx,cell 1 5");
 
-		chckbxBonusTask = new JCheckBox("Bonus task", task.getBonus());
+		chckbxBonusTask = new JCheckBox("Bonus task", task.isBonus());
 		contents.add(chckbxBonusTask, "cell 1 6");
+		
+		chckbxPenaltyTask = new JCheckBox("Penalty task", task.isPenalty());
+		contents.add(chckbxPenaltyTask, "cell 1 7");
 		
 		horizontalGlue = Box.createHorizontalGlue();
 		contents.add(horizontalGlue, "cell 1 0");
@@ -178,7 +182,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 
 		chckbxAllowMarkerComment.setSelected(target.hasComment());
 		chckbxGroupTask.setSelected(target.isGroup());
-		chckbxBonusTask.setSelected(target.getBonus());
+		chckbxBonusTask.setSelected(target.isBonus());
 		validate();
 	}
 
@@ -207,6 +211,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		target.setHasComment(chckbxAllowMarkerComment.isSelected());
 		target.setGroup(chckbxGroupTask.isSelected());
 		target.setBonus(chckbxBonusTask.isSelected());
+		target.setPenalty(chckbxPenaltyTask.isSelected());
 		scheme.refresh();		
 	}
 

@@ -136,7 +136,7 @@ public class ConsoleMaker implements OutputMaker {
 	public void doTask(Task task) {
 		doComplexTask(task);
 		System.out.println("\nMark: ___/" + task.getMaxMark());
-		if (task.getBonus())
+		if (task.isBonus())
 			System.out.println("[Bonus allowed] ");
 	}
 
