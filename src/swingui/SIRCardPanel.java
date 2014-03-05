@@ -235,6 +235,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			Mark ourTask = getCurrentCard().getTask();
 			getCurrentCard().save();
 			seekToCard(ourTask);
+			scheme.refresh();
 		}
 		
 		// Reset current task

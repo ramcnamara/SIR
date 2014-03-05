@@ -171,7 +171,7 @@ public class Task extends ComplexTask {
 
 	@Override
 	public String toString() {
-		return "(" + getMaxMark() + " marks) " + getName();
+		return "(" + (penalty? "Penalty: " : "") + getMaxMark() + (bonus? " bonus": "") + " marks) " + getName();
 	}
 
 	@Override
