@@ -153,7 +153,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		Card firstCard = getCurrentCard();
 		do {
 			cl.next(cardArea);
-			if (getCurrentCard().getTask() == mark) {
+			if (getCurrentCard().getTask() != null && getCurrentCard().getTask() == mark) {
 				task = mark;
 				replaceAddSubtaskButton();
 				repaint();
