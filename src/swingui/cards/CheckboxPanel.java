@@ -168,6 +168,7 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		
 		target.setGroup(chckbxGroupTask.isSelected());
 		target.setBonus(chckbxBonusTask.isSelected());
+		target.setPenalty(chckbxPenaltyTask.isSelected());
 	}
 	
 	/**
