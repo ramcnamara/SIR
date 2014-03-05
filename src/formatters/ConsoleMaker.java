@@ -94,7 +94,7 @@ public class ConsoleMaker implements OutputMaker {
 	}
 
 	@Override
-	public void endCheckbox(Checkbox checkbox) {
+	public void endCheckbox(Mark checkbox) {
 		System.out.println("[ ] (" + checkbox.getMaxMark() + " marks)\n");
 
 	}

@@ -49,6 +49,9 @@ public abstract class Mark implements Serializable {
 	@XmlAttribute
 	protected boolean group;
 
+	@XmlAttribute
+	protected boolean penalty;
+
 	public Mark(Mark old) {
 		description = old.getDescription();
 		group = old.isGroup();
@@ -205,4 +208,17 @@ public abstract class Mark implements Serializable {
 	public abstract void insertAt(int index, Mark childTask) throws SubtaskTypeException;
 
 	public abstract Mark getCopy();
+	
+	public abstract boolean isPenalty();
+
+	public void setPenalty(boolean penalty) {
+		this.penalty = penalty;
+	}
+
+	public float getEffectiveMaxMark() {
+		if (isPenalty())
+			return 0;
+		
+		return this.getMaxMark();
+	}
 }

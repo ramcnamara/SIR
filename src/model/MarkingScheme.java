@@ -219,5 +219,14 @@ public class MarkingScheme extends Observable {
 			tasks.add(incoming);
 		
 	}
+
+	public float getAvailableMarks() {
+		float marks = 0.0f;
+		
+		for (Mark m:this.tasks)
+			marks += m.getEffectiveMaxMark();
+		
+		return marks;
+	}
 }
 

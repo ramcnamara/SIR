@@ -161,4 +161,9 @@ public class Criterion extends Mark implements CriterionReferenced {
 	public Mark getCopy() {
 		return new Criterion(this);
 	}
+
+	@Override
+	public boolean isPenalty() {
+		return false;
+	}
 }

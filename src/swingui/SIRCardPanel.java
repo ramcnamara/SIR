@@ -254,6 +254,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			JRadioButton rbcheckbox = new JRadioButton(
 					"Checkbox (done or not done, no intermediate grades)");
 
+			rbcheckbox.setEnabled(false);
 			ButtonGroup group = new ButtonGroup();
 			group.add(rbtask);
 			group.add(rbqtask);

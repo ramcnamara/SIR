@@ -113,6 +113,7 @@ public class SIRMainFrame extends JFrame {
 					
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
+					schemePanel.rereadTotalMark();
 					controlPanel.removeAll();
 					controlPanel.add(schemePanel, "dock north");
 					controlPanel.add(cardPanel, "dock center, aligny top, growy");
@@ -154,6 +155,12 @@ public class SIRMainFrame extends JFrame {
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			// TODO: confirmation dialog if unsaved changes
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		mnFile.add(mntmExit);
 		
 		// TODO: factor this out so that it can also be used for File -> New.

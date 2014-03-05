@@ -7,7 +7,7 @@ package model;
  *
  */
 public class ObjectFactory {
-	public Checkbox createCheckbox() {
+	public Mark createCheckbox() {
 		return new Checkbox();
 	}
 	

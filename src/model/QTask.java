@@ -216,7 +216,6 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	 */
 	@Override
 	public Mark getCopy() {
-		// TODO Auto-generated method stub
 		return new QTask(this);
 	}
 
@@ -227,5 +226,10 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	public void clearSubtasks() {
 		subtasks = new ArrayList<QTask>();
 		
+	}
+
+	@Override
+	public boolean isPenalty() {
+		return false;
 	}
 }

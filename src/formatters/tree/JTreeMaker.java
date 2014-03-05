@@ -42,7 +42,7 @@ public class JTreeMaker implements OutputMaker {
 	}
 
 	@Override
-	public void endCheckbox(Checkbox checkbox) {
+	public void endCheckbox(Mark checkbox) {
 	}
 
 	@Override

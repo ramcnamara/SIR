@@ -243,4 +243,9 @@ public class Task extends ComplexTask {
 		subtasks = new ArrayList<Mark>();
 
 	}
+
+	@Override
+	public boolean isPenalty() {
+		return penalty;
+	}
 }
