@@ -34,7 +34,7 @@ public class Task extends ComplexTask {
 	@XmlElements({ @XmlElement(name = "Task", type = Task.class),
 			@XmlElement(name = "QTask", type = QTask.class),
 			@XmlElement(name = "Checkbox", type = Checkbox.class) })
-	private ArrayList<Mark> subtasks;
+	private ArrayList<Mark> subtasks = null;
 
 	@XmlAttribute
 	private float maxMark;

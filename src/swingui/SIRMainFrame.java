@@ -140,6 +140,7 @@ public class SIRMainFrame extends JFrame {
 							context = JAXBContext.newInstance(MarkingScheme.class);
 
 						Marshaller marshaller = context.createMarshaller();
+						marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 						OutputStream outstream = new FileOutputStream(outfile);
 						marshaller.marshal(theScheme, outstream);
 						} catch (JAXBException e1) {

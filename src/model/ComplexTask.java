@@ -32,7 +32,7 @@ public abstract class ComplexTask extends Mark {
 	/* ComplexTasks may have criteria, which in the XML representation will be wrapped in
 	 * a Criteria element. 
 	 */
-	@XmlElementWrapper(name="Criteria")
+	@XmlElementWrapper(name="Criteria", required=false, nillable=false)
 	@XmlElement(name="Criterion")
 	protected ArrayList<Criterion> criteria;
 	
