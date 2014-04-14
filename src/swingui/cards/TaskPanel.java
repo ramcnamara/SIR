@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import model.Criterion;
 import model.Mark;
 import model.MarkingScheme;
+import model.QTask;
 import model.Task;
 
 import javax.swing.border.TitledBorder;
@@ -17,7 +18,9 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 
 /**
@@ -150,10 +153,19 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		
 		horizontalGlue = Box.createHorizontalGlue();
 		contents.add(horizontalGlue, "cell 1 0");
+
 		if (task.getSubtasks() == null || task.getSubtasks().size() == 0)
 			lblComputed.setVisible(false);
-		else
-			tfMaxMark.setEnabled(false);
+		else {
+			boolean allQual = true;
+			for (Mark m: task.getSubtasks()) {
+				if (!(m instanceof QTask)) {
+					allQual = false;
+					break;
+				}
+			}
+			tfMaxMark.setEnabled(!allQual);
+		}
 
 		scrollpane.getVerticalScrollBar().setValue(0);
 	}
