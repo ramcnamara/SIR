@@ -154,17 +154,21 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		horizontalGlue = Box.createHorizontalGlue();
 		contents.add(horizontalGlue, "cell 1 0");
 
-		if (task.getSubtasks() == null || task.getSubtasks().size() == 0)
-			lblComputed.setVisible(false);
-		else {
-			boolean allQual = true;
+		boolean enableMarksEntry = true;
+		
+		if (task.getSubtasks() != null && task.getSubtasks().size() > 0)
 			for (Mark m: task.getSubtasks()) {
 				if (!(m instanceof QTask)) {
-					allQual = false;
+					enableMarksEntry = false;
 					break;
 				}
 			}
-			tfMaxMark.setEnabled(!allQual);
+		
+		if (enableMarksEntry)
+			lblComputed.setVisible(false);
+		else {
+
+			tfMaxMark.setEnabled(enableMarksEntry);
 		}
 
 		scrollpane.getVerticalScrollBar().setValue(0);
