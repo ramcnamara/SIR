@@ -17,12 +17,14 @@ import javax.xml.bind.Unmarshaller;
 
 
 
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.prefs.Preferences;
 
 import javax.swing.JSplitPane;
 
@@ -88,7 +90,8 @@ public class SIRMainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				// display "file open" dialog
-				JFileChooser fc = new JFileChooser();
+				Preferences prefs = Preferences.userRoot().node(getClass().getName());
+				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
 				fc.addChoosableFileFilter(new XmlFileFilter());
 				int fcval = fc.showOpenDialog(contentPane);
 				
@@ -96,12 +99,12 @@ public class SIRMainFrame extends JFrame {
 				if (fcval == JFileChooser.APPROVE_OPTION) {
 					// This will need to change if we ever move to a multidocument interface.
 					File infile = fc.getSelectedFile();
+					prefs.put("LAST_USED_FOLDER", infile.getParent());
 					try {
 						JAXBContext  context = JAXBContext.newInstance(MarkingScheme.class);
 						Unmarshaller unmarshaller = context.createUnmarshaller();
 						theScheme = (MarkingScheme) unmarshaller.unmarshal(infile);
 					} catch (JAXBException e1) {
-						// TODO This should pop up a dialog.
 						e1.printStackTrace();
 					}
 
