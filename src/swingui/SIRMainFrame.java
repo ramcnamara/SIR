@@ -132,11 +132,13 @@ public class SIRMainFrame extends JFrame {
 		mntmSave.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser();
+				Preferences prefs = Preferences.userRoot().node(getClass().getName());
+				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
 				int fcval = fc.showSaveDialog(contentPane);
 				
 				if (fcval == JFileChooser.APPROVE_OPTION) {
 					File outfile = fc.getSelectedFile();
+					prefs.put("LAST_USED_FOLDER", outfile.getParent());
 
 						JAXBContext context;
 						try {
