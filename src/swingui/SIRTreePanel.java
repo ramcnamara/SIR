@@ -21,9 +21,9 @@ import formatters.tree.JTreeMaker;
 public class SIRTreePanel extends JScrollPane implements Observer {
 
 	private static final long serialVersionUID = 1L;
-	JTree tree;
+	private JTree tree;
 	
-	SIRTreePanel() {
+	public SIRTreePanel() {
 		tree = new JTree();
 		setLayout(new ScrollPaneLayout());
 	}
