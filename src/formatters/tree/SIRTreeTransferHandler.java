@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import model.Checkbox;
 import model.ComplexTask;
 import model.Criterion;
 import model.Mark;
@@ -131,13 +132,14 @@ final class SIRTreeTransferHandler extends TransferHandler {
 			return true;
 		}
 		// You can't drop anything onto a Checkbox or Criterion
-		if (m instanceof Mark || m instanceof Criterion) {
+		if (m instanceof Checkbox || m instanceof Criterion) {
 			return false;
 		}
 
 		// You can't drop Tasks or Checkboxes on QTasks
-		if (m instanceof QTask)
+		if (m instanceof QTask) {
 			return (incoming instanceof QTask || incoming instanceof Criterion);
+		}
 
 		// The only thing you can't drop on the root node is a Criterion.
 		return !(incoming instanceof Criterion);

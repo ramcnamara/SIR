@@ -121,6 +121,8 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	}
 
 	private void replaceAddSubtaskButton() {
+		if (getCurrentCard() == null) return;
+		
 		taskControlPanel.remove(btnAddSubtask);
 		btnAddSubtask = getCurrentCard().getAddSubtaskButton();
 		btnAddSubtask.addActionListener(this);
