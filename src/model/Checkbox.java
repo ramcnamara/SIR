@@ -23,6 +23,9 @@ public class Checkbox extends Mark {
 	@XmlAttribute
 	private boolean bonus;
 	
+	@XmlAttribute
+	private boolean penalty;
+	
 	/**
 	 * Copy constructor.
 	 * 
@@ -119,9 +122,12 @@ public class Checkbox extends Mark {
 		return new Checkbox(this);
 	}
 
-	@Override
+
 	public boolean isPenalty() {
-		// TODO Auto-generated method stub
 		return penalty;
+	}
+
+	public void setPenalty(boolean penalty) {
+		this.penalty = penalty;	
 	}
 }

@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -25,11 +24,15 @@ import net.miginfocom.swing.MigLayout;
 import formatters.tree.JTreeMaker;
 import formatters.tree.SIRNode;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.JSeparator;
 
 import swingui.cards.Card;
+
 /**
  * The SIRCardPanel is responsible for displaying the Tasks, QTasks, and Checkboxes
  * that comprise SIR's data model.  It also allows the user to perform task-level
@@ -38,10 +41,11 @@ import swingui.cards.Card;
  * @author Robyn
  *
  */
-public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListener, ActionListener {
+public class SIRCardPanel extends JPanel implements TreeSelectionListener, ActionListener, NavDisableEventListener {
 	private MarkingScheme scheme;
 	private ComplexTask parent = null;
 	private Mark task = null;
+	private boolean allowNavigation = true;
 	
 	/**
 	 * Instantiates a new button panel.  Does not add the tree panel;
@@ -50,16 +54,16 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	public SIRCardPanel() {
 		setLayout(new MigLayout());
 		taskControlPanel = new JPanel();
-		JButton btnAddTask = new JButton("Add task");
+		btnAddTask = new JButton("Add task");
 		btnAddTask.setActionCommand("Add task");
 		btnAddTask.addActionListener(this);
 		taskControlPanel.setLayout(new MigLayout("", "[95px]", "[][][][][23px][23px][]"));
 		
-		JButton btnSaveTask = new JButton("Save task");
+		btnSaveTask = new JButton("Save task");
 		btnSaveTask.addActionListener(this);
 		taskControlPanel.add(btnSaveTask, "cell 0 0, growx, aligny center");
 		
-		JButton btnResetTask = new JButton("Revert task");
+		btnResetTask = new JButton("Revert task");
 		btnResetTask.addActionListener(this);
 		taskControlPanel.add(btnResetTask, "cell 0 1, growx, aligny center");
 		
@@ -83,8 +87,10 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	private static final long serialVersionUID = 1L;
 	private JPanel taskControlPanel;
 	private JButton btnAddSubtask;
+	private JButton btnSaveTask;
+	private JButton btnResetTask;
+	private JButton btnAddTask;
 
-	@Override
 	/**
 	 * Respond to changes in the data model.
 	 * 
@@ -94,9 +100,12 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	public void update(Observable scheme, Object o) {
 		if (!(scheme instanceof MarkingScheme))
 			return;
+		
+		// dispose of current components
+		
 		this.scheme = (MarkingScheme)scheme;
 		parent = null;
-		JTreeMaker treemaker = new JTreeMaker();
+		JTreeMaker treemaker = new JTreeMaker(this);
 		treemaker.doScheme(this.scheme);
 		cardArea = treemaker.getCardStack();
 		this.removeAll();
@@ -105,6 +114,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		cardArea.setAlignmentY(Component.LEFT_ALIGNMENT);
 		if (task != null)
 			seekToCard(task);
+		enableNavigation();
 		this.repaint();
 	}
 
@@ -113,6 +123,8 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 	 * Respond to TreeSelectionEvents by showing the task selected in the tree.
 	 */
 	public void valueChanged(TreeSelectionEvent e) {
+		if (!allowNavigation)
+			return;
 		SIRNode node = (SIRNode) e.getNewLeadSelectionPath().getLastPathComponent();
 		parent = node.getParentTask();
 		task = node.getMark();
@@ -154,6 +166,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		CardLayout cl = (CardLayout) cardArea.getLayout();
 		cl.first(cardArea);
 		Card firstCard = getCurrentCard();
+		if (firstCard == null) return;
 		do {
 			cl.next(cardArea);
 			Card card = getCurrentCard();
@@ -182,7 +195,6 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 			JRadioButton rbtask = new JRadioButton("Numerically-marked task");
 			JRadioButton rbqtask = new JRadioButton("Qualitatively-marked task");
 			JRadioButton rbcheckbox = new JRadioButton("Checkbox (done or not done, no intermediate grades)");
-			rbcheckbox.setEnabled(false);
 			
 			ButtonGroup group = new ButtonGroup();
 			group.add(rbtask);
@@ -224,6 +236,7 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		
 		// Remove currently-visible task (no matter what type it is)
 		else if (cmd.equals("Remove task")) {
+			if (getCurrentCard() == null) return;
 			if (parent == null) {
 				scheme.delete(task);
 			}
@@ -239,15 +252,20 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		else if (cmd.equals("Save task")) {
 			// We will need to manually reset the card selection 
 			// because saving will trigger the card display to be rebuilt
+			if (getCurrentCard() == null) return;
 			Mark ourTask = getCurrentCard().getTask();
 			getCurrentCard().save();
 			seekToCard(ourTask);
 			scheme.refresh();
+			enableNavigation();
 		}
 		
 		// Reset current task
-		else if (cmd.equals("Reset task")) {
-			getCurrentCard().reset();
+		else if (cmd.equals("Revert task")) {
+			Card currentCard = getCurrentCard();
+			if (currentCard == null) return;
+			currentCard.reset();
+			enableNavigation();
 		}
 		
 		else if (cmd.equals("Add subtask")) {
@@ -319,4 +337,45 @@ public class SIRCardPanel extends JPanel implements Observer, TreeSelectionListe
 		}
 
 	}
+	
+
+	private void disableNavigation() {
+		allowNavigation = false;
+		btnAddSubtask.setEnabled(false);
+		btnAddTask.setEnabled(false);
+	}
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		disableNavigation();
+		
+	}
+
+	
+	private void enableNavigation() {
+		allowNavigation = true;
+		btnAddSubtask.setEnabled(true);
+		btnAddTask.setEnabled(true);
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		disableNavigation();		
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		disableNavigation();
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		disableNavigation();		
+	}
+
+	@Override
+	public void tableChanged(TableModelEvent e) {
+		disableNavigation();
+		
+	}
+
 }

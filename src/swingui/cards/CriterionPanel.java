@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 
 import net.miginfocom.swing.MigLayout;
@@ -38,7 +39,7 @@ public class CriterionPanel extends JPanel implements ActionListener {
 	 * Creates the panel, including a JTable containing the data and
 	 * a panel of buttons for insertion and deletion.
 	 */
-	public CriterionPanel() {
+	public CriterionPanel(TableModelListener listener) {
 		setLayout(new MigLayout("fill", "[fill]", "[grow][]"));
 		// create button panel
 		JPanel buttonPanel = new JPanel();
@@ -75,9 +76,13 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		contents = new JScrollPane(criteria);
 		contents.setBackground(UIManager.getColor("Panel.background"));
 		contents.getViewport().setBackground(UIManager.getColor("Panel.background"));
+		
 		// get everything to display
 		add(contents, "cell 0 0,grow");
 		add(buttonPanel, "dock south");
+		
+		// add handler to allow disabling of navigation if the table data is changed
+		m.addTableModelListener(listener);
 	}
 	
 	public void addCriterion(Criterion criterion) {

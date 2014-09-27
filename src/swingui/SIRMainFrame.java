@@ -1,7 +1,6 @@
 package swingui;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JFileChooser;
@@ -12,31 +11,23 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-
-
-
-
-
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.prefs.Preferences;
-
 import javax.swing.JSplitPane;
 
 import model.MarkingScheme;
 import net.miginfocom.swing.MigLayout;
 
 
-public class SIRMainFrame extends JFrame {
+public class SIRMainFrame extends JFrame implements Observer {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private MarkingScheme theScheme;
@@ -45,6 +36,7 @@ public class SIRMainFrame extends JFrame {
 	private JPanel controlPanel;
 	private SIRMetadataPanel schemePanel;
 	private SIRCardPanel cardPanel;
+	private JSplitPane treeSplitPane;
 
 
 	/**
@@ -63,18 +55,13 @@ public class SIRMainFrame extends JFrame {
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				// create new model object
 				theScheme = new MarkingScheme();
-				schemePanel.setScheme(theScheme);
 				
 				// Set up observers
-				theScheme.addObserver(xmlPanel);
-				theScheme.addObserver(treePanel);
-				theScheme.addObserver(cardPanel);
-				theScheme.addObserver(schemePanel);
-				theScheme.refresh();
+				changeScheme(theScheme);
 				
-				// Instantiate scheme editor panel
-				//schemePanel = new SIRMetadataPanel(theScheme);
 				controlPanel.removeAll();
 				controlPanel.add(schemePanel, "dock north");
 				controlPanel.add(cardPanel, "dock center, aligny top, growy");
@@ -108,16 +95,14 @@ public class SIRMainFrame extends JFrame {
 						e1.printStackTrace();
 					}
 
-					// Set up observers
-					theScheme.addObserver(xmlPanel);
-					theScheme.addObserver(treePanel);
-					theScheme.addObserver(cardPanel);
-					theScheme.refresh();
 					
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
-					theScheme.addObserver(schemePanel);
 					schemePanel.rereadTotalMark();
+					
+					// Set up observers
+					changeScheme(theScheme);
+					
 					controlPanel.removeAll();
 					controlPanel.add(schemePanel, "dock north");
 					controlPanel.add(cardPanel, "dock center, aligny top, growy");
@@ -185,17 +170,17 @@ public class SIRMainFrame extends JFrame {
 		xmlPanel.setBorder(null);
 		xmlSplitPane.setRightComponent(xmlPanel);
 		
-		JSplitPane treeSplitPane = new JSplitPane();
+		treeSplitPane = new JSplitPane();
 		xmlSplitPane.setLeftComponent(treeSplitPane);
 		xmlSplitPane.setResizeWeight(0.8);
 		
-		treePanel = new SIRTreePanel();
+		cardPanel = new SIRCardPanel();
+		treePanel = new SIRTreePanel(cardPanel);
 		treeSplitPane.setLeftComponent(treePanel);
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new MigLayout("fill", "", ""));
 		schemePanel = new SIRMetadataPanel(null);
 		controlPanel.add(schemePanel, "dock north, growy");
-		cardPanel = new SIRCardPanel();
 		treePanel.addTreeSelectionListener(cardPanel);
 		controlPanel.add(cardPanel, "push ,grow");
 		treeSplitPane.setRightComponent(controlPanel);
@@ -203,5 +188,33 @@ public class SIRMainFrame extends JFrame {
 		
 		// Get things displaying on the XML Pane and Tree
 		treePanel.addTreeSelectionListener(cardPanel);
+	}
+	
+	
+	// When the marking scheme is replaced by a new one (rather than updated)
+	// this method can manages communication with the panels that depend on the
+	// MainFrame.
+	private void changeScheme(MarkingScheme newScheme) {
+		// Remove previous observers
+		newScheme.deleteObservers();
+		
+		// Set up observers
+		newScheme.addObserver(xmlPanel);
+		newScheme.addObserver(schemePanel);
+		newScheme.addObserver(SIRMainFrame.this);
+		
+		// reset stored marking schemes
+		schemePanel.setScheme(newScheme);
+		this.theScheme = newScheme;
+		
+		// trigger an update
+		newScheme.refresh();
+	}
+
+
+	@Override
+	public void update(Observable observable, Object parameters) {
+		treePanel.update(observable, parameters);
+		cardPanel.update(observable, parameters);
 	}
 }

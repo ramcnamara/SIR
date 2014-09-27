@@ -1,7 +1,6 @@
 package swingui;
 
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -18,13 +17,15 @@ import formatters.tree.JTreeMaker;
  * @author Robyn
  *
  */
-public class SIRTreePanel extends JScrollPane implements Observer {
+public class SIRTreePanel extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 	private JTree tree;
+	private NavDisableEventListener ndel;
 	
-	public SIRTreePanel() {
-		tree = new JTree();
+	public SIRTreePanel(NavDisableEventListener ndel) {
+		this.tree = new JTree();
+		this.ndel = ndel;
 		setLayout(new ScrollPaneLayout());
 	}
 	
@@ -36,21 +37,25 @@ public class SIRTreePanel extends JScrollPane implements Observer {
 	 * event listeners over to it.
 	 * 
 	 * @param o the Observable that triggered the update (which should be a MarkingScheme)
-	 * @param parameter required by the override but currently ignored
+	 * @param parameter object, but currently ignored
 	 */
-	@Override
 	public void update(Observable o, Object parameter) {
 		// check we're being invoked on something sane
 		if (!(o instanceof MarkingScheme))
 			return;
 		
 		// copy out the old listeners
-		TreeSelectionListener[] tsl = tree.getTreeSelectionListeners();
+		TreeSelectionListener[] tsl = null;
+		if (tree != null) {
+			tsl = tree.getListeners(TreeSelectionListener.class);
+		}
 		
-		// instantiate shiny new contents
-		JTreeMaker treemaker = new JTreeMaker();
+		JTreeMaker treemaker = new JTreeMaker(ndel);
 		treemaker.doScheme((MarkingScheme)o);
 		tree = treemaker.getJTree();
+		if (tree == null)
+			return;
+		
 		this.getViewport().removeAll();
 		this.getViewport().add(tree);
 		

@@ -23,17 +23,18 @@ import java.awt.Component;
 
 import javax.swing.Box;
 
+import swingui.NavDisableEventListener;
+
 /**
  * Panel that allows reading and editing of numerically-marked tasks.
  * 
  * @author Robyn
  * 
  */
-public class TaskPanel extends JPanel implements CriterionContainer, Card {
+public class TaskPanel extends Card implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
 	private Task target;
-	private Mark parent;
 	private JPanel contents;
 	private JScrollPane scrollpane;
 	private CriterionPanel cp;
@@ -45,7 +46,6 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 	private JCheckBox chckbxAllowMarkerComment;
 	private JCheckBox chckbxBonusTask;
 	private JCheckBox chckbxPenaltyTask;
-	private MarkingScheme scheme;
 	private JLabel lblLabel;
 	private JTextField tfLabel;
 	private Component horizontalGlue;
@@ -62,10 +62,9 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 	 * @param scheme
 	 *            marking scheme (needed for change notification)
 	 */
-	public TaskPanel(Task task, Mark mark, MarkingScheme scheme) {
+	public TaskPanel(MarkingScheme scheme, NavDisableEventListener listener, Mark parent, Task task) {
+		super(scheme, listener, parent);
 		target = task;
-		parent = mark;
-		this.scheme = scheme;
 
 		setLayout(new MigLayout("", "[grow]", "[grow]"));
 
@@ -134,7 +133,7 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment",
 				task.hasComment());
 		contents.add(chckbxAllowMarkerComment, "cell 1 8");
-		cp = new CriterionPanel();
+		cp = new CriterionPanel(listener);
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
@@ -172,6 +171,17 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		}
 
 		scrollpane.getVerticalScrollBar().setValue(0);
+		
+		// Add a listener to each component to allow navigation to be disabled when edits have been made
+		chckbxAllowMarkerComment.addChangeListener(listener);
+		chckbxBonusTask.addChangeListener(listener);
+		chckbxGroupTask.addChangeListener(listener);
+		chckbxPenaltyTask.addChangeListener(listener);
+		taDescription.getDocument().addDocumentListener(listener);
+		taMarkerInstructions.getDocument().addDocumentListener(listener);
+		tfLabel.getDocument().addDocumentListener(listener);
+		tfMaxMark.getDocument().addDocumentListener(listener);
+		tfTaskName.getDocument().addDocumentListener(listener);
 	}
 
 	/**
@@ -246,15 +256,6 @@ public class TaskPanel extends JPanel implements CriterionContainer, Card {
 		}
 	}
 
-	/**
-	 * Retrieve the model object representing the parent of the Task providing
-	 * the data. This is used for deletion.
-	 * 
-	 * @return an instance of Mark representing the parent
-	 */
-	public Mark getParentTask() {
-		return parent;
-	}
 
 	@Override
 	public Mark getTask() {

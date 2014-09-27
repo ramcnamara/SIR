@@ -13,9 +13,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import swingui.NavDisableEventListener;
 import net.miginfocom.swing.MigLayout;
 import model.Checkbox;
 import model.Mark;
+import model.MarkingScheme;
 
 /**
  * Display for Checkbox type tasks.
@@ -23,11 +25,11 @@ import model.Mark;
  * @author Robyn
  *
  */
-public class CheckboxPanel extends JPanel implements ActionListener, Card {
+public class CheckboxPanel extends Card implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private Checkbox target;
-	private Mark parent;
+
 	private JPanel contents;
 	private JTextArea tfTaskName;
 	private JTextArea taDescription;
@@ -45,9 +47,10 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 	 * Create the panel.
 	 * @param mark 
 	 */
-	public CheckboxPanel(Checkbox checkbox, Mark mark) {
+	public CheckboxPanel(MarkingScheme scheme, NavDisableEventListener listener, Mark parent, Checkbox checkbox) {
+		super(scheme, listener, parent);
+		
 		target = checkbox;
-		parent = mark;
 		
 		setLayout(new MigLayout("fill", "[grow]", "[][grow]"));
 		scrollpane = new JScrollPane();
@@ -128,7 +131,16 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		
 		scrollpane.setViewportView(contents);
 		add(scrollpane, "cell 0 1, growx, growy");
-
+		
+		// Add a listener to each component to allow navigation to be disabled when edits have been made
+		chckbxBonusTask.addChangeListener(listener);
+		chckbxGroupTask.addChangeListener(listener);
+		chckbxPenaltyTask.addChangeListener(listener);
+		taDescription.getDocument().addDocumentListener(listener);
+		taMarkerInstructions.getDocument().addDocumentListener(listener);
+		tfLabel.getDocument().addDocumentListener(listener);
+		tfMark.getDocument().addDocumentListener(listener);
+		tfTaskName.getDocument().addDocumentListener(listener);
 	}
 	
 	/**
@@ -185,14 +197,6 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		}
 	}
 	
-	/**
-	 * Retrieve the model object representing the parent of the 
-	 * Checkbox providing the data.  This is used for deletion.
-	 * @return an instance of Mark representing the parent
-	 */
-	public Mark getParentTask() {
-		return parent;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
@@ -211,7 +215,6 @@ public class CheckboxPanel extends JPanel implements ActionListener, Card {
 		return target;
 	}
 
-	@Override
 	public JButton getAddSubtaskButton() {
 		JButton newButton = new JButton("Add subtask");
 		newButton.setEnabled(false);

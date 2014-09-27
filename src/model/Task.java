@@ -44,6 +44,9 @@ public class Task extends ComplexTask {
 
 	@XmlAttribute
 	private boolean bonus;
+	
+	@XmlAttribute
+	private boolean penalty;
 
 	/**
 	 * Copy constructor, required by JAXB
@@ -252,5 +255,9 @@ public class Task extends ComplexTask {
 	@Override
 	public boolean isPenalty() {
 		return penalty;
+	}
+
+	public void setPenalty(boolean penalty) {
+		this.penalty = penalty;
 	}
 }

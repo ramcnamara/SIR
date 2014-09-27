@@ -6,6 +6,7 @@ import java.util.Stack;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import swingui.NavDisableEventListener;
 import swingui.cards.CheckboxPanel;
 import swingui.cards.CriterionContainer;
 import swingui.cards.QTaskPanel;
@@ -26,11 +27,17 @@ public class JTreeMaker implements OutputMaker {
 	public static final ImageIcon schemeIcon = new ImageIcon(JTreeMaker.class.getResource("/resources/diamond.png"));
 	
 	private SIRNode root = null;
+	private SIRTree tree;
 	private JPanel panel = new JPanel(new CardLayout());
 	private CriterionContainer lastcard;
 	private Stack<SIRNode> path = new Stack<SIRNode>();
 	private Integer tasknum = 0;
 	private MarkingScheme scheme;
+	private NavDisableEventListener listener;
+
+	public JTreeMaker(NavDisableEventListener listener) {
+		this.listener = listener;
+	}
 
 	@Override
 	public void doCheckbox(Checkbox checkbox) {
@@ -38,7 +45,7 @@ public class JTreeMaker implements OutputMaker {
 		String idstr = (++tasknum).toString();
 		parent.add(new SIRNode(idstr, parent, checkbox, checkboxIcon));
 		path.push(parent);
-		panel.add(new CheckboxPanel(checkbox, parent.getMark()), idstr);
+		panel.add(new CheckboxPanel(scheme, listener, parent.getMark(), checkbox), idstr);
 	}
 
 	@Override
@@ -66,7 +73,7 @@ public class JTreeMaker implements OutputMaker {
 		parent.add(child);
 		path.push(parent);
 		path.push(child);
-		QTaskPanel card = new QTaskPanel(qtask, parent.getMark(), scheme);
+		QTaskPanel card = new QTaskPanel(scheme, listener, parent.getMark(), qtask);
 		panel.add(card, idstr);
 		lastcard = card;
 	}
@@ -85,7 +92,7 @@ public class JTreeMaker implements OutputMaker {
 		path.push(parent);
 		path.push(child);
 
-		TaskPanel card = new TaskPanel(task, parent.getMark(), scheme);
+		TaskPanel card = new TaskPanel(scheme, listener, parent.getMark(), task);
 		lastcard = card;
 		panel.add(card, idstr);
 	}
@@ -104,17 +111,16 @@ public class JTreeMaker implements OutputMaker {
 		for (Mark m : markingScheme.getSubtasks()) {
 			m.makeOutput(this);
 		}
+		endScheme(markingScheme);
 	}
 
 	@Override
 	public void endScheme(MarkingScheme markingScheme) {
+		if (root != null && markingScheme != null)
+			tree = new SIRTree(root, markingScheme);
 	}
 
 	public SIRTree getJTree() {
-		if (root == null)
-			return null;
-		SIRTree tree = new SIRTree(root, scheme);
-
 		return tree;
 	}
 

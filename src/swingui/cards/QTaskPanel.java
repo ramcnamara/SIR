@@ -19,11 +19,12 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
-
 import java.awt.Component;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.Box;
+
+import swingui.NavDisableEventListener;
 
 
 /**
@@ -32,12 +33,10 @@ import javax.swing.Box;
  * @author Robyn
  *
  */
-public class QTaskPanel extends JPanel implements CriterionContainer, Card {
+public class QTaskPanel extends Card implements CriterionContainer {
 
 	private static final long serialVersionUID = 1L;
 	private QTask target;
-	private MarkingScheme scheme;
-	private Mark parent;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
@@ -58,11 +57,11 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 	 * @param mark qtask's parent, used for deletion
 	 * @param scheme the marking scheme, used for change notification
 	 */
-	public QTaskPanel(QTask qtask, Mark mark, MarkingScheme scheme) {
+	public QTaskPanel(MarkingScheme scheme, NavDisableEventListener listener, Mark parent, QTask qtask) {
+		super(scheme, listener, parent);
+		
 		setBorder(null);
 		target=qtask;
-		parent = mark;
-		this.scheme = scheme;
 		setLayout(new MigLayout("fill", "[]","[]"));
 		
 		String label = "";
@@ -126,7 +125,7 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 		
 		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment", qtask.hasComment());
 		contents.add(chckbxAllowMarkerComment, "cell 1 7");
-		cp = new CriterionPanel();
+		cp = new CriterionPanel(listener);
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contents.add(cp, "cell 0 8 2 2,aligny top,grow");
@@ -141,6 +140,14 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 		if (qtask.getScale() == null) {
 			scalebox.setSelectedIndex(scalebox.getItemCount() - 1);
 		}
+		
+		// Add a listener to each component to allow navigation to be disabled when edits have been made
+		chckbxAllowMarkerComment.addChangeListener(listener);
+		chckbxGroupTask.addChangeListener(listener);
+		taDescription.getDocument().addDocumentListener(listener);
+		taMarkerInstructions.getDocument().addDocumentListener(listener);
+		tfLabel.getDocument().addDocumentListener(listener);
+		tfTaskName.getDocument().addDocumentListener(listener);
 	}
 	
 	/**
@@ -208,14 +215,6 @@ public class QTaskPanel extends JPanel implements CriterionContainer, Card {
 		scheme.refresh();
 	}
 	
-	/**
-	 * Retrieve the model object representing the parent of the 
-	 * QTask providing the data.  This is used for deletion.
-	 * @return an instance of Mark representing the parent
-	 */
-	public Mark getParentTask() {
-		return parent;
-	}
 	
 	public JButton getAddSubtaskButton() {
 		JButton newButton = new JButton("Add subtask");
