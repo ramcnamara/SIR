@@ -22,7 +22,7 @@ import java.util.Observer;
 import java.util.prefs.Preferences;
 import javax.swing.JSplitPane;
 
-import model.MarkingScheme;
+import model.scheme.MarkingScheme;
 import net.miginfocom.swing.MigLayout;
 
 

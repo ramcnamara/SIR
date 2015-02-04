@@ -13,14 +13,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import model.Checkbox;
-import model.ComplexTask;
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.QTask;
-import model.SubtaskTypeException;
-import model.Task;
+import model.scheme.Checkbox;
+import model.scheme.ComplexTask;
+import model.scheme.Criterion;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.QTask;
+import model.scheme.SubtaskTypeException;
+import model.scheme.Task;
 
 final class SIRTreeTransferHandler extends TransferHandler {
 	private static final long serialVersionUID = 1L;

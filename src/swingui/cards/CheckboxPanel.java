@@ -15,9 +15,9 @@ import javax.swing.ScrollPaneConstants;
 
 import swingui.NavDisableEventListener;
 import net.miginfocom.swing.MigLayout;
-import model.Checkbox;
-import model.Mark;
-import model.MarkingScheme;
+import model.scheme.Checkbox;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
 
 /**
  * Display for Checkbox type tasks.

@@ -12,7 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-import model.Scale;
+import model.scheme.Scale;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JTable;

@@ -8,8 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-import model.ComplexTask;
-import model.Mark;
+import model.scheme.ComplexTask;
+import model.scheme.Mark;
 
 public class SIRNode implements MutableTreeNode {
 	

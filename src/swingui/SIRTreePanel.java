@@ -7,7 +7,7 @@ import javax.swing.JTree;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.event.TreeSelectionListener;
 
-import model.MarkingScheme;
+import model.scheme.MarkingScheme;
 import formatters.tree.JTreeMaker;
 
 /**

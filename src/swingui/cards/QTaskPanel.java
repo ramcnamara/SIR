@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.QTask;
+import model.scheme.Criterion;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.QTask;
 
 import javax.swing.border.TitledBorder;
 

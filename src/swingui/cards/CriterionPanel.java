@@ -13,7 +13,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 
 import net.miginfocom.swing.MigLayout;
-import model.Criterion;
+import model.scheme.Criterion;
 
 import java.awt.Dimension;
 import java.awt.Component;

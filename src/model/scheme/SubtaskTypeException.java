@@ -1,4 +1,4 @@
-package model;
+package model.scheme;
 
 public class SubtaskTypeException extends Exception {
 

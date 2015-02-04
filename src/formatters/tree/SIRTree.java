@@ -18,8 +18,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import model.MarkingScheme;
-import model.QTask;
+import model.scheme.MarkingScheme;
+import model.scheme.QTask;
 
 /**
  * An extension of JTree that implements drag and drop.
@@ -82,16 +82,16 @@ public class SIRTree extends JTree {
 						Clipboard theClipboard = CutCopyPasteHelper.getClipboard();
 						
 						// can't paste to Checkbox or Criterion
-						if (theClipboard.isDataFlavorAvailable(new DataFlavor(model.Checkbox.class, "Mark")) ||
-								theClipboard.isDataFlavorAvailable(new DataFlavor(model.Criterion.class, "Mark"))) {
+						if (theClipboard.isDataFlavorAvailable(new DataFlavor(model.scheme.Checkbox.class, "Mark")) ||
+								theClipboard.isDataFlavorAvailable(new DataFlavor(model.scheme.Criterion.class, "Mark"))) {
 							popup.enablePaste(false);
 						}
 						else {
 							SIRNode curr = (SIRNode) path.getLastPathComponent();
 							// QTasks can contain only QTask or Criterion
 							if (curr.getMark() instanceof QTask)
-								popup.enablePaste(theClipboard.isDataFlavorAvailable(new DataFlavor(model.QTask.class, "Mark")) ||
-										theClipboard.isDataFlavorAvailable(new DataFlavor(model.Criterion.class, "Mark")));
+								popup.enablePaste(theClipboard.isDataFlavorAvailable(new DataFlavor(model.scheme.QTask.class, "Mark")) ||
+										theClipboard.isDataFlavorAvailable(new DataFlavor(model.scheme.Criterion.class, "Mark")));
 							
 							else // it's a Task, paste anything here if it exists
 							{

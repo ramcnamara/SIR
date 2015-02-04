@@ -2,8 +2,8 @@ package swingui.cards;
 
 import java.util.ArrayList;
 
-import model.Criterion;
-import model.Scale;
+import model.scheme.Criterion;
+import model.scheme.Scale;
 
 import javax.swing.table.AbstractTableModel;
 

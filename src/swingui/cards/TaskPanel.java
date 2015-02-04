@@ -5,11 +5,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.QTask;
-import model.Task;
+import model.scheme.Criterion;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.QTask;
+import model.scheme.Task;
 
 import javax.swing.border.TitledBorder;
 

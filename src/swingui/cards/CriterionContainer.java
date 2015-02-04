@@ -1,6 +1,6 @@
 package swingui.cards;
 
-import model.Criterion;
+import model.scheme.Criterion;
 
 /**
  * Interface implemented by the cardpanel classes that display

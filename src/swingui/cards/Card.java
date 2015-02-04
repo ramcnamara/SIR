@@ -4,8 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeListener;
 
-import model.Mark;
-import model.MarkingScheme;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
 
 public abstract class Card extends JPanel {
 

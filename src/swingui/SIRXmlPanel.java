@@ -16,7 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 
 import swingui.xml.XmlTextPane;
-import model.MarkingScheme;
+import model.scheme.MarkingScheme;
 
 public class SIRXmlPanel extends JPanel implements Observer {
 
