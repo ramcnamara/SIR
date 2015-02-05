@@ -127,7 +127,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 
 
 					// Instantiate scheme editor panel
-					schemePanel = new SIRMetadataPanel(theScheme);
+					schemePanel = new SIRMetadataPanel(theScheme, outcomes);
 					schemePanel.rereadTotalMark();
 
 					// Set up observers
@@ -209,7 +209,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 		treeSplitPane.setLeftComponent(treePanel);
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new MigLayout("fill", "", ""));
-		schemePanel = new SIRMetadataPanel(null);
+		schemePanel = new SIRMetadataPanel(null, null);
 		controlPanel.add(schemePanel, "dock north, growy");
 		treePanel.addTreeSelectionListener(cardPanel);
 		controlPanel.add(cardPanel, "push ,grow");

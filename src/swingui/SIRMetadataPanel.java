@@ -8,12 +8,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import net.miginfocom.swing.MigLayout;
+import model.outcomes.Outcomecollection;
 import model.scheme.MarkingScheme;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.JTextField;
 
 
 /**
@@ -40,11 +46,14 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 	private EditButton btnEditActivityName;
 	private JLabel lblTotalMarks;
 	private JLabel mark;
+	private JLabel lblLearningOutcomes;
+	private EditButton btnEditOutcomes;
+	private JTextPane textPane;
 
 	/**
 	 * Create the panel.
 	 */
-	public SIRMetadataPanel(MarkingScheme scheme) {
+	public SIRMetadataPanel(MarkingScheme scheme, Outcomecollection outcomes) {
 		theScheme = scheme;
 
 		String notLoadedString = new String("<no marking scheme loaded>");
@@ -103,7 +112,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 				c.setEnabled(false);
 			}
 
-		setLayout(new MigLayout("", "[right][grow,fill][pref!]", "[][][][grow][]"));
+		setLayout(new MigLayout("", "[right][grow,fill][pref!]", "[][][][grow,top][grow][]"));
 		add(lblUCtext, "cell 0 0");
 		add(lblANtext, "cell 0 1");
 		add(lblST, "cell 0 2");
@@ -118,12 +127,23 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		add(btnEditActivityName, "cell 2 1");
 		add(btnEditSubtitle, "cell 2 2");
 		add(btnEditPreamble, "cell 2 3");
+		
+		lblLearningOutcomes = new JLabel("Learning Outcomes");
+		add(lblLearningOutcomes, "cell 0 4,alignx trailing,aligny top");
+		
+		textPane = new JTextPane();
+		textPane.setText("<no marking scheme loaded>");
+		add(textPane, "cell 1 4,growx,aligny top");
+		
+		btnEditOutcomes = new EditButton();
+		btnEditOutcomes.setActionCommand("Outcomes");
+		add(btnEditOutcomes, "cell 2 4");
 
 		lblTotalMarks = new JLabel("Total marks");
-		add(lblTotalMarks, "cell 0 4,alignx trailing");
+		add(lblTotalMarks, "cell 0 5,alignx trailing");
 
 		mark = new JLabel("<no marking scheme loaded>");
-		add(mark, "cell 1 4");
+		add(mark, "cell 1 5");
 		rereadTotalMark();
 		repaint();
 	}
@@ -185,6 +205,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		String activityName = (scheme.getActivityName() == null? "" : scheme.getActivityName());
 		String subtitle = (scheme.getSubtitle() == null? "":scheme.getSubtitle());
 		String preamble = (scheme.getPreamble() == null? "":scheme.getPreamble());
+		List<String> outcomes = (scheme.getOutcomes() == null? new ArrayList<String>() : scheme.getOutcomes());
 
 		lblUnitCode.setText(unitCode);
 		lblActivityName.setText(activityName);

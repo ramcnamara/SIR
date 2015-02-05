@@ -2,8 +2,10 @@ package model.scheme;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -48,6 +50,44 @@ public class MarkingScheme extends Observable {
 	})
 
 	private ArrayList<Mark> tasks;
+
+	/*
+	 * This markup tells JAXB that the "outcomes" element is a wrapper containing Strings.
+	 */
+	
+	@XmlElementWrapper(name="OutcomeCollections")
+	@XmlElement(name="OutcomeCollection")
+	private List<String> outcomes;
+	
+	/** Add an outcome collection.
+	 * @param guid Unique identifier for the outcome collection, as specified in outcomes.xml.
+	 */
+	public void addOutcome(String guid) {
+		outcomes.add(guid);
+	}
+	
+	/** Remove an outcome collection.
+	 * 
+	 * Does nothing if no outcome collection with a matching GUID is associated with the marking scheme.
+	 * 
+	 * @param guid Unique identifier for the outcome collection, as specified in outcomes.xml.
+	 */
+	public void removeOutcome(String guid) {
+
+		if (outcomes.contains(guid)) {
+			outcomes.remove(guid);
+			
+			for (Mark m: tasks)
+				m.removeAllOutcomesForGuid(guid);
+		}
+	}
+	
+	/** Clear the list of associated outcomes.
+	 * 
+	 */
+	public void clearOutcomes() {
+		outcomes = new ArrayList<String>();
+	}
 	
 	/** Unit code accessor. 
 	 * @return the unit code
@@ -104,10 +144,11 @@ public class MarkingScheme extends Observable {
 
 	/**
 	 * Default constructor.  
-	 * Initializes the list of tasks to an empty list.
+	 * Initializes the list of tasks to an empty list.  Initializes the set of outcomes to an empty list.
 	 */
 	public MarkingScheme() {
 		tasks = new ArrayList<Mark>();
+		outcomes = new ArrayList<String>();
 		change();
 	}
 	
@@ -227,6 +268,11 @@ public class MarkingScheme extends Observable {
 			marks += m.getEffectiveMaxMark();
 		
 		return marks;
+	}
+
+	public List<String> getOutcomes() {
+		// TODO Auto-generated method stub
+		return Collections.unmodifiableList(outcomes);
 	}
 }
 

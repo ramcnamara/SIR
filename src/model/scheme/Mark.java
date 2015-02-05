@@ -216,4 +216,9 @@ public abstract class Mark implements Serializable {
 	public abstract boolean isPenalty();
 
 	public abstract boolean isBonus();
+
+	public void removeAllOutcomesForGuid(String guid) {
+		// TODO Not yet implemented since task-level outcomes are not yet a thing.
+		System.out.println("removeAllOutcomesForGuid(" + guid + "): Task-level associations not yet implemented.");
+	}
 }
