@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema
+	xmlns = "http://www.w3.org/2001/XMLSchema"
+	xmlns:outcomes = "http://www.monash.edu/LearningOutcomes"
+	targetNamespace = "http://www.monash.edu/LearningOutcomes"
+	elementFormDefault = "qualified"
+	version = "0.1">
+
+	<!--
+	A set of learning outcomes consists of the outcomes themselves, a name (i.e. short description), a long
+	description, a date, an organization, and a GUID.
+
+	The "responsible body" element should indicate which organization was responsible for developing the
+	learning outcomes.  This may be a University or a Faculty or School within a University, or it may be
+	an external accrediting body such as the IEEE or Engineers Australia.
+	-->
+<element name="outcomecollection">
+	<complexType>
+		<sequence>
+			<element name="learningoutcomes" maxOccurs="unbounded">
+				<complexType>
+					<all>
+						<element name="guid" type="string"/>
+						<element name="name" type="string"/>
+						<element name="description" type="string"/>
+						<element name="organization" type="string"/>
+						<element name="date" type="date"/>
+						<element name="outcomes">
+							<complexType>
+								<sequence>
+									<element name="outcome" type="string" maxOccurs="unbounded"/>
+								</sequence>
+							</complexType>
+						</element>
+					</all>
+				</complexType>
+			</element>
+		</sequence>
+	</element>
+</schema>

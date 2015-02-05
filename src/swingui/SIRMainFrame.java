@@ -1,6 +1,7 @@
 package swingui;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JFileChooser;
@@ -10,19 +11,24 @@ import javax.swing.JMenuItem;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.prefs.Preferences;
+
 import javax.swing.JSplitPane;
 
 import model.scheme.MarkingScheme;
+import model.outcomes.Outcomecollection;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -37,6 +43,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 	private SIRMetadataPanel schemePanel;
 	private SIRCardPanel cardPanel;
 	private JSplitPane treeSplitPane;
+	private Outcomecollection outcomes;
 
 
 	/**
@@ -46,22 +53,45 @@ public class SIRMainFrame extends JFrame implements Observer {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1152, 820);
 		
+		// search for default learning outcomes file
+		// TODO: look for a user-set preference first
+		String outcomeFileLoc = System.getProperty("user.home") + File.separator + "SIR" + File.separator + "outcomes.xml";
+		File infile = null;
+		try {
+			infile = new File(outcomeFileLoc);
+		} catch (NullPointerException e) {
+			// TODO: dialog
+			System.out.println("Learning outcome file location was null");
+		}
+		try {
+			JAXBContext  context = JAXBContext.newInstance(Outcomecollection.class);
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+			outcomes = (Outcomecollection) unmarshaller.unmarshal(infile);
+		} catch (UnmarshalException e1) {
+			System.out.println("Failed to unmarshal file " + outcomeFileLoc + ".  Check that it exists.");
+		} catch (JAXBException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		// TODO: factor menu out into a class or package of its own
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-		
+
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				// create new model object
 				theScheme = new MarkingScheme();
-				
+
 				// Set up observers
 				changeScheme(theScheme);
-				
+
 				controlPanel.removeAll();
 				controlPanel.add(schemePanel, "dock north");
 				controlPanel.add(cardPanel, "dock center, aligny top, growy");
@@ -70,18 +100,18 @@ public class SIRMainFrame extends JFrame implements Observer {
 		});
 		mnFile.add(mntmNew);
 
-		
+
 		JMenuItem mntmLoad = new JMenuItem("Load");
 		mntmLoad.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				
+
 				// display "file open" dialog
 				Preferences prefs = Preferences.userRoot().node(getClass().getName());
 				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
 				fc.addChoosableFileFilter(new XmlFileFilter());
 				int fcval = fc.showOpenDialog(contentPane);
-				
+
 				// file chosen?
 				if (fcval == JFileChooser.APPROVE_OPTION) {
 					// This will need to change if we ever move to a multidocument interface.
@@ -95,14 +125,14 @@ public class SIRMainFrame extends JFrame implements Observer {
 						e1.printStackTrace();
 					}
 
-					
+
 					// Instantiate scheme editor panel
 					schemePanel = new SIRMetadataPanel(theScheme);
 					schemePanel.rereadTotalMark();
-					
+
 					// Set up observers
 					changeScheme(theScheme);
-					
+
 					controlPanel.removeAll();
 					controlPanel.add(schemePanel, "dock north");
 					controlPanel.add(cardPanel, "dock center, aligny top, growy");
@@ -110,9 +140,9 @@ public class SIRMainFrame extends JFrame implements Observer {
 				}
 			}
 		});
-		
+
 		mnFile.add(mntmLoad);
-		
+
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mntmSave.addActionListener(new ActionListener() {
 
@@ -120,32 +150,32 @@ public class SIRMainFrame extends JFrame implements Observer {
 				Preferences prefs = Preferences.userRoot().node(getClass().getName());
 				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
 				int fcval = fc.showSaveDialog(contentPane);
-				
+
 				if (fcval == JFileChooser.APPROVE_OPTION) {
 					File outfile = fc.getSelectedFile();
 					prefs.put("LAST_USED_FOLDER", outfile.getParent());
 
-						JAXBContext context;
-						try {
-							context = JAXBContext.newInstance(MarkingScheme.class);
+					JAXBContext context;
+					try {
+						context = JAXBContext.newInstance(MarkingScheme.class);
 
 						Marshaller marshaller = context.createMarshaller();
 						marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 						OutputStream outstream = new FileOutputStream(outfile);
 						marshaller.marshal(theScheme, outstream);
-						} catch (JAXBException e1) {
-							// TODO Display some kind of sensible error message
-							e1.printStackTrace();
-						} catch (FileNotFoundException e1) {
-							// TODO put up a "file not found" dialog (although this shouldn't happen)
-							e1.printStackTrace();
-						}
+					} catch (JAXBException e1) {
+						// TODO Display some kind of sensible error message
+						e1.printStackTrace();
+					} catch (FileNotFoundException e1) {
+						// TODO put up a "file not found" dialog (although this shouldn't happen)
+						e1.printStackTrace();
+					}
 
 				}
 			}
 		});
 		mnFile.add(mntmSave);
-		
+
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener() {
 			// TODO: confirmation dialog if unsaved changes
@@ -154,26 +184,26 @@ public class SIRMainFrame extends JFrame implements Observer {
 			}
 		});
 		mnFile.add(mntmExit);
-		
+
 		// TODO: factor this out so that it can also be used for File -> New.
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JSplitPane xmlSplitPane = new JSplitPane();
 		xmlSplitPane.setOneTouchExpandable(true);
 		xmlSplitPane.setContinuousLayout(true);
 		xmlSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		contentPane.add(xmlSplitPane, BorderLayout.CENTER);
-		
+
 		xmlPanel = new SIRXmlPanel();
 		xmlPanel.setBorder(null);
 		xmlSplitPane.setRightComponent(xmlPanel);
-		
+
 		treeSplitPane = new JSplitPane();
 		xmlSplitPane.setLeftComponent(treeSplitPane);
 		xmlSplitPane.setResizeWeight(0.8);
-		
+
 		cardPanel = new SIRCardPanel();
 		treePanel = new SIRTreePanel(cardPanel);
 		treeSplitPane.setLeftComponent(treePanel);
@@ -185,28 +215,28 @@ public class SIRMainFrame extends JFrame implements Observer {
 		controlPanel.add(cardPanel, "push ,grow");
 		treeSplitPane.setRightComponent(controlPanel);
 		treeSplitPane.setResizeWeight(0.2);
-		
+
 		// Get things displaying on the XML Pane and Tree
 		treePanel.addTreeSelectionListener(cardPanel);
 	}
-	
-	
+
+
 	// When the marking scheme is replaced by a new one (rather than updated)
 	// this method can manages communication with the panels that depend on the
 	// MainFrame.
 	private void changeScheme(MarkingScheme newScheme) {
 		// Remove previous observers
 		newScheme.deleteObservers();
-		
+
 		// Set up observers
 		newScheme.addObserver(xmlPanel);
 		newScheme.addObserver(schemePanel);
 		newScheme.addObserver(SIRMainFrame.this);
-		
+
 		// reset stored marking schemes
 		schemePanel.setScheme(newScheme);
 		this.theScheme = newScheme;
-		
+
 		// trigger an update
 		newScheme.refresh();
 	}
