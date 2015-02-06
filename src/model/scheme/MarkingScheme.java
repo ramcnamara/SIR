@@ -11,6 +11,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import model.outcomes.Learningoutcomes;
 
 
 /**
@@ -46,8 +49,15 @@ public class MarkingScheme extends Observable {
 		@XmlElement(name="QTask", type=QTask.class),
 		@XmlElement(name="Checkbox", type=Checkbox.class)
 	})
-
+	
 	private ArrayList<Mark> tasks;
+
+	/*
+	 * This markup tells JAXB to ignore this field -- it's for SIR's use only, to store the sets of
+	 * learning outcomes that this marking scheme can reference.
+	 */
+	@XmlTransient
+	private List<Learningoutcomes> outcomeSets;
 	
 	/** Unit code accessor. 
 	 * @return the unit code
@@ -104,10 +114,11 @@ public class MarkingScheme extends Observable {
 
 	/**
 	 * Default constructor.  
-	 * Initializes the list of tasks to an empty list.
+	 * Initializes the lists of tasks and outcome sets to empty lists.
 	 */
 	public MarkingScheme() {
 		tasks = new ArrayList<Mark>();
+		outcomeSets = new ArrayList<Learningoutcomes>();
 		change();
 	}
 	
@@ -227,6 +238,15 @@ public class MarkingScheme extends Observable {
 			marks += m.getEffectiveMaxMark();
 		
 		return marks;
+	}
+	
+	/**
+	 * Add a set of learning outcomes to the set available for this marking scheme's tasks.
+	 * 
+	 * 
+	 */
+	public void addLearningOutcomes(Learningoutcomes outcomes) {
+		outcomeSets.add(outcomes);
 	}
 }
 

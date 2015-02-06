@@ -6,14 +6,22 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import net.miginfocom.swing.MigLayout;
+import model.mappings.MappingType;
+import model.mappings.Mappings;
 import model.scheme.MarkingScheme;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 
 /**
@@ -133,7 +141,6 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		rereadTotalMark();
 	}
 	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Respond to edit button clicks.  Pop up a dialog with appropriate controls.
@@ -143,8 +150,31 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 
 		if (action.equals("Activity name"))
 			currentValue = lblActivityName.getText();
-		else if (action.equals("Unit code"))
+		else if (action.equals("Unit code")) {
 			currentValue = lblUnitCode.getText();
+			
+			// reset available learning outcome sets
+			try {
+				ZipFile zip = new ZipFile("~/SIR/outcomes.sirx");
+				ZipEntry mapfile = zip.getEntry("mappings.xml");
+				if (mapfile == null)
+					System.out.println("Outcomes mapping file wasn't found in outcomes.sirx");
+				else {
+					Mappings mappings = null;
+					try {
+						JAXBContext  context = JAXBContext.newInstance(Mappings.class);
+						Unmarshaller unmarshaller = context.createUnmarshaller();
+						mappings = (Mappings) unmarshaller.unmarshal(zip.getInputStream(mapfile));
+					} catch (JAXBException e1) {
+						e1.printStackTrace();
+					}
+					
+				}
+			} catch (IOException e1) {
+				// TODO should be a dialog
+				System.out.println("Couldn't read outcomes.sirx");
+			}
+		}
 		else if (action.equals("Subtitle"))
 			currentValue = lblSubtitle.getText();
 		else if (action.equals("Preamble"))

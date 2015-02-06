@@ -1,7 +1,6 @@
 package swingui;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JFileChooser;
@@ -37,9 +36,9 @@ public class SIRMainFrame extends JFrame implements Observer {
 	private SIRXmlPanel xmlPanel;
 	private SIRTreePanel treePanel;
 	private JPanel controlPanel;
-	private SIRMetadataPanel schemePanel;
 	private SIRCardPanel cardPanel;
 	private JSplitPane treeSplitPane;
+	private SIRMetadataPanel schemePanel;
 
 
 	/**
