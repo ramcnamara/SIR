@@ -15,9 +15,9 @@ import javax.swing.ScrollPaneConstants;
 
 import swingui.NavDisableEventListener;
 import net.miginfocom.swing.MigLayout;
-import model.Checkbox;
-import model.Mark;
-import model.MarkingScheme;
+import model.scheme.Checkbox;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
 
 /**
  * Display for Checkbox type tasks.
@@ -144,7 +144,7 @@ public class CheckboxPanel extends Card implements ActionListener {
 	}
 	
 	/**
-	 * Re-reads the displayed data from the model, which has the
+	 * Re-reads the displayed data from the model.scheme, which has the
 	 * effect of cancelling any changes that were to have been made.
 	 */
 	public void reset() {
@@ -162,7 +162,7 @@ public class CheckboxPanel extends Card implements ActionListener {
 	
 	
 	/**
-	 * Stores displayed values back into the model.
+	 * Stores displayed values back into the model.scheme.
 	 */
 	public void save() {
 		String labelField = tfLabel.getText();

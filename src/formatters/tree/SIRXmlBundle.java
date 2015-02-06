@@ -10,8 +10,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import model.Mark;
-import model.MarkingScheme;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
 
 /**
  * Transferable class to support drag/drop and copy/cut/paste operations.

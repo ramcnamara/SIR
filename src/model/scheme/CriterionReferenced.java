@@ -1,4 +1,4 @@
-package model;
+package model.scheme;
 
 /**
  * Interface for criterion-referenced objects.

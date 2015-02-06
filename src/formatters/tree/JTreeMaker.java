@@ -11,13 +11,13 @@ import swingui.cards.CheckboxPanel;
 import swingui.cards.CriterionContainer;
 import swingui.cards.QTaskPanel;
 import swingui.cards.TaskPanel;
-import model.Checkbox;
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.OutputMaker;
-import model.QTask;
-import model.Task;
+import model.scheme.Checkbox;
+import model.scheme.Criterion;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.OutputMaker;
+import model.scheme.QTask;
+import model.scheme.Task;
 
 public class JTreeMaker implements OutputMaker {
 	public static final ImageIcon taskIcon = new ImageIcon(JTreeMaker.class.getResource("/resources/diamond.png"));

@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.QTask;
+import model.scheme.Criterion;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.QTask;
 
 import javax.swing.border.TitledBorder;
 
@@ -19,9 +19,13 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
+
 import java.awt.Component;
+
 import javax.swing.border.MatteBorder;
+
 import java.awt.Color;
+
 import javax.swing.Box;
 
 import swingui.NavDisableEventListener;
@@ -175,7 +179,7 @@ public class QTaskPanel extends Card implements CriterionContainer {
 	}
 	
 	/**
-	 * Re-reads the displayed data from the model, which has the
+	 * Re-reads the displayed data from the model.scheme, which has the
 	 * effect of cancelling any changes that were to have been made.
 	 */
 	public void reset() {
@@ -192,7 +196,7 @@ public class QTaskPanel extends Card implements CriterionContainer {
 	}
 	
 	/**
-	 * Stores displayed values back into the model.
+	 * Stores displayed values back into the model.scheme.
 	 */
 	public void save() {
 		String labelField = tfLabel.getText();

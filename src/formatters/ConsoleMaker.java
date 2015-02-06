@@ -3,15 +3,15 @@ package formatters;
 import java.util.List;
 import java.util.Stack;
 
-import model.Checkbox;
-import model.ComplexTask;
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.OutputMaker;
-import model.QTask;
-import model.Scale;
-import model.Task;
+import model.scheme.Checkbox;
+import model.scheme.ComplexTask;
+import model.scheme.Criterion;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.OutputMaker;
+import model.scheme.QTask;
+import model.scheme.Scale;
+import model.scheme.Task;
 
 
 

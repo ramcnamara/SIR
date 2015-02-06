@@ -1,6 +1,7 @@
 package swingui;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JFileChooser;
@@ -11,6 +12,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -20,9 +22,10 @@ import java.io.OutputStream;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.prefs.Preferences;
+
 import javax.swing.JSplitPane;
 
-import model.MarkingScheme;
+import model.scheme.MarkingScheme;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -56,7 +59,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				// create new model object
+				// create new model.scheme object
 				theScheme = new MarkingScheme();
 				
 				// Set up observers

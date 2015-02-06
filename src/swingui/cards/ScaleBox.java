@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
-import model.CriterionReferenced;
-import model.Scale;
+import model.scheme.CriterionReferenced;
+import model.scheme.Scale;
 
 /** 
  * A ComboBox that is populated with all Scales used in the current marking scheme.

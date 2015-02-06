@@ -1,4 +1,4 @@
-package model;
+package model.scheme;
 
 /**
  * Trivial object creation methods required by JAXB. 

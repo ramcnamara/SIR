@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import net.miginfocom.swing.MigLayout;
-import model.MarkingScheme;
+import model.scheme.MarkingScheme;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

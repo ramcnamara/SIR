@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import model.Checkbox;
-import model.ComplexTask;
-import model.Mark;
-import model.MarkingScheme;
-import model.QTask;
-import model.SubtaskTypeException;
-import model.Task;
+import model.scheme.Checkbox;
+import model.scheme.ComplexTask;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.QTask;
+import model.scheme.SubtaskTypeException;
+import model.scheme.Task;
 import net.miginfocom.swing.MigLayout;
 import formatters.tree.JTreeMaker;
 import formatters.tree.SIRNode;
@@ -35,7 +35,7 @@ import swingui.cards.Card;
 
 /**
  * The SIRCardPanel is responsible for displaying the Tasks, QTasks, and Checkboxes
- * that comprise SIR's data model.  It also allows the user to perform task-level
+ * that comprise SIR's data model.scheme.  It also allows the user to perform task-level
  * modifications: adding and removing tasks and subtasks.
  * 
  * @author Robyn
@@ -92,9 +92,9 @@ public class SIRCardPanel extends JPanel implements TreeSelectionListener, Actio
 	private JButton btnAddTask;
 
 	/**
-	 * Respond to changes in the data model.
+	 * Respond to changes in the data model.scheme.
 	 * 
-	 * @param scheme the MarkingScheme in the data model
+	 * @param scheme the MarkingScheme in the data model.scheme
 	 * @param o parameter object, currently ignored
 	 */
 	public void update(Observable scheme, Object o) {

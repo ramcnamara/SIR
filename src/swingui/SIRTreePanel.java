@@ -7,13 +7,13 @@ import javax.swing.JTree;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.event.TreeSelectionListener;
 
-import model.MarkingScheme;
+import model.scheme.MarkingScheme;
 import formatters.tree.JTreeMaker;
 
 /**
  * This class is a ScrollPane that wraps a JTree displaying the marking
  * scheme structure.  It is also responsible for handling the tree's response
- * to events that change the data model.
+ * to events that change the data model.scheme.
  * @author Robyn
  *
  */
@@ -31,7 +31,7 @@ public class SIRTreePanel extends JScrollPane {
 	
 
 	/**
-	 * Handle changes to the domain model.
+	 * Handle changes to the domain model.scheme.
 	 * 
 	 * SIRTreePanel deals with this by creating a new JTree and copying the old tree's
 	 * event listeners over to it.

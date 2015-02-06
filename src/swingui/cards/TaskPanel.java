@@ -5,11 +5,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.Criterion;
-import model.Mark;
-import model.MarkingScheme;
-import model.QTask;
-import model.Task;
+import model.scheme.Criterion;
+import model.scheme.Mark;
+import model.scheme.MarkingScheme;
+import model.scheme.QTask;
+import model.scheme.Task;
 
 import javax.swing.border.TitledBorder;
 
@@ -195,7 +195,7 @@ public class TaskPanel extends Card implements CriterionContainer {
 	}
 
 	/**
-	 * Re-reads the displayed data from the model, which has the effect of
+	 * Re-reads the displayed data from the model.scheme, which has the effect of
 	 * cancelling any changes that were to have been made.
 	 */
 	public void reset() {
@@ -213,7 +213,7 @@ public class TaskPanel extends Card implements CriterionContainer {
 	}
 
 	/**
-	 * Stores displayed values back into the model.
+	 * Stores displayed values back into the model.scheme.
 	 */
 	public void save() {
 		String labelField = tfLabel.getText();

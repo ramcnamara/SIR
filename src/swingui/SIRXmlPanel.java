@@ -16,7 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 
 import swingui.xml.XmlTextPane;
-import model.MarkingScheme;
+import model.scheme.MarkingScheme;
 
 public class SIRXmlPanel extends JPanel implements Observer {
 
@@ -48,9 +48,9 @@ public class SIRXmlPanel extends JPanel implements Observer {
 	
 	@Override
 	/**
-	 * Handle changes in data model by rerendering it to XML.
+	 * Handle changes in data model.scheme by rerendering it to XML.
 	 * 
-	 * @param scheme the MarkingScheme that comprises the data model
+	 * @param scheme the MarkingScheme that comprises the data model.scheme
 	 * @param o not used
 	 */
 	public void update(Observable scheme, Object o) {
