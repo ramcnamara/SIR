@@ -11,7 +11,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import net.miginfocom.swing.MigLayout;
-import model.mappings.MappingType;
 import model.mappings.Mappings;
 import model.scheme.MarkingScheme;
 

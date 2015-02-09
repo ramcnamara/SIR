@@ -1,6 +1,7 @@
 package swingui;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JFileChooser;
@@ -15,11 +16,16 @@ import javax.xml.bind.Unmarshaller;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Properties;
 import java.util.prefs.Preferences;
 
 import javax.swing.JSplitPane;
@@ -39,6 +45,8 @@ public class SIRMainFrame extends JFrame implements Observer {
 	private SIRCardPanel cardPanel;
 	private JSplitPane treeSplitPane;
 	private SIRMetadataPanel schemePanel;
+	
+	private ArrayList<String> teachingPeriods;
 
 
 	/**
@@ -53,6 +61,31 @@ public class SIRMainFrame extends JFrame implements Observer {
 		
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
+		
+		// load teaching period
+		// FIXME: this is VERY quick'n'dirty -- polish up and defensify!
+		InputStream propFile = null;
+		try {
+			propFile = new FileInputStream(System.getProperty("user.home") + File.separator + "SIR" + File.separator + "config.properties");
+		} catch (FileNotFoundException ex) {
+			System.out.println("Properties file not found");
+		}
+		
+		Properties props = new Properties();
+		try {
+			props.load(propFile);
+		} catch (IOException e2) {
+			System.out.println("Failed to read properties");
+		}
+		
+		teachingPeriods = new ArrayList<String>();
+		for (String s : props.getProperty("teachingperiods").split("\\|")) {
+			teachingPeriods.add(s);
+			System.out.println(s);
+		}
+		
+		
+		
 		
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
