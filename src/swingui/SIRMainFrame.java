@@ -4,32 +4,13 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Properties;
-import java.util.prefs.Preferences;
 
 import javax.swing.JSplitPane;
 
+import swingui.menu.SIRMenuBar;
 import model.scheme.MarkingScheme;
 import net.miginfocom.swing.MigLayout;
 
@@ -46,9 +27,6 @@ public class SIRMainFrame extends JFrame implements Observer {
 	private JSplitPane treeSplitPane;
 	private SIRMetadataPanel schemePanel;
 	
-	private ArrayList<String> teachingPeriods;
-
-
 	/**
 	 * Create the frame.
 	 */
@@ -56,139 +34,8 @@ public class SIRMainFrame extends JFrame implements Observer {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1152, 820);
 		
-		JMenuBar menuBar = new JMenuBar();
+		SIRMenuBar menuBar = new SIRMenuBar(this);
 		setJMenuBar(menuBar);
-		
-		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
-		
-		// load teaching period
-		// FIXME: this is VERY quick'n'dirty -- polish up and defensify!
-		InputStream propFile = null;
-		try {
-			propFile = new FileInputStream(System.getProperty("user.home") + File.separator + "SIR" + File.separator + "config.properties");
-		} catch (FileNotFoundException ex) {
-			System.out.println("Properties file not found");
-		}
-		
-		Properties props = new Properties();
-		try {
-			props.load(propFile);
-		} catch (IOException e2) {
-			System.out.println("Failed to read properties");
-		}
-		
-		teachingPeriods = new ArrayList<String>();
-		for (String s : props.getProperty("teachingperiods").split("\\|")) {
-			teachingPeriods.add(s);
-			System.out.println(s);
-		}
-		
-		
-		
-		
-		JMenuItem mntmNew = new JMenuItem("New");
-		mntmNew.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				// create new model.scheme object
-				theScheme = new MarkingScheme();
-				
-				// Set up observers
-				changeScheme(theScheme);
-				
-				controlPanel.removeAll();
-				controlPanel.add(schemePanel, "dock north");
-				controlPanel.add(cardPanel, "dock center, aligny top, growy");
-				validate();
-			}
-		});
-		mnFile.add(mntmNew);
-
-		
-		JMenuItem mntmLoad = new JMenuItem("Load");
-		mntmLoad.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				
-				// display "file open" dialog
-				Preferences prefs = Preferences.userRoot().node(getClass().getName());
-				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
-				fc.addChoosableFileFilter(new XmlFileFilter());
-				int fcval = fc.showOpenDialog(contentPane);
-				
-				// file chosen?
-				if (fcval == JFileChooser.APPROVE_OPTION) {
-					// This will need to change if we ever move to a multidocument interface.
-					File infile = fc.getSelectedFile();
-					prefs.put("LAST_USED_FOLDER", infile.getParent());
-					try {
-						JAXBContext  context = JAXBContext.newInstance(MarkingScheme.class);
-						Unmarshaller unmarshaller = context.createUnmarshaller();
-						theScheme = (MarkingScheme) unmarshaller.unmarshal(infile);
-					} catch (JAXBException e1) {
-						e1.printStackTrace();
-					}
-
-					
-					// Instantiate scheme editor panel
-					schemePanel = new SIRMetadataPanel(theScheme);
-					schemePanel.rereadTotalMark();
-					
-					// Set up observers
-					changeScheme(theScheme);
-					
-					controlPanel.removeAll();
-					controlPanel.add(schemePanel, "dock north");
-					controlPanel.add(cardPanel, "dock center, aligny top, growy");
-					validate();
-				}
-			}
-		});
-		
-		mnFile.add(mntmLoad);
-		
-		JMenuItem mntmSave = new JMenuItem("Save");
-		mntmSave.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				Preferences prefs = Preferences.userRoot().node(getClass().getName());
-				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
-				int fcval = fc.showSaveDialog(contentPane);
-				
-				if (fcval == JFileChooser.APPROVE_OPTION) {
-					File outfile = fc.getSelectedFile();
-					prefs.put("LAST_USED_FOLDER", outfile.getParent());
-
-						JAXBContext context;
-						try {
-							context = JAXBContext.newInstance(MarkingScheme.class);
-
-						Marshaller marshaller = context.createMarshaller();
-						marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-						OutputStream outstream = new FileOutputStream(outfile);
-						marshaller.marshal(theScheme, outstream);
-						} catch (JAXBException e1) {
-							// TODO Display some kind of sensible error message
-							e1.printStackTrace();
-						} catch (FileNotFoundException e1) {
-							// TODO put up a "file not found" dialog (although this shouldn't happen)
-							e1.printStackTrace();
-						}
-
-				}
-			}
-		});
-		mnFile.add(mntmSave);
-		
-		JMenuItem mntmExit = new JMenuItem("Exit");
-		mntmExit.addActionListener(new ActionListener() {
-			// TODO: confirmation dialog if unsaved changes
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		mnFile.add(mntmExit);
 		
 		// TODO: factor this out so that it can also be used for File -> New.
 		contentPane = new JPanel();
@@ -224,10 +71,10 @@ public class SIRMainFrame extends JFrame implements Observer {
 		// Get things displaying on the XML Pane and Tree
 		treePanel.addTreeSelectionListener(cardPanel);
 	}
-	
-	
+
+
 	// When the marking scheme is replaced by a new one (rather than updated)
-	// this method can manages communication with the panels that depend on the
+	// this method manages communication with the panels that depend on the
 	// MainFrame.
 	private void changeScheme(MarkingScheme newScheme) {
 		// Remove previous observers
@@ -251,5 +98,60 @@ public class SIRMainFrame extends JFrame implements Observer {
 	public void update(Observable observable, Object parameters) {
 		treePanel.update(observable, parameters);
 		cardPanel.update(observable, parameters);
+	}
+
+
+	/**
+	 * Set current marking scheme to a newly-instantiated one.
+	 * 
+	 * Used by the File -> New menu item.
+	 */
+	public void newScheme() {
+		// create new model.scheme object
+		theScheme = new MarkingScheme();
+		
+		// Set up observers
+		changeScheme(theScheme);
+		
+		controlPanel.removeAll();
+		controlPanel.add(schemePanel, "dock north");
+		controlPanel.add(cardPanel, "dock center, aligny top, growy");
+		validate();
+	}
+
+
+	/**
+	 * Set current marking scheme
+	 * 
+	 * Used by the File -> Open menu item.
+	 * 
+	 * @param scheme the new scheme.
+	 */
+	public void setScheme(MarkingScheme scheme) {
+		theScheme = scheme;			
+		
+		// Instantiate scheme editor panel
+		schemePanel = new SIRMetadataPanel(theScheme);
+		schemePanel.rereadTotalMark();
+		
+		// Set up observers
+		changeScheme(theScheme);
+		
+		controlPanel.removeAll();
+		controlPanel.add(schemePanel, "dock north");
+		controlPanel.add(cardPanel, "dock center, aligny top, growy");
+		validate();
+	}
+
+
+	/**
+	 * Accessor method
+	 * 
+	 * Used by File -> Save menu item.
+	 * 
+	 * @return the current MarkingScheme
+	 */
+	public MarkingScheme getScheme() {
+		return theScheme;
 	}
 }
