@@ -15,10 +15,18 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import javax.swing.JSplitPane;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import swingui.menu.SIRMenuBar;
+import model.mappings.OutcomesMap;
+import model.mappings.XMLMappingType;
+import model.mappings.XMLMappings;
 import model.scheme.MarkingScheme;
 import net.miginfocom.swing.MigLayout;
 
@@ -44,6 +52,40 @@ public class SIRMainFrame extends JFrame implements Observer {
 		setBounds(100, 100, 1152, 820);
 		
 		teachingPeriods = loadTeachingPeriods();
+		
+		// load associations for learning outcome sets
+		try {
+			String path = System.getProperty("user.home") + File.separator + "SIR" + File.separator + "outcomes.sirx";
+			ZipFile zip = new ZipFile(path);
+			ZipEntry mapfile = zip.getEntry("mappings.xml");
+			if (mapfile == null)
+				System.out.println("Outcomes mapping file wasn't found in outcomes.sirx");
+			else {
+				System.out.println("Outcomes mapping file found!");
+				XMLMappings mappings = null;
+				try {
+					JAXBContext  context = JAXBContext.newInstance(XMLMappings.class);
+					Unmarshaller unmarshaller = context.createUnmarshaller();
+					mappings = (XMLMappings) unmarshaller.unmarshal(zip.getInputStream(mapfile));
+					
+					for (XMLMappingType map:mappings.getUnitdata()) {
+						String key = map.getUnitcode() + " " + map.getTeachingperiod();
+
+						// Store key -> GUID mappings
+						for (String guid:map.getOutcomecollections().getGuid()) {
+							OutcomesMap.addMapping(key, guid);
+							System.out.println("Mapping " + key + " to GUID " + guid);
+						}
+					}
+				} catch (JAXBException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		} catch (IOException e1) {
+			// TODO should be a dialog
+			System.out.println("Couldn't read outcomes.sirx");
+		}
 		
 		SIRMenuBar menuBar = new SIRMenuBar(this);
 		setJMenuBar(menuBar);
