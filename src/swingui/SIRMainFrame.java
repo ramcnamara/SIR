@@ -5,8 +5,16 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Properties;
 
 import javax.swing.JSplitPane;
 
@@ -26,6 +34,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 	private SIRCardPanel cardPanel;
 	private JSplitPane treeSplitPane;
 	private SIRMetadataPanel schemePanel;
+	private List<String> teachingPeriods;
 	
 	/**
 	 * Create the frame.
@@ -33,6 +42,8 @@ public class SIRMainFrame extends JFrame implements Observer {
 	public SIRMainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1152, 820);
+		
+		teachingPeriods = loadTeachingPeriods();
 		
 		SIRMenuBar menuBar = new SIRMenuBar(this);
 		setJMenuBar(menuBar);
@@ -153,5 +164,50 @@ public class SIRMainFrame extends JFrame implements Observer {
 	 */
 	public MarkingScheme getScheme() {
 		return theScheme;
+	}
+
+
+	public List<String> getTeachingPeriods() {
+		return teachingPeriods;
+	}
+
+
+	/** Loads list of teaching periods from config file.
+	 * 
+	 * Currently, the config file is hard-coded to ~/SIR/config.properties.  Eventually, it should look in a
+	 * set of default properties and then overwrite with user-defined properties.
+	 * 
+	 * @return a newly-constructed List<String> where each entry describes a teaching period
+	 * 
+	 */
+	private List<String> loadTeachingPeriods() {
+		// FIXME: this is VERY quick'n'dirty -- polish up and defensify!
+		InputStream propFile = null;
+		try {
+			propFile = new FileInputStream(System.getProperty("user.home") + File.separator + "SIR" + File.separator + "config.properties");
+		} catch (FileNotFoundException ex) {
+			System.out.println("Properties file not found");
+		}
+		
+		Properties props = new Properties();
+		try {
+			props.load(propFile);
+		} catch (IOException e2) {
+			System.out.println("Failed to read properties");
+		}
+		
+		teachingPeriods = new ArrayList<String>();
+		for (String s : props.getProperty("teachingperiods").split("\\|")) {
+			teachingPeriods.add(s);
+			System.out.println(s);
+		}
+		
+		return teachingPeriods;
+	}
+
+
+	public void setTeachingPeriod(List<String> teachingPeriod) {
+		this.teachingPeriods = teachingPeriod;
+		
 	}
 }
