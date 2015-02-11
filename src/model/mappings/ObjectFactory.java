@@ -37,27 +37,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link MappingType }
+     * Create an instance of {@link XMLMappingType }
      * 
      */
-    public MappingType createMappingType() {
-        return new MappingType();
+    public XMLMappingType createMappingType() {
+        return new XMLMappingType();
     }
 
     /**
-     * Create an instance of {@link Mappings }
+     * Create an instance of {@link XMLMappings }
      * 
      */
-    public Mappings createMappings() {
-        return new Mappings();
+    public XMLMappings createMappings() {
+        return new XMLMappings();
     }
 
     /**
-     * Create an instance of {@link MappingType.Outcomecollections }
+     * Create an instance of {@link XMLMappingType.Outcomecollections }
      * 
      */
-    public MappingType.Outcomecollections createMappingTypeOutcomecollections() {
-        return new MappingType.Outcomecollections();
+    public XMLMappingType.Outcomecollections createMappingTypeOutcomecollections() {
+        return new XMLMappingType.Outcomecollections();
     }
 
 }

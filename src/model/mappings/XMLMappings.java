@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="unitdata" type="{http://www.monash.edu/mappings}MappingType" maxOccurs="unbounded"/>
+ *         &lt;element name="unitdata" type="{http://www.monash.edu/mappings}XMLMappingType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,10 +41,10 @@ import javax.xml.bind.annotation.XmlType;
     "unitdata"
 })
 @XmlRootElement(name = "mappings")
-public class Mappings {
+public class XMLMappings {
 
     @XmlElement(required = true)
-    protected List<MappingType> unitdata;
+    protected List<XMLMappingType> unitdata;
 
     /**
      * Gets the value of the unitdata property.
@@ -64,13 +64,13 @@ public class Mappings {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link MappingType }
+     * {@link XMLMappingType }
      * 
      * 
      */
-    public List<MappingType> getUnitdata() {
+    public List<XMLMappingType> getUnitdata() {
         if (unitdata == null) {
-            unitdata = new ArrayList<MappingType>();
+            unitdata = new ArrayList<XMLMappingType>();
         }
         return this.unitdata;
     }

@@ -17,12 +17,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for MappingType complex type.
+ * <p>Java class for XMLMappingType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="MappingType">
+ * &lt;complexType name="XMLMappingType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -48,19 +48,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MappingType", propOrder = {
+@XmlType(name = "XMLMappingType", propOrder = {
     "unitcode",
     "teachingperiod",
     "outcomecollections"
 })
-public class MappingType {
+public class XMLMappingType {
 
     @XmlElement(required = true)
     protected String unitcode;
     @XmlElement(required = true)
     protected String teachingperiod;
     @XmlElement(required = true)
-    protected MappingType.Outcomecollections outcomecollections;
+    protected XMLMappingType.Outcomecollections outcomecollections;
 
     /**
      * Gets the value of the unitcode property.
@@ -115,10 +115,10 @@ public class MappingType {
      * 
      * @return
      *     possible object is
-     *     {@link MappingType.Outcomecollections }
+     *     {@link XMLMappingType.Outcomecollections }
      *     
      */
-    public MappingType.Outcomecollections getOutcomecollections() {
+    public XMLMappingType.Outcomecollections getOutcomecollections() {
         return outcomecollections;
     }
 
@@ -127,10 +127,10 @@ public class MappingType {
      * 
      * @param value
      *     allowed object is
-     *     {@link MappingType.Outcomecollections }
+     *     {@link XMLMappingType.Outcomecollections }
      *     
      */
-    public void setOutcomecollections(MappingType.Outcomecollections value) {
+    public void setOutcomecollections(XMLMappingType.Outcomecollections value) {
         this.outcomecollections = value;
     }
 
