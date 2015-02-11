@@ -39,92 +39,13 @@ public class SIRMenuBar extends JMenuBar {
 	 * @param menuBar
 	 */
 	public SIRMenuBar(final SIRMainFrame parent) {
-		JMenu mnFile = new JMenu("File");
+		SIRFileMenu mnFile = new SIRFileMenu(parent);
 		this.add(mnFile);
 		
 		loadTeachingPeriods();
 		
 		
-		JMenuItem mntmNew = new JMenuItem("New");
-		mntmNew.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				parent.newScheme();
-			}
-		});
-		mnFile.add(mntmNew);
-	
 		
-		JMenuItem mntmLoad = new JMenuItem("Load");
-		mntmLoad.addActionListener(new ActionListener() {
-	
-			public void actionPerformed(ActionEvent e) {
-				
-				// display "file open" dialog
-				Preferences prefs = Preferences.userRoot().node(getClass().getName());
-				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
-				fc.addChoosableFileFilter(new XmlFileFilter());
-				int fcval = fc.showOpenDialog(parent);
-				
-				// file chosen?
-				if (fcval == JFileChooser.APPROVE_OPTION) {
-					// This will need to change if we ever move to a multidocument interface.
-					File infile = fc.getSelectedFile();
-					prefs.put("LAST_USED_FOLDER", infile.getParent());
-					try {
-						JAXBContext  context = JAXBContext.newInstance(MarkingScheme.class);
-						Unmarshaller unmarshaller = context.createUnmarshaller();
-						parent.setScheme((MarkingScheme) unmarshaller.unmarshal(infile));
-					} catch (JAXBException e1) {
-						e1.printStackTrace();
-					}
-
-				}
-			}
-		});
-		
-		mnFile.add(mntmLoad);
-		
-		JMenuItem mntmSave = new JMenuItem("Save");
-		mntmSave.addActionListener(new ActionListener() {
-	
-			public void actionPerformed(ActionEvent e) {
-				Preferences prefs = Preferences.userRoot().node(getClass().getName());
-				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
-				int fcval = fc.showSaveDialog(parent);
-				
-				if (fcval == JFileChooser.APPROVE_OPTION) {
-					File outfile = fc.getSelectedFile();
-					prefs.put("LAST_USED_FOLDER", outfile.getParent());
-	
-						JAXBContext context;
-						try {
-							context = JAXBContext.newInstance(MarkingScheme.class);
-	
-						Marshaller marshaller = context.createMarshaller();
-						marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-						OutputStream outstream = new FileOutputStream(outfile);
-						marshaller.marshal(parent.getScheme(), outstream);
-						} catch (JAXBException e1) {
-							// TODO Display some kind of sensible error message
-							e1.printStackTrace();
-						} catch (FileNotFoundException e1) {
-							// TODO put up a "file not found" dialog (although this shouldn't happen)
-							e1.printStackTrace();
-						}
-	
-				}
-			}
-		});
-		mnFile.add(mntmSave);
-		
-		JMenuItem mntmExit = new JMenuItem("Exit");
-		mntmExit.addActionListener(new ActionListener() {
-			// TODO: confirmation dialog if unsaved changes
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		mnFile.add(mntmExit);
 	}
 
 	/** Loads list of teaching periods from config file.
