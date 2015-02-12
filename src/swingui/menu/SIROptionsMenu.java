@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import model.mappings.TeachingPeriod;
 import swingui.SIRMainFrame;
 
 public class SIROptionsMenu extends JMenu {
@@ -23,7 +24,7 @@ public class SIROptionsMenu extends JMenu {
 		JMenuItem mntmNew = new JMenuItem("Set teaching period");
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				TeachingPeriodSelector tps = new TeachingPeriodSelector(parent.getTeachingPeriods());
+				TeachingPeriodSelector tps = new TeachingPeriodSelector(TeachingPeriod.getTeachingPeriods());
 				int option =JOptionPane.showConfirmDialog(parent, tps, "Select teaching period and year", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				
 				// User cancelled?
@@ -31,8 +32,8 @@ public class SIROptionsMenu extends JMenu {
 					return;
 				
 				// User selected a new teaching period and year, so store that to current preferences
-				List<String> teachingPeriod = tps.getTeachingPeriod();
-				parent.setTeachingPeriod(teachingPeriod);
+				String teachingPeriod = tps.getTeachingPeriod();
+				TeachingPeriod.setCurrentTeachingPeriod(teachingPeriod);
 			}
 		});
 		this.add(mntmNew);

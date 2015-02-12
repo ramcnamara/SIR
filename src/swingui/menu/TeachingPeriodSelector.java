@@ -50,12 +50,9 @@ public class TeachingPeriodSelector extends JPanel {
 	/**
 	 * Retrieve current values of teaching period and year.
 	 * 
-	 * @return String[] tp such that tp[0] represents the teaching period and tp[1] represents the year.
+	 * @return String containing teaching period + ", " + year.
 	 */
-	public List<String> getTeachingPeriod() {
-		ArrayList<String> tplist = new ArrayList<String>();
-		tplist.add((String) tpBox.getSelectedItem());
-		tplist.add(yearSpinner.getValue().toString());
-		return tplist;
+	public String getTeachingPeriod() {
+		return tpBox.getSelectedItem() + ", " + yearSpinner.getValue().toString();
 	}
 }
