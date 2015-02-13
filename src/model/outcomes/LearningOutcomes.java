@@ -58,7 +58,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 })
 @XmlRootElement(name = "learningoutcomes")
-public class Learningoutcomes {
+public class LearningOutcomes {
 
     @XmlElement(required = true)
     protected String guid;
@@ -72,7 +72,7 @@ public class Learningoutcomes {
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar date;
     @XmlElement(required = true)
-    protected Learningoutcomes.Outcomes outcomes;
+    protected LearningOutcomes.Outcomes outcomes;
 
     /**
      * Gets the value of the guid property.
@@ -199,10 +199,10 @@ public class Learningoutcomes {
      * 
      * @return
      *     possible object is
-     *     {@link Learningoutcomes.Outcomes }
+     *     {@link LearningOutcomes.Outcomes }
      *     
      */
-    public Learningoutcomes.Outcomes getOutcomes() {
+    public LearningOutcomes.Outcomes getOutcomes() {
         return outcomes;
     }
 
@@ -211,10 +211,10 @@ public class Learningoutcomes {
      * 
      * @param value
      *     allowed object is
-     *     {@link Learningoutcomes.Outcomes }
+     *     {@link LearningOutcomes.Outcomes }
      *     
      */
-    public void setOutcomes(Learningoutcomes.Outcomes value) {
+    public void setOutcomes(LearningOutcomes.Outcomes value) {
         this.outcomes = value;
     }
 

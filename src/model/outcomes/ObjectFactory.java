@@ -37,19 +37,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Learningoutcomes }
+     * Create an instance of {@link LearningOutcomes }
      * 
      */
-    public Learningoutcomes createLearningoutcomes() {
-        return new Learningoutcomes();
+    public LearningOutcomes createLearningoutcomes() {
+        return new LearningOutcomes();
     }
 
     /**
-     * Create an instance of {@link Learningoutcomes.Outcomes }
+     * Create an instance of {@link LearningOutcomes.Outcomes }
      * 
      */
-    public Learningoutcomes.Outcomes createLearningoutcomesOutcomes() {
-        return new Learningoutcomes.Outcomes();
+    public LearningOutcomes.Outcomes createLearningoutcomesOutcomes() {
+        return new LearningOutcomes.Outcomes();
     }
 
 }

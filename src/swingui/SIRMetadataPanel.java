@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import net.miginfocom.swing.MigLayout;
+import model.mappings.OutcomesMap;
+import model.mappings.TeachingPeriod;
 import model.scheme.MarkingScheme;
 
 import java.awt.event.ActionListener;
@@ -144,7 +146,6 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 			currentValue = lblActivityName.getText();
 		else if (action.equals("Unit code")) {
 			currentValue = lblUnitCode.getText();
-			
 
 		}
 		else if (action.equals("Subtitle"))
@@ -165,6 +166,12 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		else if (action.equals("Unit code")) {
 			lblUnitCode.setText(newValue);
 			theScheme.setUnitCode(newValue);
+			OutcomesMap.reset();
+			String targetOffering = newValue + " " + TeachingPeriod.getCurrentTeachingPeriod();
+			System.out.println("Seeking outcomes for " + targetOffering);
+			for (String guid: OutcomesMap.getOutcomesGuid(targetOffering)) {
+				OutcomesMap.loadOutcomes(guid);
+			}
 		}
 		else if (action.equals("Subtitle")) {
 			lblSubtitle.setText(newValue);

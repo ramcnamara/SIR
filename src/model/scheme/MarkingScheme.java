@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import model.outcomes.Learningoutcomes;
+import model.outcomes.LearningOutcomes;
 
 
 /**
@@ -57,7 +57,7 @@ public class MarkingScheme extends Observable {
 	 * learning outcomes that this marking scheme can reference.
 	 */
 	@XmlTransient
-	private List<Learningoutcomes> outcomeSets;
+	private List<LearningOutcomes> outcomeSets;
 	
 	/** Unit code accessor. 
 	 * @return the unit code
@@ -118,7 +118,7 @@ public class MarkingScheme extends Observable {
 	 */
 	public MarkingScheme() {
 		tasks = new ArrayList<Mark>();
-		outcomeSets = new ArrayList<Learningoutcomes>();
+		outcomeSets = new ArrayList<LearningOutcomes>();
 		change();
 	}
 	
@@ -245,7 +245,7 @@ public class MarkingScheme extends Observable {
 	 * 
 	 * 
 	 */
-	public void addLearningOutcomes(Learningoutcomes outcomes) {
+	public void addLearningOutcomes(LearningOutcomes outcomes) {
 		outcomeSets.add(outcomes);
 	}
 }

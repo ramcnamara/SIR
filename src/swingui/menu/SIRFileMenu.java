@@ -16,6 +16,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import model.mappings.OutcomesMap;
 import model.scheme.MarkingScheme;
 import swingui.SIRMainFrame;
 import swingui.XmlFileFilter;
@@ -32,6 +33,7 @@ public class SIRFileMenu extends JMenu {
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
+				OutcomesMap.reset();
 				parent.newScheme();
 			}
 		});
