@@ -15,11 +15,14 @@ import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.jdesktop.swingx.JXCollapsiblePane;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 
 import java.awt.Component;
+import java.awt.GridLayout;
 
 import javax.swing.Box;
 
@@ -130,9 +133,7 @@ public class TaskPanel extends Card implements CriterionContainer {
 		contents.add(taMarkerInstructions, "cell 1 4,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 
-		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment",
-				task.hasComment());
-		contents.add(chckbxAllowMarkerComment, "cell 1 8");
+		
 		cp = new CriterionPanel(listener);
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING,
@@ -141,14 +142,25 @@ public class TaskPanel extends Card implements CriterionContainer {
 		scrollpane = new JScrollPane(contents);
 		add(scrollpane, "cell 0 0,grow");
 
+		JXCollapsiblePane checkboxes = new JXCollapsiblePane();
+		GridLayout boxstack = new GridLayout(0,1);	// 1 column, many rows
+		checkboxes.setLayout(boxstack);
+		contents.add(checkboxes, "cell 1 6");
+		JButton toggle = new JButton(checkboxes.getActionMap().get("toggle"));
+		contents.add(toggle, "cell 1 5");
+		
+		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment",
+				task.hasComment());
+		checkboxes.add(chckbxAllowMarkerComment);
+		
 		chckbxGroupTask = new JCheckBox("Group task", task.isGroup());
-		contents.add(chckbxGroupTask, "flowx,cell 1 5");
+		checkboxes.add(chckbxGroupTask);
 
 		chckbxBonusTask = new JCheckBox("Bonus task", task.isBonus());
-		contents.add(chckbxBonusTask, "cell 1 6");
+		checkboxes.add(chckbxBonusTask);
 		
 		chckbxPenaltyTask = new JCheckBox("Penalty task", task.isPenalty());
-		contents.add(chckbxPenaltyTask, "cell 1 7");
+		checkboxes.add(chckbxPenaltyTask);
 		
 		horizontalGlue = Box.createHorizontalGlue();
 		contents.add(horizontalGlue, "cell 1 0");
