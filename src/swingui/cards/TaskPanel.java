@@ -72,7 +72,7 @@ public class TaskPanel extends Card implements CriterionContainer {
 		setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][][][grow,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][grow,fill]"));
 		
 		// String and numeric data
 		String label = "";
@@ -138,7 +138,7 @@ public class TaskPanel extends Card implements CriterionContainer {
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 9 2 1,aligny top,grow");
+		contents.add(cp, "cell 0 7 2 1,aligny top,grow");
 		scrollpane = new JScrollPane(contents);
 		add(scrollpane, "cell 0 0,grow");
 
