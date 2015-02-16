@@ -46,6 +46,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 		setBounds(100, 100, 1152, 820);
 		
 		TeachingPeriod.loadTeachingPeriods();
+		TeachingPeriod.getCurrentTeachingPeriod();
 		
 		// load associations for learning outcome sets
 		try {
