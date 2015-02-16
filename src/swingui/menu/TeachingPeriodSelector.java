@@ -1,7 +1,6 @@
 package swingui.menu;
 
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+
+import model.mappings.TeachingPeriod;
 
 
 public class TeachingPeriodSelector extends JPanel {
@@ -28,6 +29,7 @@ public class TeachingPeriodSelector extends JPanel {
 		
 		// Set up teaching period spinner
 		tpBox = new JComboBox(teachingPeriodNames.toArray());
+		tpBox.setSelectedItem(TeachingPeriod.getCurrentTeachingPeriod());
 		JLabel tpLabel = new JLabel("Teaching period:");
 		tpLabel.setLabelFor(tpBox);
 		add(tpLabel);
@@ -35,7 +37,17 @@ public class TeachingPeriodSelector extends JPanel {
 		
 		// Set up year spinner
 		Calendar calendar = Calendar.getInstance();
-		int year = calendar.get(Calendar.YEAR);
+		int year;
+		String currentYear = TeachingPeriod.getCurrentTeachingYear();
+		if (currentYear == null)
+			year = calendar.get(Calendar.YEAR);
+		else
+			try {
+				year = Integer.parseInt(currentYear);
+			} catch (NumberFormatException e) {
+				year = calendar.get(Calendar.YEAR);
+			}
+		
 		SpinnerModel yearModel = new SpinnerNumberModel(year, year-100, year+100, 1);
 		yearSpinner = new JSpinner(yearModel);
 		yearSpinner.setEditor(new JSpinner.NumberEditor(yearSpinner, "#"));
@@ -53,6 +65,11 @@ public class TeachingPeriodSelector extends JPanel {
 	 * @return String containing teaching period + ", " + year.
 	 */
 	public String getTeachingPeriod() {
-		return tpBox.getSelectedItem() + ", " + yearSpinner.getValue().toString();
+		return tpBox.getSelectedItem().toString(); 
+	}
+
+	public String getTeachingYear() {
+		// TODO Auto-generated method stub
+		return yearSpinner.getValue().toString();
 	}
 }

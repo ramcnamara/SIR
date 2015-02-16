@@ -14,16 +14,19 @@ import java.util.Properties;
 public class TeachingPeriod {
 
 	private static String currentTeachingPeriod;
+	private static String currentTeachingYear;
 	private static List<String> teachingPeriods;
 	
-	public static void setCurrentTeachingPeriod(String tp) {
+	public static void setCurrentTeachingPeriod(String tp, String yr) {
 		currentTeachingPeriod = tp;
+		currentTeachingYear = yr;
 	
 		Properties props = new Properties();
 		
 		File f = readTeachingPeriodFromFile(props);
 		
 		props.setProperty("currentteachingperiod", tp);
+		props.setProperty("currentteachingyear", yr);
 		try {
 			OutputStream outfile = new FileOutputStream(f);
 			props.store(outfile, "");
@@ -64,6 +67,15 @@ public class TeachingPeriod {
 			currentTeachingPeriod = props.getProperty("currentteachingperiod");
 		}
 		return currentTeachingPeriod;
+	}
+	
+	public static String getCurrentTeachingYear() {
+		if (currentTeachingYear == null) {
+			Properties props = new Properties();
+			readTeachingPeriodFromFile(props);
+			currentTeachingYear = props.getProperty("currentteachingyear");
+		}
+		return currentTeachingYear;
 	}
 
 	

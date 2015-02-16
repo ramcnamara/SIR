@@ -33,7 +33,8 @@ public class SIROptionsMenu extends JMenu {
 				
 				// User selected a new teaching period and year, so store that to current preferences
 				String teachingPeriod = tps.getTeachingPeriod();
-				TeachingPeriod.setCurrentTeachingPeriod(teachingPeriod);
+				String teachingYear = tps.getTeachingYear();
+				TeachingPeriod.setCurrentTeachingPeriod(teachingPeriod, teachingYear);
 			}
 		});
 		this.add(mntmNew);

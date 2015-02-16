@@ -42,6 +42,8 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 	private EditButton btnEditActivityName;
 	private JLabel lblTotalMarks;
 	private JLabel mark;
+	private JLabel lblTeachingPeriod;
+	private JTextPane tpPane;
 
 	/**
 	 * Create the panel.
@@ -54,6 +56,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		String activityName = notLoadedString;
 		String subtitle = notLoadedString;
 		String preamble = notLoadedString;
+		String teachingPeriod = TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear();
 
 
 
@@ -105,27 +108,35 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 				c.setEnabled(false);
 			}
 
-		setLayout(new MigLayout("", "[right][grow,fill][pref!]", "[][][][grow][]"));
+		setLayout(new MigLayout("", "[right][grow,fill][pref!]", "[][][][][grow][]"));
 		add(lblUCtext, "cell 0 0");
-		add(lblANtext, "cell 0 1");
-		add(lblST, "cell 0 2");
-		add(lblPreamble, "cell 0 3");
+		
+		lblTeachingPeriod = new JLabel("Teaching period");
+		add(lblTeachingPeriod, "cell 0 1,alignx trailing");
+		
+		tpPane = new JTextPane();
+		tpPane.setText(teachingPeriod);
+		tpPane.setEditable(false);
+		add(tpPane, "flowy,cell 1 1");
+		add(lblANtext, "cell 0 2");
+		add(lblST, "cell 0 3");
+		add(lblPreamble, "cell 0 4");
 
 		add(lblUnitCode, "cell 1 0, growx");
-		add(lblActivityName, "cell 1 1, growx");
-		add(lblSubtitle, "cell 1 2, growx");
-		add(preambleTextPane, "cell 1 3, growx");
+		add(lblActivityName, "cell 1 2,growx");
+		add(lblSubtitle, "cell 1 3,growx");
+		add(preambleTextPane, "cell 1 4,growx");
 
 		add(btnEditUnitCode, "cell 2 0");
-		add(btnEditActivityName, "cell 2 1");
-		add(btnEditSubtitle, "cell 2 2");
-		add(btnEditPreamble, "cell 2 3");
+		add(btnEditActivityName, "cell 2 2");
+		add(btnEditSubtitle, "cell 2 3");
+		add(btnEditPreamble, "cell 2 4");
 
 		lblTotalMarks = new JLabel("Total marks");
-		add(lblTotalMarks, "cell 0 4,alignx trailing");
+		add(lblTotalMarks, "cell 0 5,alignx trailing");
 
 		mark = new JLabel("<no marking scheme loaded>");
-		add(mark, "cell 1 4");
+		add(mark, "cell 1 5");
 		rereadTotalMark();
 		repaint();
 	}
@@ -167,7 +178,7 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 			lblUnitCode.setText(newValue);
 			theScheme.setUnitCode(newValue);
 			OutcomesMap.reset();
-			String targetOffering = newValue + " " + TeachingPeriod.getCurrentTeachingPeriod();
+			String targetOffering = newValue + " " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear();
 			System.out.println("Seeking outcomes for " + targetOffering);
 			for (String guid: OutcomesMap.getOutcomesGuid(targetOffering)) {
 				OutcomesMap.loadOutcomes(guid);
@@ -184,11 +195,11 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 	}
 
 	@Override
-	public void update(Observable schemeobject, Object o) {
-		if (schemeobject == null || !(schemeobject instanceof MarkingScheme))
+	public void update(Observable source, Object o) {
+		if (source == null || !(source instanceof MarkingScheme))
 			return;
 
-		MarkingScheme scheme = (MarkingScheme) schemeobject;
+		MarkingScheme scheme = (MarkingScheme) source;
 
 		String unitCode = (scheme.getUnitCode() == null? "" : scheme.getUnitCode());
 		String activityName = (scheme.getActivityName() == null? "" : scheme.getActivityName());
