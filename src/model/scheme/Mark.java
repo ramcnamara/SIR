@@ -1,13 +1,18 @@
 package model.scheme;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlSeeAlso;
+
+import model.outcomes.LearningOutcomes;
 
 /**
  * Base class for markable objects in SIR.  Similar to the Mark base type in the MADAM
@@ -29,7 +34,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 public abstract class Mark implements Serializable {
 
 	protected Mark() {
-		
+		outcomes = new ArrayList<LearningOutcomeRef>();
 	}
 	
 	private static final long serialVersionUID = 2644920807147460137L;
@@ -48,6 +53,10 @@ public abstract class Mark implements Serializable {
 	
 	@XmlAttribute
 	protected boolean group;
+	
+	@XmlElementWrapper(name="LearningOutcomes")
+	@XmlElement(name="Outcome", required=true, nillable=true)
+	protected List<LearningOutcomeRef> outcomes;
 
 	public Mark(Mark old) {
 		description = old.getDescription();
@@ -55,6 +64,15 @@ public abstract class Mark implements Serializable {
 		label = old.getLabel();
 		markerInstruction = old.getMarkerInstruction();
 		name = old.getName();
+		outcomes = new ArrayList<LearningOutcomeRef>();
+		for (LearningOutcomeRef lo : old.getOutcomes()) {
+			outcomes.add(lo);
+		}
+	}
+
+
+	private List<LearningOutcomeRef> getOutcomes() {
+		return outcomes;
 	}
 
 	// Subclasses of Mark need to be able to tell an OutputMaker how to deal with their structure.
@@ -216,4 +234,5 @@ public abstract class Mark implements Serializable {
 	public abstract boolean isPenalty();
 
 	public abstract boolean isBonus();
+
 }
