@@ -157,7 +157,6 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 			currentValue = lblActivityName.getText();
 		else if (action.equals("Unit code")) {
 			currentValue = lblUnitCode.getText();
-
 		}
 		else if (action.equals("Subtitle"))
 			currentValue = lblSubtitle.getText();
@@ -179,8 +178,9 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 			theScheme.setUnitCode(newValue);
 			OutcomesMap.reset();
 			String targetOffering = newValue + " " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear();
+			theScheme.setOffering(targetOffering);
 			System.out.println("Seeking outcomes for " + targetOffering);
-			for (String guid: OutcomesMap.getOutcomesGuid(targetOffering)) {
+			for (String guid: OutcomesMap.getGuidsForOffering(targetOffering)) {
 				OutcomesMap.loadOutcomes(guid);
 			}
 		}

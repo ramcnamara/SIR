@@ -23,10 +23,13 @@ import javax.swing.JCheckBox;
 
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 
 import swingui.NavDisableEventListener;
+import swingui.OutcomesDialog;
 
 /**
  * Panel that allows reading and editing of numerically-marked tasks.
@@ -34,7 +37,7 @@ import swingui.NavDisableEventListener;
  * @author Robyn
  * 
  */
-public class TaskPanel extends Card implements CriterionContainer {
+public class TaskPanel extends Card implements CriterionContainer, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private Task target;
@@ -53,6 +56,7 @@ public class TaskPanel extends Card implements CriterionContainer {
 	private JTextField tfLabel;
 	private Component horizontalGlue;
 	private JLabel lblName;
+	private JButton btnSelectLearningOutcomes;
 
 	/**
 	 * Create the panel.
@@ -72,7 +76,7 @@ public class TaskPanel extends Card implements CriterionContainer {
 		setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][grow,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][][][][grow,fill]"));
 		
 		// String and numeric data
 		String label = "";
@@ -132,22 +136,27 @@ public class TaskPanel extends Card implements CriterionContainer {
 		taMarkerInstructions = new JTextArea(markerInstruction);
 		contents.add(taMarkerInstructions, "cell 1 4,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
+		
+		btnSelectLearningOutcomes = new JButton("Select learning outcomes");
+		contents.add(btnSelectLearningOutcomes, "cell 1 5");
+		btnSelectLearningOutcomes.setActionCommand("Select learning outcomes");
+		btnSelectLearningOutcomes.addActionListener(this);
 
 		
 		cp = new CriterionPanel(listener);
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 7 2 1,aligny top,grow");
+		contents.add(cp, "cell 0 10 2 1,aligny top,grow");
 		scrollpane = new JScrollPane(contents);
 		add(scrollpane, "cell 0 0,grow");
 
 		JXCollapsiblePane checkboxes = new JXCollapsiblePane();
 		GridLayout boxstack = new GridLayout(0,1);	// 1 column, many rows
 		checkboxes.setLayout(boxstack);
-		contents.add(checkboxes, "cell 1 6");
+		contents.add(checkboxes, "cell 1 7");
 		JButton toggle = new JButton(checkboxes.getActionMap().get("toggle"));
-		contents.add(toggle, "cell 1 5");
+		contents.add(toggle, "cell 1 6");
 		
 		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment",
 				task.hasComment());
@@ -278,5 +287,15 @@ public class TaskPanel extends Card implements CriterionContainer {
 		JButton newButton = new JButton("Add subtask");
 		newButton.setActionCommand("Add subtask");
 		return newButton;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand() == "Select learning outcomes") {
+			OutcomesDialog od = new OutcomesDialog(scheme.getOffering());
+			od.pack();
+			od.setVisible(true);
+		}
+		
 	}
 }

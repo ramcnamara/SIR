@@ -50,6 +50,7 @@ public class SIRFileMenu extends JMenu {
 				JFileChooser fc = new JFileChooser(prefs.get("LAST_USED_FOLDER", new File(".").getAbsolutePath()));
 				fc.addChoosableFileFilter(new XmlFileFilter());
 				int fcval = fc.showOpenDialog(parent);
+				MarkingScheme scheme;
 				
 				// file chosen?
 				if (fcval == JFileChooser.APPROVE_OPTION) {
@@ -59,9 +60,18 @@ public class SIRFileMenu extends JMenu {
 					try {
 						JAXBContext  context = JAXBContext.newInstance(MarkingScheme.class);
 						Unmarshaller unmarshaller = context.createUnmarshaller();
-						parent.setScheme((MarkingScheme) unmarshaller.unmarshal(infile));
+						scheme = (MarkingScheme) unmarshaller.unmarshal(infile);
 					} catch (JAXBException e1) {
 						e1.printStackTrace();
+						return;
+					}
+					
+					parent.setScheme(scheme);
+					
+					// Load relevant learning outcome sets (if any)
+					String offering = scheme.getOffering();
+					for (String guid : OutcomesMap.getGuidsForOffering(offering)) {
+						OutcomesMap.loadOutcomes(guid);
 					}
 
 				}

@@ -68,7 +68,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 
 						// Store key -> GUID mappings
 						for (String guid:map.getOutcomecollections().getGuid()) {
-							OutcomesMap.addMapping(key, guid);
+							OutcomesMap.addGuidMapping(key, guid);
 							System.out.println("Mapping " + key + " to GUID " + guid);
 						}
 					}
@@ -157,6 +157,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 	public void newScheme() {
 		// create new model.scheme object
 		theScheme = new MarkingScheme();
+		theScheme.setOffering("<Unknown unit code>, " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear());
 		
 		// Set up observers
 		changeScheme(theScheme);
@@ -176,7 +177,8 @@ public class SIRMainFrame extends JFrame implements Observer {
 	 * @param scheme the new scheme.
 	 */
 	public void setScheme(MarkingScheme scheme) {
-		theScheme = scheme;			
+		theScheme = scheme;		
+		theScheme.setOffering(theScheme.getUnitCode() + " " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear());
 		
 		// Instantiate scheme editor panel
 		schemePanel = new SIRMetadataPanel(theScheme);

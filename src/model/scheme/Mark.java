@@ -12,7 +12,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import model.outcomes.LearningOutcomes;
 
 /**
  * Base class for markable objects in SIR.  Similar to the Mark base type in the MADAM
@@ -71,7 +70,7 @@ public abstract class Mark implements Serializable {
 	}
 
 
-	private List<LearningOutcomeRef> getOutcomes() {
+	public List<LearningOutcomeRef> getOutcomes() {
 		return outcomes;
 	}
 

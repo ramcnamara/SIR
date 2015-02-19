@@ -26,7 +26,7 @@ public class OutcomesMap {
 	 * @param offering String containing the unit code and teaching period (including year)
 	 * @param guid String giving the GUID of the set of learning outcomes to be associated
 	 */
-	public static void addMapping(String offering, String guid) {
+	public static void addGuidMapping(String offering, String guid) {
 		Set<String> newGuids;
 		
 		offering = offering.toUpperCase();
@@ -46,12 +46,27 @@ public class OutcomesMap {
 	 * @param offering
 	 * @return the set of Strings denoting associated GUIDs, or an empty set if the offering is not found.
 	 */
-	public static Set<String> getOutcomesGuid(String offering) {
-		offering = offering.toUpperCase();
+	public static Set<String> getGuidsForOffering(String offering) {
+		if (offering != null)
+			offering = offering.toUpperCase();
+		else
+			System.out.println("Null offering in getGuidsForOffering");
 		if (guidMap.containsKey(offering))
 			return guidMap.get(offering);
+		else {
+			System.out.println("No match for '" + offering + "'.  Available offerings:");
+			for (String s : guidMap.keySet())
+				System.out.println("'"+s+"'");
+		}		
 		
 		return new HashSet<String>();
+	}
+	
+	public static LearningOutcomes getOutcomesForGuid(String guid) {
+		guid = guid.toUpperCase();
+		if (outcomeMap.containsKey(guid))
+			return outcomeMap.get(guid);
+		return null;
 	}
 	
 	public static void loadOutcomes(String guid) {
@@ -101,5 +116,5 @@ public class OutcomesMap {
 	public static void reset() {
 		outcomeMap = new HashMap<String, LearningOutcomes>();		
 	}
-	
+
 }

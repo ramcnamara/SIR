@@ -58,6 +58,8 @@ public class MarkingScheme extends Observable {
 	 */
 	@XmlTransient
 	private List<LearningOutcomes> outcomeSets;
+
+	private String offering;
 	
 	/** Unit code accessor. 
 	 * @return the unit code
@@ -247,6 +249,15 @@ public class MarkingScheme extends Observable {
 	 */
 	public void addLearningOutcomes(LearningOutcomes outcomes) {
 		outcomeSets.add(outcomes);
+	}
+
+	public String getOffering() {
+		// TODO Auto-generated method stub
+		return offering;
+	}
+	
+	public void setOffering(String offering) {
+		this.offering = offering;
 	}
 }
 
