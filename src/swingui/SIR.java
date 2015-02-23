@@ -3,9 +3,6 @@ package swingui;
 
 import java.awt.EventQueue;
 
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 
 public class SIR {
 	/**

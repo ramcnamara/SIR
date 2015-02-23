@@ -8,8 +8,11 @@ import javax.swing.table.AbstractTableModel;
 
 
 public class OutcomesTableModel extends AbstractTableModel {
-
+	public static final int WEIGHT_COL = 1;
+	public static final int DESC_COL = 0;
+	
 	public class OutcomeEntry {
+
 		
 		private String description;
 		private String weight;
@@ -46,7 +49,6 @@ public class OutcomesTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static String[] columns = {"Outcome", "Weight"};
 	private ArrayList<OutcomeEntry> data;
 
 	
@@ -60,12 +62,17 @@ public class OutcomesTableModel extends AbstractTableModel {
 	
 	@Override
 	public String getColumnName(int index) {
-		return columns[index];
+		if (index == OutcomesTableModel.WEIGHT_COL)
+			return "Weight";
+		if (index == OutcomesTableModel.DESC_COL)
+			return "Description";
+		
+		return "<no label>";
 	}
 
 	@Override
 	public int getColumnCount() {
-		return columns.length;
+		return 2;
 	}
 
 	@Override
@@ -77,7 +84,7 @@ public class OutcomesTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int col) {
-		if (col == 1)
+		if (col == WEIGHT_COL)
 			return data.get(row).getWeight();
 		return data.get(row).getDescription();
 	}
@@ -85,7 +92,7 @@ public class OutcomesTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object o, int row, int col) {
 		// descriptions are immutable
-		if (col == 0)
+		if (col == DESC_COL)
 			return;
 		
 		if (o instanceof String)
@@ -94,6 +101,6 @@ public class OutcomesTableModel extends AbstractTableModel {
 	
 	@Override
 	public boolean isCellEditable(int row, int col) {
-		return col == 1;
+		return col == WEIGHT_COL;
 	}
 }

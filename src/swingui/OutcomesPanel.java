@@ -1,6 +1,7 @@
 package swingui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class OutcomesPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JTable outcomes;
+	private OutcomesTable outcomes;
 
 	public OutcomesPanel(LearningOutcomes lo) {
 		setLayout(new BorderLayout());
@@ -48,15 +49,17 @@ public class OutcomesPanel extends JPanel {
 
 
 		OutcomesTableModel m = new OutcomesTableModel(outcomeList);
-		outcomes = new JTable(m);
-		outcomes.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		outcomes = new OutcomesTable(m);
 		outcomes.setFillsViewportHeight(true);
 		
-		TableColumn weights = outcomes.getColumnModel().getColumn(1);
+		
+		TableColumn weights = outcomes.getColumnModel().getColumn(OutcomesTableModel.WEIGHT_COL);
+		int boxWidth = new WeightBox().getPreferredSize().width;
+		weights.setMaxWidth(boxWidth);
+		weights.setMinWidth(boxWidth);
 		weights.setCellEditor(new WeightEditor());
-		weights.setMaxWidth(new WeightBox().getPreferredSize().width);
 
-		TableColumn descriptions = outcomes.getColumnModel().getColumn(0);
+		TableColumn descriptions = outcomes.getColumnModel().getColumn(OutcomesTableModel.DESC_COL);
 		descriptions.setCellRenderer(new OutcomeTextRenderer());
 
 		contents = new JScrollPane(outcomes);
@@ -64,7 +67,7 @@ public class OutcomesPanel extends JPanel {
 	}
 
 	public void setWeight(int index, String weight) {
-		outcomes.setValueAt(weight, index, 1);
+		outcomes.setValueAt(weight, index, OutcomesTableModel.WEIGHT_COL);
 	}
 
 	private class WeightEditor extends AbstractCellEditor implements TableCellEditor {
@@ -102,9 +105,9 @@ public class OutcomesPanel extends JPanel {
 			setSelectedItem(weights[0]);
 		}
 
-		public void setSelected(String selected) {
-			if (selected != null)
-				setSelectedItem(selected);	
+		
+		public String toString() {
+			return (String) getSelectedItem();
 		}
 	}
 
@@ -129,7 +132,12 @@ public class OutcomesPanel extends JPanel {
 			else
 				setText("");
 			
-			setSize(table.getColumnModel().getColumn(0).getWidth(), Short.MAX_VALUE);
+			if (row % 2 == 1)
+				setBackground(Color.LIGHT_GRAY);
+			else
+				setBackground(Color.WHITE);
+			
+			setSize(table.getColumnModel().getColumn(OutcomesTableModel.DESC_COL).getWidth(), Short.MAX_VALUE);
 			int rowHeight = getPreferredSize().height;
 			if (table.getRowHeight(row) != rowHeight)
 				table.setRowHeight(row, rowHeight);
@@ -178,5 +186,32 @@ public class OutcomesPanel extends JPanel {
 			super.repaint(tm, x, y, width, height);
 		}
 
+	}
+
+	private class OutcomesTable extends JTable {
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public OutcomesTable(OutcomesTableModel m) {
+			super(m);
+		}
+
+		@Override
+		public Component prepareRenderer(TableCellRenderer renderer,int row, int col) { 
+			  Component comp = super.prepareRenderer(renderer, row, col); 
+	
+			  if (row % 2 == 0) { 
+				  comp.setBackground(Color.LIGHT_GRAY); 
+				  comp.setForeground(Color.BLACK);
+			  } 
+			  else { 
+				  comp.setBackground(Color.WHITE); 
+				  comp.setForeground(Color.BLACK);
+			  } 
+			  return comp; 
+		}
 	}
 }
