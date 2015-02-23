@@ -93,7 +93,7 @@ public class OutcomesMap {
 					JAXBContext  context = JAXBContext.newInstance(LearningOutcomes.class);
 					Unmarshaller unmarshaller = context.createUnmarshaller();
 					learningOutcomes = (LearningOutcomes) unmarshaller.unmarshal(zip.getInputStream(outcomeFile));
-					outcomeMap.put(guid, learningOutcomes);
+					outcomeMap.put(guid.toUpperCase(), learningOutcomes);
 				} catch (JAXBException e1) {
 					// invalid XML in guid.xml
 					e1.printStackTrace();
