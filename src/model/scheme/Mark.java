@@ -73,6 +73,10 @@ public abstract class Mark implements Serializable {
 	public List<LearningOutcomeRef> getOutcomes() {
 		return outcomes;
 	}
+	
+	public void setOutcomes(List<LearningOutcomeRef> oc) {
+		outcomes = oc;		
+	}
 
 	// Subclasses of Mark need to be able to tell an OutputMaker how to deal with their structure.
 	public abstract void makeOutput(OutputMaker om);
