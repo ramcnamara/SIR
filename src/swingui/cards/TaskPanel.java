@@ -2,6 +2,7 @@ package swingui.cards;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -289,13 +290,17 @@ public class TaskPanel extends Card implements CriterionContainer, ActionListene
 		return newButton;
 	}
 
-	@Override
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "Select learning outcomes") {
-			OutcomesDialog od = new OutcomesDialog(scheme.getOffering());
-			od.pack();
-			od.setVisible(true);
+			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
+			int result = JOptionPane.showConfirmDialog(null, od, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+			if (result == JOptionPane.CANCEL_OPTION)
+				return;
+			
+			if (result == JOptionPane.OK_OPTION) {
+				target.setOutcomes(od.getSelectedOutcomes());
+			}
 		}
-		
 	}
 }

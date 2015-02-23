@@ -20,6 +20,7 @@ import javax.swing.table.TableColumn;
 
 import model.outcomes.LearningOutcomes;
 import model.outcomes.LearningOutcomes.Outcomes;
+import model.scheme.LearningOutcomeRef;
 
 
 public class OutcomesPanel extends JPanel {
@@ -30,9 +31,11 @@ public class OutcomesPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private OutcomesTable outcomes;
+	private String guid;
 
 	public OutcomesPanel(LearningOutcomes lo) {
 		setLayout(new BorderLayout());
+		guid = lo.getGuid();
 		
 		JScrollPane contents;
 
@@ -64,6 +67,23 @@ public class OutcomesPanel extends JPanel {
 
 		contents = new JScrollPane(outcomes);
 		add(contents, BorderLayout.CENTER);
+	}
+	
+	public List<LearningOutcomeRef> getSelectedOutcomes() {
+		List<LearningOutcomeRef> outcomeList = new ArrayList<LearningOutcomeRef>();
+		for (int row = 0; row < outcomes.getRowCount(); row++) {
+			String weight = outcomes.getValueAt(row, OutcomesTableModel.WEIGHT_COL).toString();
+			if (weight != "None") {
+				LearningOutcomeRef oc = new LearningOutcomeRef();
+				oc.setGuid(guid);
+				oc.setIndex(row);
+				oc.setWeight(weight);
+				
+				outcomeList.add(oc);
+			}
+		}
+		
+		return outcomeList;
 	}
 
 	public void setWeight(int index, String weight) {
@@ -213,5 +233,9 @@ public class OutcomesPanel extends JPanel {
 			  } 
 			  return comp; 
 		}
+	}
+
+	public void setValue(int index, String weight) {
+		outcomes.setValueAt(weight, index, OutcomesTableModel.WEIGHT_COL);	
 	}
 }

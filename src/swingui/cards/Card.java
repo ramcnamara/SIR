@@ -11,8 +11,8 @@ public abstract class Card extends JPanel {
 
 
 	private static final long serialVersionUID = 1L;
-	private Mark parent;
 	protected ChangeListener listener;
+	protected Mark parent;
 	protected static MarkingScheme scheme;
 	
 	public Card(MarkingScheme scheme, ChangeListener listener, Mark parent) {

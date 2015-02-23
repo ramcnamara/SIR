@@ -3,6 +3,7 @@ package swingui.cards;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -25,10 +26,13 @@ import java.awt.Component;
 import javax.swing.border.MatteBorder;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 
 import swingui.NavDisableEventListener;
+import swingui.OutcomesDialog;
 
 
 /**
@@ -37,10 +41,9 @@ import swingui.NavDisableEventListener;
  * @author Robyn
  *
  */
-public class QTaskPanel extends Card implements CriterionContainer {
+public class QTaskPanel extends Card implements CriterionContainer, ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private QTask target;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
@@ -54,6 +57,7 @@ public class QTaskPanel extends Card implements CriterionContainer {
 	private Component horizontalGlue;
 	private ScaleBox scalebox;
 	private JLabel lblName;
+	private QTask target;
 
 	/**
 	 * Create the panel.
@@ -229,6 +233,19 @@ public class QTaskPanel extends Card implements CriterionContainer {
 	@Override
 	public Mark getTask() {
 		return target;
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand() == "Select learning outcomes") {
+			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
+			int result = JOptionPane.showConfirmDialog(null, od, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+			if (result == JOptionPane.CANCEL_OPTION)
+				return;
+			
+			if (result == JOptionPane.OK_OPTION) {
+				target.setOutcomes(od.getSelectedOutcomes());
+			}
+		}
 	}
 
 }
