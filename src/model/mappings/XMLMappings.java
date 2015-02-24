@@ -18,7 +18,8 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for anonymous complex type.  This type holds a collection of XMLMappingTypes and
+ * is was generated for XML I/O of the file mappings.xml, which is zipped into outcomes.sirx.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 

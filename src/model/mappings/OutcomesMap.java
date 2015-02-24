@@ -15,6 +15,17 @@ import javax.xml.bind.Unmarshaller;
 
 import model.outcomes.LearningOutcomes;
 
+/**
+ * <p>This class contains the global set of mappings from offerings (unit code + semester + year) to learning outcome set GUIDs.  It also holds the 
+ * mappings from GUID to learning outcome sets.  The full offerings map is loaded at runtime; learning outcome sets are loaded on demand in order
+ * to keep load times tractable.
+ * 
+ * <p>All methods and data in this class are static.
+ * 
+ * 
+ * @author ram
+ *
+ */
 public class OutcomesMap {
 
 	private static Map<String, Set<String>> guidMap = new HashMap<String, Set<String>>();
@@ -62,6 +73,13 @@ public class OutcomesMap {
 		return new HashSet<String>();
 	}
 	
+	/**
+	 * Look up and return the LearningOutcomes associated with a GUID.  Returns null if the no such LearningOutcomes object
+	 * is mapped to the given GUID.
+	 * 
+	 * @param guid
+	 * @return LearningOutcomes
+	 */
 	public static LearningOutcomes getOutcomesForGuid(String guid) {
 		guid = guid.toUpperCase();
 		if (outcomeMap.containsKey(guid))
@@ -69,6 +87,12 @@ public class OutcomesMap {
 		return null;
 	}
 	
+	
+	/**
+	 * Loads the learning outcomes associated with a particular GUID from the [GUID].xml file zipped into outcomes.sirx.
+	 * 
+	 * @param guid
+	 */
 	public static void loadOutcomes(String guid) {
 		// find outcomes file in outcomes.sirx
 		ZipFile zip = null;

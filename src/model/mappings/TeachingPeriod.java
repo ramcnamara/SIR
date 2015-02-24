@@ -11,6 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ *<p> This class holds a list of valid teaching periods for this institution and also stores the currently-selected
+ * teaching period (term or semester) and year.
+ * 
+ * <p>It is used to enable the automation of selection of appropriate learning outcomes sets.  These are specified in the file mappings.xml, 
+ * which is zipped into outcomes.sirx.  Note that the key to these mappings is a concatenation of teaching period + ", " + year.
+ * 
+ * @author ram
+ *
+ */
 public class TeachingPeriod {
 
 	private static String currentTeachingPeriod;
@@ -21,10 +31,12 @@ public class TeachingPeriod {
 		currentTeachingPeriod = tp;
 		currentTeachingYear = yr;
 	
+		// The currently-selected teaching period is persistent between sessions, so
+		// it is saved out to the user-level configuration file.
 		Properties props = new Properties();
 		
 		File f = readTeachingPeriodFromFile(props);
-		
+
 		props.setProperty("currentteachingperiod", tp);
 		props.setProperty("currentteachingyear", yr);
 		try {
@@ -41,6 +53,9 @@ public class TeachingPeriod {
 	}
 
 	/**
+	 * <p>Reads currently-selected teaching period from ~/SIR/config.properties into its parameter and returns a reference
+	 * to the opened file.
+	 * 
 	 * @param props reference to Properties object
 	 * @return File reference to config.properties file
 	 */
