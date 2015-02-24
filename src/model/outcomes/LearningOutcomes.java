@@ -20,7 +20,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for anonymous complex type to store learning outcomes.  This class is used for XML file I/O in conjunction with
+ * the classes of model.mappings.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
