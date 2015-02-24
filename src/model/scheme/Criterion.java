@@ -147,6 +147,10 @@ public class Criterion extends Mark implements CriterionReferenced {
 		return getName();
 	}
 
+	/**
+	 * Criteria do not have subcriteria or subtasks, so this method always
+	 * throws an exception.
+	 */
 	@Override
 	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
 		throw new SubtaskTypeException();
@@ -162,11 +166,17 @@ public class Criterion extends Mark implements CriterionReferenced {
 		return new Criterion(this);
 	}
 
+	/**
+	 * Criteria cannot have bonus or penalty status, so this method always returns false.
+	 */
 	@Override
 	public boolean isPenalty() {
 		return false;
 	}
 
+	/**
+	 * Criteria cannot have bonus or penalty status, so this method always returns false.
+	 */
 	@Override
 	public boolean isBonus() {
 		return false;

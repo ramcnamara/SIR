@@ -32,6 +32,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 })
 public abstract class Mark implements Serializable {
 
+	/**
+	 * Default constructor.  Should only be called by subclasses.
+	 */
 	protected Mark() {
 		outcomes = new ArrayList<LearningOutcomeRef>();
 	}
@@ -57,6 +60,11 @@ public abstract class Mark implements Serializable {
 	@XmlElement(name="Outcome", required=true, nillable=true)
 	protected List<LearningOutcomeRef> outcomes;
 
+	/**
+	 * Copy constructor.  Required by JAXB.
+	 * 
+	 * @param old
+	 */
 	public Mark(Mark old) {
 		description = old.getDescription();
 		group = old.isGroup();
@@ -70,10 +78,19 @@ public abstract class Mark implements Serializable {
 	}
 
 
+	/**
+	 * Accessor for learning outcomes.
+	 * 
+	 * @return
+	 */
 	public List<LearningOutcomeRef> getOutcomes() {
 		return outcomes;
 	}
 	
+	/**
+	 * Mutator for learning outcomes.
+	 * @param oc
+	 */
 	public void setOutcomes(List<LearningOutcomeRef> oc) {
 		outcomes = oc;		
 	}
@@ -227,6 +244,13 @@ public abstract class Mark implements Serializable {
 
 	public abstract Mark getCopy();
 	
+	/**
+	 * Method used during computation of total marks available for the activity.
+	 * 
+	 * Bonus and penalty tasks don't contribute towards the total available marks.
+	 * 
+	 * @return
+	 */
 	public float getEffectiveMaxMark() {
 		if (isPenalty() || isBonus())
 			return 0;

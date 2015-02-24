@@ -54,7 +54,7 @@ public class MarkingScheme extends Observable {
 
 	/*
 	 * This markup tells JAXB to ignore this field -- it's for SIR's use only, to store the sets of
-	 * learning outcomes that this marking scheme can reference.
+	 * learning outcomes that this marking scheme can reference.  It does not get added to the 
 	 */
 	@XmlTransient
 	private List<LearningOutcomes> outcomeSets;
@@ -95,6 +95,12 @@ public class MarkingScheme extends Observable {
 	}
 
 	/**
+	 * Accessor for preamble.
+	 * 
+	 * The preamble is a String which will may optionally be displayed between the title
+	 * and the sections.  This may provide instructions to markers, feedback to students,
+	 * or general explanations about the assignment.
+	 * 
 	 * @return the preamble
 	 */
 	public String getPreamble() {
@@ -219,10 +225,23 @@ public class MarkingScheme extends Observable {
 		notifyObservers();
 	}
 
+	/**
+	 * Remove a top-level Task, QTask, or Checkbox.
+	 * 
+	 * @param theMark
+	 */
 	public void removeTask(Mark theMark) {
 		tasks.remove(theMark);		
 	}
 
+	/**
+	 * Insert a Task, QTask, or Checkbox into the list of top-level tasks.
+	 * 
+	 * If the tasks list doesn't exist, it is created.
+	 * 
+	 * @param index
+	 * @param incoming
+	 */
 	public void insertAt(int index, Mark incoming) {
 		if (tasks == null)
 			tasks = new ArrayList<Mark>();
@@ -233,6 +252,14 @@ public class MarkingScheme extends Observable {
 		
 	}
 
+	/**
+	 * Computes and returns the total number of marks available, i.e. what the activity is out of.
+	 * 
+	 * Bonus and penalty tasks do not contribute towards the number of available marks.
+	 * 
+	 * 
+	 * @return float
+	 */
 	public float getAvailableMarks() {
 		float marks = 0.0f;
 		
@@ -251,11 +278,21 @@ public class MarkingScheme extends Observable {
 		outcomeSets.add(outcomes);
 	}
 
+	/**
+	 * Accessor for offering field.
+	 * 
+	 * @return String the offering: unit code + " " + teaching period + ", " + year
+	 */
 	public String getOffering() {
 		// TODO Auto-generated method stub
 		return offering;
 	}
 	
+	/**
+	 * Mutator for offering field.
+	 * 
+	 * @param offering the offering: unit code + " " + teaching period + ", " + year
+	 */
 	public void setOffering(String offering) {
 		this.offering = offering;
 	}

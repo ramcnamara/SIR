@@ -37,15 +37,35 @@ public class Task extends ComplexTask {
 	private ArrayList<Mark> subtasks = null;
 
 	@XmlAttribute
+	/**
+	 * Maximum mark that a marker may assign to this Task, if the Task is marked manually.
+	 * If the task mark is computed by adding up marks for subtask, then this field
+	 * is ignored in MADAM.
+	 */
 	private float maxMark;
 
 	@XmlAttribute
+	/**
+	 * Minimum mark that a marker may assign to this Task, if the Task is marked manually.
+	 * This field is currently ignored in MADAM but may be used in future versions. 
+	 */
 	private float minMark;
 
 	@XmlAttribute
+	/**
+	 * True if and only if this Task is a bonus Task.  A bonus Task contributes to a student's earned
+	 * mark for the activity, if they achieve marks for it, but it does not count towards the computed
+	 * maximum mark for the activity.  Hence, a student can get a mark of greater than 100% for an
+	 * activity that has bonus Tasks. 
+	 */
 	private boolean bonus;
 	
 	@XmlAttribute
+	/**
+	 * True if and only if this Task is a penalty Task.  Penalty marks are subtracted from a student's
+	 * total mark rather than added, and penalty Tasks do not not count towards the computed maximum mark
+	 * for the activity.
+	 */
 	private boolean penalty;
 
 	/**
@@ -178,6 +198,9 @@ public class Task extends ComplexTask {
 	}
 
 	@Override
+	/**
+	 * Returns a string representation of the current Task, suitable for display.
+	 */
 	public String toString() {
 		return "(" + (penalty? "Penalty: " : "") + getMaxMark() + (bonus? " bonus": "") + " marks) " + getName();
 	}
@@ -212,6 +235,9 @@ public class Task extends ComplexTask {
 		return subtasks.remove(idx);
 	}
 
+	/**
+	 * Inserts a subtask into the list.  This is a thin wrapper for ArrayList.add().
+	 */
 	@Override
 	public void insertSubtask(int index, Mark subtask) {
 		if (subtasks == null)
@@ -219,6 +245,10 @@ public class Task extends ComplexTask {
 		subtasks.add(index, subtask);
 	}
 
+
+	/**
+	 * Inserts a subtask or criterion into the relevant ArrayList.
+	 */
 	@Override
 	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
 		if (childTask instanceof Criterion)
@@ -252,11 +282,18 @@ public class Task extends ComplexTask {
 
 	}
 
+	/**
+	 * Accessor for penalty field.
+	 */
 	@Override
 	public boolean isPenalty() {
 		return penalty;
 	}
 
+	/**
+	 * Mutator for penalty field.
+	 * @param penalty
+	 */
 	public void setPenalty(boolean penalty) {
 		this.penalty = penalty;
 	}

@@ -101,6 +101,10 @@ public class Scale implements Serializable {
 		return out;
 	}
 
+	/**
+	 * Returns an unmodifiable List containing the current set of available Scales.
+	 * @return
+	 */
 	public static List<Scale> getScales() {
 		return Collections.unmodifiableList(schemes);
 	}

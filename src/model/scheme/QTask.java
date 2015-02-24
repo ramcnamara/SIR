@@ -185,6 +185,12 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 		return subtasks.remove(idx);
 	}
 
+	/**
+	 * Insert a Criterion or QTask into the appropriate container.  
+	 * 
+	 * Throws SubtaskTypeException if handed any numerically-marked subtask type, since QTasks 
+	 * can't have numeric subtasks.
+	 */
 	@Override
 	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
 		if (childTask instanceof Criterion)
@@ -200,6 +206,10 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 	}
 
 	@Override
+	/**
+	 * Inserts a QTask into the list of subtasks, and throws a SubtaskTypeException
+	 * if passed any other kind of Mark.
+	 */
 	public void insertSubtask(int index, Mark subtask)
 			throws SubtaskTypeException {
 		if (subtask instanceof QTask) {
@@ -228,11 +238,17 @@ public class QTask extends ComplexTask implements CriterionReferenced {
 		
 	}
 
+	/**
+	 * Accessor for penalty field.
+	 */
 	@Override
 	public boolean isPenalty() {
 		return false;
 	}
 
+	/**
+	 * Mutator for penalty field.
+	 */
 	@Override
 	public boolean isBonus() {
 		return false;

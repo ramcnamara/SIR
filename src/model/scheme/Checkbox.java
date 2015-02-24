@@ -109,6 +109,9 @@ public class Checkbox extends Mark {
 	}
 
 	@Override
+	/**
+	 * Checkbox tasks cannot have subtasks or criteria, so this method always throws an exception.
+	 */
 	public void insertAt(int index, Mark childTask) throws SubtaskTypeException {
 		throw new SubtaskTypeException();
 	}
@@ -123,10 +126,17 @@ public class Checkbox extends Mark {
 	}
 
 
+	/**
+	 * Accessor for penalty
+	 */
 	public boolean isPenalty() {
 		return penalty;
 	}
 
+	/**
+	 * Mutator for penalty
+	 * @param penalty
+	 */
 	public void setPenalty(boolean penalty) {
 		this.penalty = penalty;	
 	}

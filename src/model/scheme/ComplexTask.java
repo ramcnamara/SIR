@@ -173,6 +173,11 @@ public abstract class ComplexTask extends Mark {
 	}
 	
 	public abstract void insertSubtask(int index, Mark subtask) throws SubtaskTypeException;
+	
+	/**
+	 * Remove a criterion from the list of criteria.
+	 * @param theMark
+	 */
 	public void removeCriterion(Mark theMark) {
 		criteria.remove(theMark);
 		

@@ -42,6 +42,9 @@ public class ScaleAdapter extends XmlAdapter<AdaptedScale,Scale> {
 		return Scale.makeScheme(strings.levels.toArray(new String[strings.levels.size()]));
 	}
 	
+	/**
+	 * Default constructor.  Required by JAXB.
+	 */
 	ScaleAdapter() {
 	}
 }
