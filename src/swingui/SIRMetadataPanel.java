@@ -141,6 +141,11 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		repaint();
 	}
 
+	/**
+	 * Set the MarkingScheme associated with this metadata.  This triggers the recomputation of the total available marks.
+	 * 
+	 * @param scheme
+	 */
 	public void setScheme(MarkingScheme scheme) {
 		theScheme = scheme;
 		rereadTotalMark();
@@ -195,6 +200,9 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 	}
 
 	@Override
+	/**
+	 * Part of the Observer pattern.
+	 */
 	public void update(Observable source, Object o) {
 		if (source == null || !(source instanceof MarkingScheme))
 			return;
@@ -220,6 +228,9 @@ public class SIRMetadataPanel extends JPanel implements ActionListener, Observer
 		}
 	}
 
+	/**
+	 * Recompute and redisplay the total marks available for the current marking scheme.
+	 */
 	public void rereadTotalMark() {
 		if (theScheme != null)
 			mark.setText("" + theScheme.getAvailableMarks());

@@ -18,6 +18,12 @@ import javax.swing.JScrollPane;
 import swingui.xml.XmlTextPane;
 import model.scheme.MarkingScheme;
 
+/**
+ * A class that displays the XML that encodes the marking scheme as it currently stands.
+ * 
+ * @author ram
+ *
+ */
 public class SIRXmlPanel extends JPanel implements Observer {
 
 	private static final long serialVersionUID = -3215744673653118442L;
@@ -28,7 +34,7 @@ public class SIRXmlPanel extends JPanel implements Observer {
 
 
 	/**
-	 * Create the panel.
+	 * Creates the panel.
 	 */
 	public SIRXmlPanel() {
 		setLayout(new BorderLayout(0, 0));

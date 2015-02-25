@@ -85,7 +85,6 @@ public class SIRMainFrame extends JFrame implements Observer {
 		SIRMenuBar menuBar = new SIRMenuBar(this);
 		setJMenuBar(menuBar);
 		
-		// TODO: factor this out so that it can also be used for File -> New.
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -143,6 +142,11 @@ public class SIRMainFrame extends JFrame implements Observer {
 
 
 	@Override
+	/**
+	 * Part of the Observer pattern.  This method delegates the
+	 * update to the subpanels of SIRMainFrame that contain the tree and
+	 * card views.
+	 */
 	public void update(Observable observable, Object parameters) {
 		treePanel.update(observable, parameters);
 		cardPanel.update(observable, parameters);

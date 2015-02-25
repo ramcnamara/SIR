@@ -16,11 +16,15 @@ import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
 
+/**
+ * Dialog to allow users to select learning outcomes that apply to the current task.
+ * 
+ * @author ram
+ *
+ */
 public class OutcomesDialog extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -4135198605446514873L;
 	private Map<String, OutcomesPanel> guidmap = new HashMap<String, OutcomesPanel>();
 	
 	public OutcomesDialog(String offering, Mark mark) {
@@ -44,6 +48,12 @@ public class OutcomesDialog extends JPanel {
 		}
 	}
 	
+	/**
+	 * Retrieve selected learning outcomes from all tabs and return them
+	 * in the form of a list of LearningOutcomeRefs.
+	 * 
+	 * @return List<LearningOutcomeRef>=
+	 */
 	public List<LearningOutcomeRef> getSelectedOutcomes() {
 		List<LearningOutcomeRef> outcomes = new ArrayList<LearningOutcomeRef>();
 		for (OutcomesPanel op : guidmap.values()) {

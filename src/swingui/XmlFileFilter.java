@@ -13,6 +13,10 @@ import javax.swing.filechooser.FileFilter;
 public class XmlFileFilter extends FileFilter {
 
 	@Override
+	/**
+	 * Returns true for selectable files, which in this case means files ending in "xml" 
+	 * and subdirectories.
+	 */
 	public boolean accept(File f) {
 		// Always allow the option to browse subdirectories.
 		if (f.isDirectory())
@@ -33,6 +37,9 @@ public class XmlFileFilter extends FileFilter {
 	}
 
 	@Override
+	/**
+	 * Returns the constant string "XML files".
+	 */
 	public String getDescription() {
 		return "XML files";
 	}

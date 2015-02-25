@@ -22,17 +22,27 @@ import model.outcomes.LearningOutcomes;
 import model.outcomes.LearningOutcomes.Outcomes;
 import model.scheme.LearningOutcomeRef;
 
-
+/**
+ * Panel for displaying learning outcomes, so that they are selectable.
+ * 
+ * The OutcomesDialog contains one of these JPanels per set of learning outcomes, each in
+ * its own tab.
+ * 
+ * @author ram
+ *
+ */
 public class OutcomesPanel extends JPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 3981253910395288526L;
 	private OutcomesTable outcomes;
 	private String guid;
 
+	/**
+	 * Constructor.  
+	 * 
+	 * @param lo the LearningOutcomes to display in this panel
+	 */
 	public OutcomesPanel(LearningOutcomes lo) {
 		setLayout(new BorderLayout());
 		guid = lo.getGuid();
@@ -41,6 +51,8 @@ public class OutcomesPanel extends JPanel {
 
 		String desc = "";
 		List<String> outcomeList = new ArrayList<String>();
+		
+		// Set name and description if learning outcomes have been provided.
 		if (lo != null) {
 			desc = lo.getDescription();
 			Outcomes oc = lo.getOutcomes();
@@ -50,18 +62,21 @@ public class OutcomesPanel extends JPanel {
 		JLabel lblDescription = new JLabel(desc);
 		add(lblDescription, BorderLayout.NORTH);
 
-
+		// Construct table model and instantiate table
 		OutcomesTableModel m = new OutcomesTableModel(outcomeList);
 		outcomes = new OutcomesTable(m);
 		outcomes.setFillsViewportHeight(true);
 		
-		
+
+		// Set table column widths: weights column should be set to the preferred size of
+		// a weight selection combobox; the description column will expand to fill the remainder of the space
 		TableColumn weights = outcomes.getColumnModel().getColumn(OutcomesTableModel.WEIGHT_COL);
 		int boxWidth = new WeightBox().getPreferredSize().width;
 		weights.setMaxWidth(boxWidth);
 		weights.setMinWidth(boxWidth);
+		
+		// Set combobox editor for weights column, wordwrapping TextArea renderer for description column
 		weights.setCellEditor(new WeightEditor());
-
 		TableColumn descriptions = outcomes.getColumnModel().getColumn(OutcomesTableModel.DESC_COL);
 		descriptions.setCellRenderer(new OutcomeTextRenderer());
 
@@ -69,6 +84,12 @@ public class OutcomesPanel extends JPanel {
 		add(contents, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Create and return a list of LearningOutcomeRefs denoting selected outcomes for a
+	 * task and their weights.
+	 * 
+	 * @return List<LearningOutcomeRef>
+	 */
 	public List<LearningOutcomeRef> getSelectedOutcomes() {
 		List<LearningOutcomeRef> outcomeList = new ArrayList<LearningOutcomeRef>();
 		for (int row = 0; row < outcomes.getRowCount(); row++) {
@@ -86,10 +107,24 @@ public class OutcomesPanel extends JPanel {
 		return outcomeList;
 	}
 
+	/**
+	 * Set the weight of a given outcome.
+	 * 
+	 * @param index the row number of the outcome to be reweighted
+	 * @param weight the new weight
+	 */
 	public void setWeight(int index, String weight) {
 		outcomes.setValueAt(weight, index, OutcomesTableModel.WEIGHT_COL);
 	}
 
+	/**
+	 * Weight selection requires a nonstandard editor.
+	 * 
+	 * Weights may be "None", "Low", "Medium", or "High".
+	 * 
+	 * @author ram
+	 *
+	 */
 	private class WeightEditor extends AbstractCellEditor implements TableCellEditor {
 		/**
 		 * 
@@ -113,6 +148,12 @@ public class OutcomesPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Dropdown for selecting weights.
+	 * 
+	 * @author ram
+	 *
+	 */
 	private static class WeightBox extends JComboBox {
 		/**
 		 * 
@@ -131,20 +172,36 @@ public class OutcomesPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Text renderer that extends JTextArea so that it can use word wrapping.
+	 * 
+	 * @author ram
+	 *
+	 */
 	private class OutcomeTextRenderer extends JTextArea implements TableCellRenderer {
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 4218433225861339320L;
 		private boolean isPainting = false;
 
+		/**
+		 * Default constructor: turns word wrapping on.
+		 * 
+		 */
 		public OutcomeTextRenderer() {
 			setLineWrap(true);
 			setWrapStyleWord(true);
 		}
 
 		@Override
+		/**
+		 * The renderer does three things: sets the text for the component, if any;
+		 * sets the background colour to enable table striping; and sets the row height to
+		 * the height of this component, since this field will be the limiting factor as far
+		 * as height is concerned.
+		 * 
+		 * Resetting the row height can trigger rerendering, so other methods in this class
+		 * are guarded not to go off if the component is currently being painted.
+		 */
 		public Component getTableCellRendererComponent(JTable table,
 				Object text, boolean isSelected, boolean hasFocus, int row, int col) {
 			if (text instanceof String)
@@ -208,12 +265,14 @@ public class OutcomesPanel extends JPanel {
 
 	}
 
+	/**
+	 * JTable with the renderer overridden to do horizontal striping in light grey and white.
+	 * @author ram
+	 *
+	 */
 	private class OutcomesTable extends JTable {
-		
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
+
+		private static final long serialVersionUID = -6194949790411023752L;
 
 		public OutcomesTable(OutcomesTableModel m) {
 			super(m);

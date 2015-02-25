@@ -132,6 +132,13 @@ public class SIRCardPanel extends JPanel implements TreeSelectionListener, Actio
 		replaceAddSubtaskButton();
 	}
 
+	/**
+	 * The Add Subtask button needs special handling as its behaviour is dependent
+	 * on the type of task currently being displayed. Card objects have a factory
+	 * method that creates a button with the appropriate behaviour; this method
+	 * calls that and replaces the button accordingly.
+	 * 
+	 */
 	private void replaceAddSubtaskButton() {
 		if (getCurrentCard() == null) return;
 		
@@ -141,6 +148,11 @@ public class SIRCardPanel extends JPanel implements TreeSelectionListener, Actio
 		taskControlPanel.add(btnAddSubtask, "cell 0 5,growx,aligny center");
 	}
 	
+	/**
+	 * Iterates through all the Cards in the card area to find the one that is currently
+	 * being displayed.
+	 * @return
+	 */
 	private Card getCurrentCard() {
 		Component panels[] = cardArea.getComponents();
 		
@@ -160,7 +172,11 @@ public class SIRCardPanel extends JPanel implements TreeSelectionListener, Actio
 		return null;
 	}
 	
-	// Seek to the requested card.  If it is not present, seeks to first card.
+	/**
+	 * Seek to the requested card.  If it is not present, seek to first card.
+	 * 
+	 * @param mark the Mark being sought
+	 */
 	public void seekToCard(Mark mark){
 		// remember where the first card is	
 		CardLayout cl = (CardLayout) cardArea.getLayout();
@@ -339,6 +355,10 @@ public class SIRCardPanel extends JPanel implements TreeSelectionListener, Actio
 	}
 	
 
+	/**
+	 * Disable navigation components (Add Subtask and Add Task buttons) in order to
+	 * prevent users from navigating away from unsaved/unreverted changes.
+	 */
 	private void disableNavigation() {
 		allowNavigation = false;
 		btnAddSubtask.setEnabled(false);
@@ -351,6 +371,10 @@ public class SIRCardPanel extends JPanel implements TreeSelectionListener, Actio
 	}
 
 	
+	/**
+	 * Reenables the Add Subtask and Add Task buttons, which are disabled when there are
+	 * unsaved/unreverted changes.
+	 */
 	private void enableNavigation() {
 		allowNavigation = true;
 		btnAddSubtask.setEnabled(true);
@@ -358,20 +382,36 @@ public class SIRCardPanel extends JPanel implements TreeSelectionListener, Actio
 	}
 
 	@Override
+	/**
+	 * Event handler for changes to the UI that need to be saved or reverted before
+	 * the user can be allowed to navigate away from the current Card.
+	 */
 	public void changedUpdate(DocumentEvent e) {
 		disableNavigation();		
 	}
 
+	/**
+	 * Event handler for changes to the UI that need to be saved or reverted before
+	 * the user can be allowed to navigate away from the current Card.
+	 */
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		disableNavigation();
 	}
 
+	/**
+	 * Event handler for changes to the UI that need to be saved or reverted before
+	 * the user can be allowed to navigate away from the current Card.
+	 */
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		disableNavigation();		
 	}
 
+	/**
+	 * Event handler for changes to the UI that need to be saved or reverted before
+	 * the user can be allowed to navigate away from the current Card.
+	 */
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		disableNavigation();

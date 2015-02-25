@@ -6,14 +6,29 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 
-
+/**
+ * Data model for the table that stores learning outcomes so that users can
+ * select which are appropriate for each task. 
+ * 
+ * @author ram
+ *
+ */
 public class OutcomesTableModel extends AbstractTableModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3528889301143274346L;
 	public static final int WEIGHT_COL = 1;
 	public static final int DESC_COL = 0;
-	
-	public class OutcomeEntry {
 
-		
+	/**
+	 * Each OutcomeEntry instance represents a single row of the table.
+	 * 
+	 * @author ram
+	 *
+	 */
+	public class OutcomeEntry {
+	
 		private String description;
 		private String weight;
 		
@@ -44,14 +59,15 @@ public class OutcomesTableModel extends AbstractTableModel {
 
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	
 	private ArrayList<OutcomeEntry> data;
 
-	
+	/**
+	 * Constructor.  By default, no outcomes are selected.
+	 * 
+	 * @param outcomes a list of Strings containing the description of each learning outcome.
+	 */
 	public OutcomesTableModel(List<String> outcomes) {
 		data = new ArrayList<OutcomeEntry>();
 		
