@@ -28,8 +28,10 @@ import model.scheme.MarkingScheme;
  *
  */
 public class CheckboxPanel extends Card implements ActionListener {
-
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8651822675503472707L;
 	private JPanel contents;
 	private JTextArea tfTaskName;
 	private JTextArea taDescription;
@@ -225,6 +227,11 @@ public class CheckboxPanel extends Card implements ActionListener {
 		return target;
 	}
 
+	/**
+	 * The Add Subtask button has different behaviour according to the type of task
+	 * currently displayed, so each Card implements it differently.
+	 * 
+	 */
 	public JButton getAddSubtaskButton() {
 		JButton newButton = new JButton("Add subtask");
 		newButton.setEnabled(false);

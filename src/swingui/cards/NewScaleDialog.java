@@ -29,7 +29,10 @@ import javax.swing.UIManager;
  */
 public class NewScaleDialog extends JDialog implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9020605582224667908L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable levelTable;
 	private Scale theScale;

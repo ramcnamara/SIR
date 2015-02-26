@@ -40,7 +40,7 @@ import swingui.OutcomesDialog;
  */
 public class TaskPanel extends Card implements CriterionContainer, ActionListener {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 9013613774460848909L;
 	private Task target;
 	private JPanel contents;
 	private JScrollPane scrollpane;
@@ -279,11 +279,19 @@ public class TaskPanel extends Card implements CriterionContainer, ActionListene
 	}
 
 
+	/**
+	 * Accessor for target
+	 */
 	@Override
 	public Mark getTask() {
 		return target;
 	}
 
+	/**
+	 * The Add Subtask button has different behaviour according to the type of task
+	 * currently displayed, so each Card implements it differently.
+	 * 
+	 */
 	public JButton getAddSubtaskButton() {
 		JButton newButton = new JButton("Add subtask");
 		newButton.setActionCommand("Add subtask");
@@ -291,6 +299,9 @@ public class TaskPanel extends Card implements CriterionContainer, ActionListene
 	}
 
 
+	/**
+	 * Event handler for "Select learning outcomes" event -- displays an OptionDialog.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "Select learning outcomes") {
 			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
