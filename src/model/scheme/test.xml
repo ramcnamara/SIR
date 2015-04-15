@@ -7,7 +7,6 @@
 	<Tasks>
 		<Task>
 			<Name>UML Design Documents</Name>
-<Preamble> </Preamble>
 				<Subtasks>
 					<Task maxMark="2" hasComment="false">
 							<Name>Appropriate diagrams (class diagram is the minimum required)</Name>
