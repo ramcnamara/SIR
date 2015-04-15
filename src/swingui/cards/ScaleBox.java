@@ -137,10 +137,4 @@ public class ScaleBox extends JComboBox<Object> implements ActionListener {
 			}
 		}
 	}
-
-
-	public void addItem(String string) {
-		// TODO Auto-generated method stub
-		
-	}
 }

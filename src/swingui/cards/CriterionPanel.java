@@ -30,7 +30,7 @@ import javax.swing.UIManager;
  */
 public class CriterionPanel extends JPanel implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8613718010076085076L;
 	private JScrollPane contents;
 	private JTable criteria;
 	
@@ -109,6 +109,11 @@ public class CriterionPanel extends JPanel implements ActionListener {
 		
 	}
 	
+	/**
+	 * Returns the list of Criterion as currently displayed.
+	 * 
+	 * @return ArrayList<Criterion>
+	 */
 	public ArrayList<Criterion> getCriteria() {
 		CriterionTableModel model = (CriterionTableModel) criteria.getModel();
 		return model.getCriteria();

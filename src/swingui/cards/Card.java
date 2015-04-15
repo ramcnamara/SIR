@@ -7,10 +7,19 @@ import javax.swing.event.ChangeListener;
 import model.scheme.Mark;
 import model.scheme.MarkingScheme;
 
+/**
+ * Base class for Cards.
+ * 
+ * The main task-editing display is handled by a CardStack inside swingui.SIRCardPanel.
+ * 
+ * @author ram
+ *
+ */
 public abstract class Card extends JPanel {
-
-
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2627577147787672593L;
 	protected ChangeListener listener;
 	protected Mark parent;
 	protected static MarkingScheme scheme;

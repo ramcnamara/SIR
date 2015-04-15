@@ -15,8 +15,10 @@ import javax.swing.table.AbstractTableModel;
  */
 public class CriterionTableModel extends AbstractTableModel {
 
-
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1678294531364410617L;
 	private String[] tableHeaders = {"Name", "Scale"};
 	private ArrayList<Criterion> data = new ArrayList<Criterion>();
 

@@ -43,7 +43,7 @@ import swingui.OutcomesDialog;
  */
 public class QTaskPanel extends Card implements CriterionContainer, ActionListener {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5332242915675785276L;
 	private JPanel contents;
 	private CriterionPanel cp;
 	private JTextField tfTaskName;
@@ -223,18 +223,30 @@ public class QTaskPanel extends Card implements CriterionContainer, ActionListen
 		scheme.refresh();
 	}
 	
-	
+	/**
+	 * The Add Subtask button has different behaviour according to the type of task
+	 * currently displayed, so each Card implements it differently.
+	 * 
+	 */
 	public JButton getAddSubtaskButton() {
 		JButton newButton = new JButton("Add subtask");
 		newButton.setActionCommand("Add QTask");
 		return newButton;
 	}
 
+	/**
+	 * Accessor for target -- returns the QTask associated with this Card.
+	 */
 	@Override
 	public Mark getTask() {
 		return target;
 	}
 	
+	/**
+	 * Handle the "Select learning outcomes" event.
+	 * 
+	 * Instantiates and displays an OptionDialog.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "Select learning outcomes") {
 			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
