@@ -59,8 +59,6 @@ public class OutcomesTableModel extends AbstractTableModel {
 
 	}
 
-
-	
 	private ArrayList<OutcomeEntry> data;
 
 	/**

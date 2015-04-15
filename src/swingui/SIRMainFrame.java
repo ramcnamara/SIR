@@ -53,6 +53,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 			String path = System.getProperty("user.home") + File.separator + "SIR" + File.separator + "outcomes.sirx";
 			ZipFile zip = new ZipFile(path);
 			ZipEntry mapfile = zip.getEntry("mappings.xml");
+			zip.close();
 			if (mapfile == null)
 				System.out.println("Outcomes mapping file wasn't found in outcomes.sirx");
 			else {

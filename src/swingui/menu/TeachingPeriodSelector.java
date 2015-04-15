@@ -20,7 +20,7 @@ public class TeachingPeriodSelector extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JComboBox tpBox;
+	private JComboBox<String> tpBox;
 	private JSpinner yearSpinner;
 
 	public TeachingPeriodSelector(List<String> teachingPeriodNames) {
@@ -28,7 +28,7 @@ public class TeachingPeriodSelector extends JPanel {
 		
 		
 		// Set up teaching period spinner
-		tpBox = new JComboBox(teachingPeriodNames.toArray());
+		tpBox = new JComboBox<String>((String[]) teachingPeriodNames.toArray());
 		tpBox.setSelectedItem(TeachingPeriod.getCurrentTeachingPeriod());
 		JLabel tpLabel = new JLabel("Teaching period:");
 		tpLabel.setLabelFor(tpBox);

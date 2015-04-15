@@ -16,7 +16,7 @@ import model.scheme.Scale;
  * @author ram
  *
  */
-public class ScaleBox extends JComboBox implements ActionListener {
+public class ScaleBox extends JComboBox<Object> implements ActionListener {
 	/**
 	 * 
 	 */
@@ -136,5 +136,11 @@ public class ScaleBox extends JComboBox implements ActionListener {
 				}
 			}
 		}
+	}
+
+
+	public void addItem(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 }

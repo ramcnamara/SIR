@@ -154,7 +154,7 @@ public class OutcomesPanel extends JPanel {
 	 * @author ram
 	 *
 	 */
-	private static class WeightBox extends JComboBox {
+	private static class WeightBox extends JComboBox<String> {
 		/**
 		 * 
 		 */
