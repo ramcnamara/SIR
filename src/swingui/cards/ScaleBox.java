@@ -17,10 +17,11 @@ import model.scheme.Scale;
  *
  */
 public class ScaleBox extends JComboBox<Object> implements ActionListener {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8828847499106825089L;
 
 
 	/**
