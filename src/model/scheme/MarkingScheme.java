@@ -54,7 +54,7 @@ public class MarkingScheme extends Observable {
 
 	/*
 	 * This markup tells JAXB to ignore this field -- it's for SIR's use only, to store the sets of
-	 * learning outcomes that this marking scheme can reference.  It does not get added to the 
+	 * learning outcomes that this marking scheme can reference.  It does not get added to the XML output.
 	 */
 	@XmlTransient
 	private List<LearningOutcomes> outcomeSets;
