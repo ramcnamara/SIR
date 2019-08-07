@@ -13,8 +13,6 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import model.outcomes.LearningOutcomes;
-
 
 /**
  * Marking scheme.  All marking schemes have precisely one instance of this class, which
