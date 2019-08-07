@@ -30,7 +30,6 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 
 import swingui.NavDisableEventListener;
-import swingui.OutcomesDialog;
 
 /**
  * Panel that allows reading and editing of numerically-marked tasks.
@@ -38,7 +37,7 @@ import swingui.OutcomesDialog;
  * @author Robyn
  * 
  */
-public class TaskPanel extends Card implements CriterionContainer, ActionListener {
+public class TaskPanel extends Card implements CriterionContainer {
 
 	private static final long serialVersionUID = 9013613774460848909L;
 	private Task target;
@@ -57,7 +56,7 @@ public class TaskPanel extends Card implements CriterionContainer, ActionListene
 	private JTextField tfLabel;
 	private Component horizontalGlue;
 	private JLabel lblName;
-	private JButton btnSelectLearningOutcomes;
+//	private JButton btnSelectLearningOutcomes;
 
 	/**
 	 * Create the panel.
@@ -77,7 +76,7 @@ public class TaskPanel extends Card implements CriterionContainer, ActionListene
 		setLayout(new MigLayout("", "[grow]", "[grow]"));
 
 		contents = new JPanel();
-		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][][][][grow,fill]"));
+		contents.setLayout(new MigLayout("", "[][grow,fill]", "[][][][pref!,grow,top][][][][grow,fill]"));
 		
 		// String and numeric data
 		String label = "";
@@ -135,29 +134,28 @@ public class TaskPanel extends Card implements CriterionContainer, ActionListene
 		contents.add(lblInstructionsToMarkers, "cell 0 4,alignx trailing");
 
 		taMarkerInstructions = new JTextArea(markerInstruction);
+		taMarkerInstructions.setLineWrap(true);
 		contents.add(taMarkerInstructions, "cell 1 4,wmin 10,grow");
 		taMarkerInstructions.setColumns(10);
 		
-		btnSelectLearningOutcomes = new JButton("Select learning outcomes");
-		contents.add(btnSelectLearningOutcomes, "cell 1 5");
-		btnSelectLearningOutcomes.setActionCommand("Select learning outcomes");
-		btnSelectLearningOutcomes.addActionListener(this);
+//		btnSelectLearningOutcomes = new JButton("Select learning outcomes");
+//		contents.add(btnSelectLearningOutcomes, "cell 1 5");
+//		btnSelectLearningOutcomes.setActionCommand("Select learning outcomes");
+//		btnSelectLearningOutcomes.addActionListener(this);
 
 		
 		cp = new CriterionPanel(listener);
 		cp.setAlignmentY(LEFT_ALIGNMENT);
 		cp.setBorder(new TitledBorder(null, "Criteria", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		contents.add(cp, "cell 0 10 2 1,aligny top,grow");
+		contents.add(cp, "cell 0 6 2 2,aligny top,grow");
 		scrollpane = new JScrollPane(contents);
 		add(scrollpane, "cell 0 0,grow");
 
 		JXCollapsiblePane checkboxes = new JXCollapsiblePane();
 		GridLayout boxstack = new GridLayout(0,1);	// 1 column, many rows
 		checkboxes.setLayout(boxstack);
-		contents.add(checkboxes, "cell 1 7");
-		JButton toggle = new JButton(checkboxes.getActionMap().get("toggle"));
-		contents.add(toggle, "cell 1 6");
+		contents.add(checkboxes, "cell 1 5");
 		
 		chckbxAllowMarkerComment = new JCheckBox("Allow marker comment",
 				task.hasComment());
@@ -302,16 +300,16 @@ public class TaskPanel extends Card implements CriterionContainer, ActionListene
 	/**
 	 * Event handler for "Select learning outcomes" event -- displays an OptionDialog.
 	 */
-	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "Select learning outcomes") {
-			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
-			int result = JOptionPane.showConfirmDialog(null, od, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if (result == JOptionPane.CANCEL_OPTION)
-				return;
-			
-			if (result == JOptionPane.OK_OPTION) {
-				target.setOutcomes(od.getSelectedOutcomes());
-			}
-		}
-	}
+//	public void actionPerformed(ActionEvent e) {
+//		if (e.getActionCommand() == "Select learning outcomes") {
+//			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
+//			int result = JOptionPane.showConfirmDialog(null, od, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+//			if (result == JOptionPane.CANCEL_OPTION)
+//				return;
+//			
+//			if (result == JOptionPane.OK_OPTION) {
+//				target.setOutcomes(od.getSelectedOutcomes());
+//			}
+//		}
+//	}
 }

@@ -36,7 +36,6 @@ public abstract class Mark implements Serializable {
 	 * Default constructor.  Should only be called by subclasses.
 	 */
 	protected Mark() {
-		outcomes = new ArrayList<LearningOutcomeRef>();
 	}
 	
 	private static final long serialVersionUID = 2644920807147460137L;
@@ -56,9 +55,6 @@ public abstract class Mark implements Serializable {
 	@XmlAttribute
 	protected boolean group;
 	
-	@XmlElementWrapper(name="LearningOutcomes")
-	@XmlElement(name="Outcome", required=true, nillable=true)
-	protected List<LearningOutcomeRef> outcomes;
 
 	/**
 	 * Copy constructor.  Required by JAXB.
@@ -71,29 +67,8 @@ public abstract class Mark implements Serializable {
 		label = old.getLabel();
 		markerInstruction = old.getMarkerInstruction();
 		name = old.getName();
-		outcomes = new ArrayList<LearningOutcomeRef>();
-		for (LearningOutcomeRef lo : old.getOutcomes()) {
-			outcomes.add(lo);
-		}
 	}
 
-
-	/**
-	 * Accessor for learning outcomes.
-	 * 
-	 * @return
-	 */
-	public List<LearningOutcomeRef> getOutcomes() {
-		return outcomes;
-	}
-	
-	/**
-	 * Mutator for learning outcomes.
-	 * @param oc
-	 */
-	public void setOutcomes(List<LearningOutcomeRef> oc) {
-		outcomes = oc;		
-	}
 
 	// Subclasses of Mark need to be able to tell an OutputMaker how to deal with their structure.
 	public abstract void makeOutput(OutputMaker om);

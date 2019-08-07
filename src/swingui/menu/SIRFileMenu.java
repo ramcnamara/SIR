@@ -16,7 +16,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import model.mappings.OutcomesMap;
 import model.scheme.MarkingScheme;
 import swingui.SIRMainFrame;
 import swingui.XmlFileFilter;
@@ -32,8 +31,7 @@ public class SIRFileMenu extends JMenu {
 		super("File");
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				OutcomesMap.reset();
+			public void actionPerformed(ActionEvent e) {	;
 				parent.newScheme();
 			}
 		});
@@ -68,11 +66,11 @@ public class SIRFileMenu extends JMenu {
 					
 					parent.setScheme(scheme);
 					
-					// Load relevant learning outcome sets (if any)
-					String offering = scheme.getOffering();
-					for (String guid : OutcomesMap.getGuidsForOffering(offering)) {
-						OutcomesMap.loadOutcomes(guid);
-					}
+//					// Load relevant learning outcome sets (if any)
+//					String offering = scheme.getOffering();
+//					for (String guid : OutcomesMap.getGuidsForOffering(offering)) {
+//						OutcomesMap.loadOutcomes(guid);
+//					}
 
 				}
 			}

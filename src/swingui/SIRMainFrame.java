@@ -1,29 +1,16 @@
 package swingui;
 
 import java.awt.BorderLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
 import javax.swing.JSplitPane;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
-import swingui.menu.SIRMenuBar;
-import model.mappings.OutcomesMap;
-import model.mappings.TeachingPeriod;
-import model.mappings.XMLMappingType;
-import model.mappings.XMLMappings;
 import model.scheme.MarkingScheme;
 import net.miginfocom.swing.MigLayout;
+import swingui.menu.SIRMenuBar;
 
 
 public class SIRMainFrame extends JFrame implements Observer {
@@ -45,43 +32,43 @@ public class SIRMainFrame extends JFrame implements Observer {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1152, 820);
 		
-		TeachingPeriod.loadTeachingPeriods();
-		TeachingPeriod.getCurrentTeachingPeriod();
+//		TeachingPeriod.loadTeachingPeriods();
+//		TeachingPeriod.getCurrentTeachingPeriod();
 		
 		// load associations for learning outcome sets
-		try {
-			String path = System.getProperty("user.home") + File.separator + "SIR" + File.separator + "outcomes.sirx";
-			ZipFile zip = new ZipFile(path);
-			ZipEntry mapfile = zip.getEntry("mappings.xml");
-			zip.close();
-			if (mapfile == null)
-				System.out.println("Outcomes mapping file wasn't found in outcomes.sirx");
-			else {
-				System.out.println("Outcomes mapping file found!");
-				XMLMappings mappings = null;
-				try {
-					JAXBContext  context = JAXBContext.newInstance(XMLMappings.class);
-					Unmarshaller unmarshaller = context.createUnmarshaller();
-					mappings = (XMLMappings) unmarshaller.unmarshal(zip.getInputStream(mapfile));
-					
-					for (XMLMappingType map:mappings.getUnitdata()) {
-						String key = map.getUnitcode() + " " + map.getTeachingperiod();
-
-						// Store key -> GUID mappings
-						for (String guid:map.getOutcomecollections().getGuid()) {
-							OutcomesMap.addGuidMapping(key, guid);
-							System.out.println("Mapping " + key + " to GUID " + guid);
-						}
-					}
-				} catch (JAXBException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
-		} catch (IOException e1) {
-			// TODO should be a dialog
-			System.out.println("Couldn't read outcomes.sirx");
-		}
+//		try {
+//			String path = System.getProperty("user.home") + File.separator + "SIR" + File.separator + "outcomes.sirx";
+//			ZipFile zip = new ZipFile(path);
+//			ZipEntry mapfile = zip.getEntry("mappings.xml");
+//			zip.close();
+//			if (mapfile == null)
+//				System.out.println("Outcomes mapping file wasn't found in outcomes.sirx");
+//			else {
+//				System.out.println("Outcomes mapping file found!");
+//				XMLMappings mappings = null;
+//				try {
+//					JAXBContext  context = JAXBContext.newInstance(XMLMappings.class);
+//					Unmarshaller unmarshaller = context.createUnmarshaller();
+//					mappings = (XMLMappings) unmarshaller.unmarshal(zip.getInputStream(mapfile));
+//					
+//					for (XMLMappingType map:mappings.getUnitdata()) {
+//						String key = map.getUnitcode() + " " + map.getTeachingperiod();
+//
+//						// Store key -> GUID mappings
+//						for (String guid:map.getOutcomecollections().getGuid()) {
+//							OutcomesMap.addGuidMapping(key, guid);
+//							System.out.println("Mapping " + key + " to GUID " + guid);
+//						}
+//					}
+//				} catch (JAXBException e1) {
+//					e1.printStackTrace();
+//				}
+//				
+//			}
+//		} catch (IOException e1) {
+//			// TODO should be a dialog
+//			System.out.println("Couldn't read outcomes.sirx");
+//		}
 		
 		SIRMenuBar menuBar = new SIRMenuBar(this);
 		setJMenuBar(menuBar);
@@ -162,7 +149,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 	public void newScheme() {
 		// create new model.scheme object
 		theScheme = new MarkingScheme();
-		theScheme.setOffering("<Unknown unit code>, " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear());
+//		theScheme.setOffering("<Unknown unit code>, " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear());
 		
 		// Set up observers
 		changeScheme(theScheme);
@@ -183,7 +170,7 @@ public class SIRMainFrame extends JFrame implements Observer {
 	 */
 	public void setScheme(MarkingScheme scheme) {
 		theScheme = scheme;		
-		theScheme.setOffering(theScheme.getUnitCode() + " " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear());
+//		theScheme.setOffering(theScheme.getUnitCode() + " " + TeachingPeriod.getCurrentTeachingPeriod() + ", " + TeachingPeriod.getCurrentTeachingYear());
 		
 		// Instantiate scheme editor panel
 		schemePanel = new SIRMetadataPanel(theScheme);

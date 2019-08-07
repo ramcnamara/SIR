@@ -7,19 +7,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import swingui.NavDisableEventListener;
-import swingui.OutcomesDialog;
-import net.miginfocom.swing.MigLayout;
 import model.scheme.Checkbox;
 import model.scheme.Mark;
 import model.scheme.MarkingScheme;
+import net.miginfocom.swing.MigLayout;
+import swingui.NavDisableEventListener;
 
 /**
  * Display for Checkbox type tasks.
@@ -72,6 +70,7 @@ public class CheckboxPanel extends Card implements ActionListener {
 		boolean group = false;
 		boolean bonus = false;
 		boolean penalty = false;
+		boolean hasComment = false;
 
 		if (checkbox != null) {
 			label = label + (checkbox.getLabel() == null? "": checkbox.getLabel());
@@ -79,6 +78,7 @@ public class CheckboxPanel extends Card implements ActionListener {
 			maxMark += checkbox.getMaxMark();
 			description = description + (checkbox.getDescription() == null? "": checkbox.getDescription());
 			markerInst = markerInst + (checkbox.getMarkerInstruction() == null? "" : checkbox.getMarkerInstruction());
+			hasComment = checkbox.hasComment();
 			group = checkbox.isGroup();
 			bonus = checkbox.isBonus();
 			penalty = checkbox.isPenalty();
@@ -121,7 +121,9 @@ public class CheckboxPanel extends Card implements ActionListener {
 		taMarkerInstructions = new JTextArea(markerInst);
 		contents.add(taMarkerInstructions, "cell 1 4,grow");
 		taMarkerInstructions.setColumns(10);
-
+		
+		JCheckBox chckbxAllowMarkerComment = new JCheckBox("Allow marker comment", hasComment);
+		contents.add(chckbxAllowMarkerComment, "flowx, cell 1 5");
 
 		chckbxGroupTask = new JCheckBox("Group task", group);
 		contents.add(chckbxGroupTask, "flowx,cell 1 6");
@@ -210,16 +212,16 @@ public class CheckboxPanel extends Card implements ActionListener {
 
 		else if (cmd.equals("Save"))
 			save();
-		else if (cmd.equals("Select learning outcomes")) {
-			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
-			int result = JOptionPane.showConfirmDialog(null, od, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if (result == JOptionPane.CANCEL_OPTION)
-				return;
-
-			if (result == JOptionPane.OK_OPTION) {
-				target.setOutcomes(od.getSelectedOutcomes());
-			}
-		}		
+//		else if (cmd.equals("Select learning outcomes")) {
+//			OutcomesDialog od = new OutcomesDialog(scheme.getOffering(), target);
+//			int result = JOptionPane.showConfirmDialog(null, od, "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+//			if (result == JOptionPane.CANCEL_OPTION)
+//				return;
+//
+//			if (result == JOptionPane.OK_OPTION) {
+//				target.setOutcomes(od.getSelectedOutcomes());
+//			}
+//		}		
 	}
 
 	@Override

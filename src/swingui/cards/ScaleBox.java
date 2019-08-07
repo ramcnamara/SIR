@@ -16,7 +16,7 @@ import model.scheme.Scale;
  * @author ram
  *
  */
-public class ScaleBox extends JComboBox<Object> implements ActionListener {
+public class ScaleBox extends JComboBox implements ActionListener {
 
 	/**
 	 * 

@@ -57,9 +57,9 @@ public class MarkingScheme extends Observable {
 	 * learning outcomes that this marking scheme can reference.  It does not get added to the XML output.
 	 */
 	@XmlTransient
-	private List<LearningOutcomes> outcomeSets;
+//	private List<LearningOutcomes> outcomeSets;
 
-	private String offering;
+//	private String offering;
 	
 	/** Unit code accessor. 
 	 * @return the unit code
@@ -126,7 +126,7 @@ public class MarkingScheme extends Observable {
 	 */
 	public MarkingScheme() {
 		tasks = new ArrayList<Mark>();
-		outcomeSets = new ArrayList<LearningOutcomes>();
+//		outcomeSets = new ArrayList<LearningOutcomes>();
 		change();
 	}
 	
@@ -269,32 +269,32 @@ public class MarkingScheme extends Observable {
 		return marks;
 	}
 	
-	/**
-	 * Add a set of learning outcomes to the set available for this marking scheme's tasks.
-	 * 
-	 * 
-	 */
-	public void addLearningOutcomes(LearningOutcomes outcomes) {
-		outcomeSets.add(outcomes);
-	}
-
-	/**
-	 * Accessor for offering field.
-	 * 
-	 * @return String the offering: unit code + " " + teaching period + ", " + year
-	 */
-	public String getOffering() {
-		// TODO Auto-generated method stub
-		return offering;
-	}
-	
-	/**
-	 * Mutator for offering field.
-	 * 
-	 * @param offering the offering: unit code + " " + teaching period + ", " + year
-	 */
-	public void setOffering(String offering) {
-		this.offering = offering;
-	}
+//	/**
+//	 * Add a set of learning outcomes to the set available for this marking scheme's tasks.
+//	 * 
+//	 * 
+//	 */
+//	public void addLearningOutcomes(LearningOutcomes outcomes) {
+//		outcomeSets.add(outcomes);
+//	}
+//
+//	/**
+//	 * Accessor for offering field.
+//	 * 
+//	 * @return String the offering: unit code + " " + teaching period + ", " + year
+//	 */
+//	public String getOffering() {
+//		// TODO Auto-generated method stub
+//		return offering;
+//	}
+//	
+//	/**
+//	 * Mutator for offering field.
+//	 * 
+//	 * @param offering the offering: unit code + " " + teaching period + ", " + year
+//	 */
+//	public void setOffering(String offering) {
+//		this.offering = offering;
+//	}
 }
 

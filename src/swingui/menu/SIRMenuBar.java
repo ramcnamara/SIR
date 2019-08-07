@@ -17,8 +17,6 @@ public class SIRMenuBar extends JMenuBar {
 		SIRFileMenu mnFile = new SIRFileMenu(parent);
 		this.add(mnFile);
 		
-		SIROptionsMenu mnOptions = new SIROptionsMenu(parent);
-		this.add(mnOptions);		
 	}
 
 }
